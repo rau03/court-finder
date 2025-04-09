@@ -1,103 +1,237 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+
+interface Court {
+  _id: string;
+  name: string;
+  address: string;
+  state: string;
+  zipCode: string;
+  indoor: boolean;
+  numberOfCourts: number;
+  location: {
+    type: "Point";
+    coordinates: number[];
+  };
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [indoor, setIndoor] = useState<string | null>(null);
+  const [maxDistance, setMaxDistance] = useState("50000"); // Default 50km
+  const [courts, setCourts] = useState<Court[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const states = [
+    "AL",
+    "AK",
+    "AZ",
+    "AR",
+    "CA",
+    "CO",
+    "CT",
+    "DE",
+    "FL",
+    "GA",
+    "HI",
+    "ID",
+    "IL",
+    "IN",
+    "IA",
+    "KS",
+    "KY",
+    "LA",
+    "ME",
+    "MD",
+    "MA",
+    "MI",
+    "MN",
+    "MS",
+    "MO",
+    "MT",
+    "NE",
+    "NV",
+    "NH",
+    "NJ",
+    "NM",
+    "NY",
+    "NC",
+    "ND",
+    "OH",
+    "OK",
+    "OR",
+    "PA",
+    "RI",
+    "SC",
+    "SD",
+    "TN",
+    "TX",
+    "UT",
+    "VT",
+    "VA",
+    "WA",
+    "WV",
+    "WI",
+    "WY",
+  ];
+
+  const handleSearch = async () => {
+    if (!address.trim() && !state && indoor === null) {
+      setError(
+        "Please enter an address, select a state, or filter by indoor/outdoor"
+      );
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Build the query URL with all search parameters
+      const params = new URLSearchParams();
+      if (address.trim()) params.append("address", address);
+      if (state) params.append("state", state);
+      if (indoor !== null) params.append("indoor", indoor);
+      if (maxDistance) params.append("maxDistance", maxDistance);
+
+      const url = `/api/courts?${params.toString()}`;
+      console.log("Searching:", url);
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch courts");
+      }
+      const data = await response.json();
+      setCourts(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col p-4">
+      <div className="bg-white border-4 border-black p-8 max-w-4xl mx-auto w-full">
+        <h1 className="text-4xl font-bold text-black mb-4">
+          Pickleball Court Finder USA
+        </h1>
+        <p className="text-lg text-black mb-6">
+          Find pickleball courts anywhere in the United States.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-black mb-2">Address or City</label>
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Enter address or city"
+              className="w-full p-2 border-2 border-black text-black"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+
+          <div>
+            <label className="block text-black mb-2">State</label>
+            <select
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              className="w-full p-2 border-2 border-black text-black"
+            >
+              <option value="">Any State</option>
+              {states.map((st) => (
+                <option key={st} value={st}>
+                  {st}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-black mb-2">Court Type</label>
+            <select
+              value={indoor === null ? "" : indoor}
+              onChange={(e) => {
+                const val = e.target.value;
+                setIndoor(val === "" ? null : val);
+              }}
+              className="w-full p-2 border-2 border-black text-black"
+            >
+              <option value="">Any</option>
+              <option value="true">Indoor</option>
+              <option value="false">Outdoor</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-black mb-2">
+              Max Distance (if address provided)
+            </label>
+            <select
+              value={maxDistance}
+              onChange={(e) => setMaxDistance(e.target.value)}
+              className="w-full p-2 border-2 border-black text-black"
+            >
+              <option value="5000">5km (~3 miles)</option>
+              <option value="10000">10km (~6 miles)</option>
+              <option value="25000">25km (~15 miles)</option>
+              <option value="50000">50km (~30 miles)</option>
+              <option value="100000">100km (~60 miles)</option>
+            </select>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        <button
+          onClick={handleSearch}
+          disabled={loading}
+          className="w-full bg-black text-white py-3 font-bold hover:bg-gray-800 disabled:bg-gray-400"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          {loading ? "Searching..." : "Search Courts"}
+        </button>
+
+        {error && <p className="text-red-500 mt-4">{error}</p>}
+
+        {courts.length > 0 ? (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold text-black mb-4">
+              Found {courts.length} {courts.length === 1 ? "Court" : "Courts"}:
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {courts.map((court) => (
+                <div key={court._id} className="border-2 border-black p-4">
+                  <h3 className="font-bold text-xl text-black">{court.name}</h3>
+                  <p className="text-black">{court.address}</p>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    <div className="text-sm text-black">
+                      <span className="font-bold">State:</span> {court.state}
+                    </div>
+                    <div className="text-sm text-black">
+                      <span className="font-bold">Type:</span>{" "}
+                      {court.indoor ? "Indoor" : "Outdoor"}
+                    </div>
+                    <div className="text-sm text-black">
+                      <span className="font-bold">Courts:</span>{" "}
+                      {court.numberOfCourts}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          !loading &&
+          !error &&
+          courts.length === 0 && (
+            <p className="text-center mt-8 text-black">
+              No courts found. Try adjusting your search.
+            </p>
+          )
+        )}
+      </div>
     </div>
   );
 }
