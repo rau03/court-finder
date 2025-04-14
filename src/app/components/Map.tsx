@@ -159,14 +159,23 @@ const Map: React.FC<MapProps> = ({
               }}
               onCloseClick={() => setSelectedCourt(null)}
             >
-              <div className="p-2">
-                <h3 className="font-bold text-lg">{selectedCourt.name}</h3>
-                <p>{selectedCourt.address}</p>
-                <p>
-                  {selectedCourt.state} {selectedCourt.zipCode}
-                </p>
-                <p>Type: {selectedCourt.indoor ? "Indoor" : "Outdoor"}</p>
-                <p>Number of Courts: {selectedCourt.numberOfCourts}</p>
+              <div className="text-black">
+                <h3 className="font-bold text-lg mb-1">{selectedCourt.name}</h3>
+                <p className="mb-2">{selectedCourt.address}</p>
+                <div className="text-sm">
+                  <p>
+                    <span className="font-semibold">State:</span>{" "}
+                    {selectedCourt.state}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Type:</span>{" "}
+                    {selectedCourt.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Courts:</span>{" "}
+                    {selectedCourt.numberOfCourts}
+                  </p>
+                </div>
               </div>
             </InfoWindow>
           )}
