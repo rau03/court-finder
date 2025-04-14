@@ -4,78 +4,60 @@ import Court from "@/models/Court";
 import { geocodeAddress } from "@/lib/geocoder";
 
 export async function GET(request: Request) {
-  await dbConnect();
-
-  const { searchParams } = new URL(request.url);
-  const address = searchParams.get("address");
-  const state = searchParams.get("state");
-  const zipCode = searchParams.get("zipCode");
-  const indoor = searchParams.get("indoor");
-  const maxDistance = parseInt(searchParams.get("maxDistance") || "50000", 10); // Default 50km (~30 miles)
-
   try {
+    await dbConnect();
+    console.log("MongoDB connected successfully");
+
+    const { searchParams } = new URL(request.url);
+    const address = searchParams.get("address");
+    const state = searchParams.get("state");
+    const zipCode = searchParams.get("zipCode");
+    const indoor = searchParams.get("indoor");
+    const maxDistance = parseInt(
+      searchParams.get("maxDistance") || "50000",
+      10
+    );
+
     // Return all courts if no filters are provided
     if (!address && !state && !zipCode && indoor === null) {
       const allCourts = await Court.find({}).limit(100);
       console.log(`Returning all ${allCourts.length} courts (limited to 100)`);
+
+      if (!allCourts || allCourts.length === 0) {
+        console.log("No courts found in database");
+        return NextResponse.json([]);
+      }
+
       return NextResponse.json(allCourts);
     }
 
     // Build the query based on filters
     const query: any = {};
 
-    // Filter by state if provided
     if (state) {
       query.state = state.toUpperCase();
     }
 
-    // Filter by zip code if provided
     if (zipCode) {
       query.zipCode = zipCode;
     }
 
-    // Filter by indoor/outdoor if provided
     if (indoor !== null) {
       query.indoor = indoor === "true";
     }
 
-    // If address is provided, use geocoding and geospatial query
-    if (address) {
-      const geoData = await geocodeAddress(address);
-
-      if (geoData) {
-        console.log(`Geocoded address to: ${geoData.lat}, ${geoData.lng}`);
-
-        // Use MongoDB's geospatial query with the geocoded coordinates
-        query.location = {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: [geoData.lng, geoData.lat],
-            },
-            $maxDistance: maxDistance, // in meters
-          },
-        };
-
-        const courts = await Court.find(query).limit(50);
-        console.log(`Found ${courts.length} courts near the provided address`);
-        return NextResponse.json(courts);
-      } else {
-        // If geocoding fails, fall back to text search
-        console.log("Geocoding failed, falling back to text search");
-        const searchRegex = new RegExp(address.split(" ").join(".*"), "i");
-        query.address = { $regex: searchRegex };
-      }
-    }
-
-    // Execute query with any filters that were added
+    console.log("Executing query with filters:", query);
     const courts = await Court.find(query).limit(50);
     console.log(`Found ${courts.length} courts matching filters`);
+
     return NextResponse.json(courts);
   } catch (error) {
-    console.error("Error searching courts:", error);
+    console.error("Database error:", error);
     return NextResponse.json(
-      { error: "Failed to search courts" },
+      {
+        error: "Failed to search courts",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }

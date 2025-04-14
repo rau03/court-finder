@@ -105,19 +105,12 @@ export default function Home() {
   ];
 
   const handleSearch = async () => {
-    if (!address.trim() && !state && !zipCode.trim() && indoor === null) {
-      setError(
-        "Please enter an address, select a state, enter a zip code, or filter by indoor/outdoor"
-      );
-      return;
-    }
-
     setLoading(true);
     setError(null);
     setDebugInfo("");
 
     try {
-      // Build the query URL with all search parameters
+      // Build the query URL with any provided filters
       const params = new URLSearchParams();
       if (address.trim()) params.append("address", address);
       if (state) params.append("state", state);
@@ -129,47 +122,56 @@ export default function Home() {
       console.log("Searching:", url);
 
       const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Failed to fetch courts");
-      }
-      const data = await response.json();
+      const responseText = await response.text();
 
-      // Debug: Log the first court to check its structure
-      if (data.length > 0) {
-        console.log("First court data:", data[0]);
-        setDebugInfo(
-          `Found ${data.length} courts. First court: ${data[0].name}`
-        );
-      } else {
-        setDebugInfo("No courts found matching your criteria.");
-      }
+      try {
+        const data = JSON.parse(responseText);
 
-      setCourts(data);
-
-      // If address is provided, update map center
-      if (address.trim()) {
-        try {
-          const geocodeResponse = await fetch(
-            `/api/geocode?address=${encodeURIComponent(address)}`
-          );
-          if (geocodeResponse.ok) {
-            const location = await geocodeResponse.json();
-            console.log("Geocoded location:", location);
-
-            if (location) {
-              setMapCenter(location);
-              setMapZoom(12); // Zoom in when an address is provided
-            }
-          } else {
-            console.error("Geocoding failed:", await geocodeResponse.text());
-          }
-        } catch (geoError) {
-          console.error("Geocoding error:", geoError);
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to fetch courts");
         }
-      } else {
-        // Reset to default center if no address
-        setMapCenter(null);
-        setMapZoom(4);
+
+        console.log("API Response:", data);
+
+        if (Array.isArray(data)) {
+          if (data.length > 0) {
+            console.log("First court data:", data[0]);
+            setDebugInfo(
+              `Found ${data.length} courts. First court: ${data[0].name}`
+            );
+          } else {
+            setDebugInfo("No courts found matching your criteria.");
+          }
+          setCourts(data);
+        } else {
+          throw new Error("Invalid response format");
+        }
+
+        // Update map center if address was provided
+        if (address.trim()) {
+          try {
+            const geocodeResponse = await fetch(
+              `/api/geocode?address=${encodeURIComponent(address)}`
+            );
+            if (geocodeResponse.ok) {
+              const location = await geocodeResponse.json();
+              if (location) {
+                setMapCenter(location);
+                setMapZoom(12);
+              }
+            }
+          } catch (geoError) {
+            console.error("Geocoding error:", geoError);
+          }
+        } else {
+          // Reset to default center if no address
+          setMapCenter(null);
+          setMapZoom(4);
+        }
+      } catch (parseError) {
+        console.error("Response parsing error:", parseError);
+        console.error("Raw response:", responseText);
+        throw new Error("Invalid response from server");
       }
     } catch (err) {
       console.error("Search error:", err);
