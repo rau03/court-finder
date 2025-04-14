@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 /**
- * Geocode an address to get coordinates using Nominatim (OpenStreetMap) API directly
+ * Geocode an address to get coordinates using Google Maps Geocoding API
  * @param address The address to geocode
  * @returns Promise with latitude and longitude or null if geocoding fails
  */
@@ -9,16 +9,18 @@ export async function geocodeAddress(
   address: string
 ): Promise<{ lat: number; lng: number } | null> {
   try {
-    // Use Nominatim API directly
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-      address
-    )}`;
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent": "PickleballCourtFinder/1.0",
-      },
-    });
+    if (!apiKey) {
+      throw new Error("Google Maps API key is not configured");
+    }
+
+    // Use Google Maps Geocoding API
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${apiKey}`;
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(
@@ -28,10 +30,11 @@ export async function geocodeAddress(
 
     const data = await response.json();
 
-    if (data && data.length > 0 && data[0].lat && data[0].lon) {
+    if (data.status === "OK" && data.results && data.results.length > 0) {
+      const location = data.results[0].geometry.location;
       return {
-        lat: parseFloat(data[0].lat),
-        lng: parseFloat(data[0].lon),
+        lat: location.lat,
+        lng: location.lng,
       };
     }
 

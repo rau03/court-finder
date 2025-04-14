@@ -9,12 +9,13 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const address = searchParams.get("address");
   const state = searchParams.get("state");
+  const zipCode = searchParams.get("zipCode");
   const indoor = searchParams.get("indoor");
   const maxDistance = parseInt(searchParams.get("maxDistance") || "50000", 10); // Default 50km (~30 miles)
 
   try {
     // Return all courts if no filters are provided
-    if (!address && !state && indoor === null) {
+    if (!address && !state && !zipCode && indoor === null) {
       const allCourts = await Court.find({}).limit(100);
       console.log(`Returning all ${allCourts.length} courts (limited to 100)`);
       return NextResponse.json(allCourts);
@@ -26,6 +27,11 @@ export async function GET(request: Request) {
     // Filter by state if provided
     if (state) {
       query.state = state.toUpperCase();
+    }
+
+    // Filter by zip code if provided
+    if (zipCode) {
+      query.zipCode = zipCode;
     }
 
     // Filter by indoor/outdoor if provided
