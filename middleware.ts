@@ -1,9 +1,7 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-export default authMiddleware({
-  // Routes that can be accessed while signed out
-  publicRoutes: ["/", "/api/courts", "/api/search", "/api/geocode"],
-});
+// Initialize Clerk middleware
+export default clerkMiddleware();
 
 export const config = {
   // Runs the middleware on all routes
