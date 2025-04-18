@@ -24,3 +24,81 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Add these rules to your globals.css */
+.cl-formButtonPrimary,
+.cl-formButtonPrimary:hover,
+.cl-formButtonPrimary:focus,
+.cl-formButtonPrimary:active {
+  background-color: #2563eb !important; /* blue-600 */
+  color: white !important;
+}
+
+.cl-headerTitle,
+.cl-headerSubtitle,
+.cl-formFieldLabel,
+.cl-formFieldInput,
+.cl-socialButtonsBlockButtonText,
+.cl-identityPreviewText,
+.cl-accordionTriggerButton {
+  color: #000000 !important;
+  font-weight: 500 !important;
+}
+
+.cl-formFieldInput::placeholder {
+  color: #4b5563 !important; /* gray-600 */
+}
+
+.cl-card {
+  background-color: white !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Add these strong overrides for Clerk components */
+.cl-internal-b3fm6y,  /* Clerk header title */
+.cl-internal-wkkub3,  /* Clerk header subtitle */
+.cl-internal-13zprp1, /* Form labels */
+.cl-internal-1w67h8,  /* Input text */
+.cl-internal-15amzqo, /* Other text elements */
+.cl-internal-pi07y0,  /* More text elements */
+.cl-internal-uyu30m,  /* Even more text elements */
+.cl-internal-1xpzp53 /* Footer text */ {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+}
+
+/* Make input text jet black */
+.cl-formFieldInput,
+.cl-formFieldInput:focus,
+.cl-formFieldInput::placeholder {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  opacity: 1 !important;
+  caret-color: #000000 !important;
+}
+
+/* Style the input fields and their text */
+.cl-formFieldInput {
+  background-color: #ffffff !important;
+  border: 2px solid #d1d5db !important;
+}
+
+.cl-formFieldInput:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Make all Clerk text elements black */
+[class^="cl-"] {
+  color: #000000;
+  opacity: 1;
+}
+
+/* Override input placeholder color */
+.cl-formFieldInput::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}

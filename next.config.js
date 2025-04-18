@@ -1,17 +1,12 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "standalone",
   env: {
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
   },
-  // Ensure environment variables are properly exposed to the client
   publicRuntimeConfig: {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   },
-  // Add API key restrictions in Google Cloud Console:
-  // - HTTP referrers (your domain only)
-  // - API restrictions (Maps JS API, Geocoding API only)
   async headers() {
     const securityHeaders = [
       {
@@ -44,7 +39,7 @@ const nextConfig: NextConfig = {
             key: "Access-Control-Allow-Origin",
             value:
               process.env.NODE_ENV === "production"
-                ? "https://yourdomain.com"
+                ? process.env.PRODUCTION_URL || "https://yourdomain.com"
                 : "http://localhost:3000",
           },
           {
@@ -61,4 +56,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

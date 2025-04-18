@@ -1,16 +1,17 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
 
 interface Court {
-  _id: string;
+  _id?: string; // Make _id optional since external courts might not have it
+  placeId?: string; // Add placeId for external courts
   name: string;
   address: string;
-  state: string;
-  zipCode: string;
-  indoor: boolean;
-  numberOfCourts: number;
+  state?: string;
+  zipCode?: string;
+  indoor?: boolean;
+  numberOfCourts?: number;
   location: {
     type: "Point";
     coordinates: number[];
@@ -35,36 +36,11 @@ const Map: React.FC<MapProps> = ({
   const [mapError, setMapError] = useState<string | null>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
 
-  // Debug logging
-  useEffect(() => {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    console.log("Map component rendered with:", {
-      courtsCount: courts.length,
-      center,
-      zoom,
-      apiKey: apiKey ? "Present" : "Missing",
-      apiKeyLength: apiKey ? apiKey.length : 0,
-    });
-
-    // Check if courts have valid coordinates
-    courts.forEach((court, index) => {
-      if (
-        !court.location ||
-        !court.location.coordinates ||
-        court.location.coordinates.length < 2
-      ) {
-        console.error(`Court ${index} has invalid coordinates:`, court);
-      }
-    });
-  }, [courts, center, zoom]);
-
   const onLoad = useCallback((map: google.maps.Map) => {
-    console.log("Map loaded successfully");
     mapRef.current = map;
   }, []);
 
   const onUnmount = useCallback(() => {
-    console.log("Map unmounted");
     mapRef.current = null;
   }, []);
 
@@ -125,8 +101,9 @@ const Map: React.FC<MapProps> = ({
         zoom={zoom}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        onError={onError}
       >
-        {courts.map((court) => {
+        {courts.map((court, index) => {
           // Skip courts with invalid coordinates
           if (
             !court.location ||
@@ -137,9 +114,15 @@ const Map: React.FC<MapProps> = ({
             return null;
           }
 
+          // Generate a unique key for each marker
+          const uniqueKey =
+            court._id ||
+            court.placeId ||
+            `court-${index}-${court.name.replace(/\s+/g, "-").toLowerCase()}`;
+
           return (
             <Marker
-              key={court._id}
+              key={uniqueKey}
               position={{
                 lat: court.location.coordinates[1],
                 lng: court.location.coordinates[0],
@@ -163,18 +146,24 @@ const Map: React.FC<MapProps> = ({
                 <h3 className="font-bold text-lg mb-1">{selectedCourt.name}</h3>
                 <p className="mb-2">{selectedCourt.address}</p>
                 <div className="text-sm">
-                  <p>
-                    <span className="font-semibold">State:</span>{" "}
-                    {selectedCourt.state}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Type:</span>{" "}
-                    {selectedCourt.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Courts:</span>{" "}
-                    {selectedCourt.numberOfCourts}
-                  </p>
+                  {selectedCourt.state && (
+                    <p>
+                      <span className="font-semibold">State:</span>{" "}
+                      {selectedCourt.state}
+                    </p>
+                  )}
+                  {selectedCourt.indoor !== undefined && (
+                    <p>
+                      <span className="font-semibold">Type:</span>{" "}
+                      {selectedCourt.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
+                    </p>
+                  )}
+                  {selectedCourt.numberOfCourts && (
+                    <p>
+                      <span className="font-semibold">Courts:</span>{" "}
+                      {selectedCourt.numberOfCourts}
+                    </p>
+                  )}
                 </div>
               </div>
             </InfoWindow>

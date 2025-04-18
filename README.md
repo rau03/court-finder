@@ -44,6 +44,7 @@ npm install
 
 ```
 MONGODB_URI=your_mongodb_connection_string
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 ```
 
 4. Run the development server
@@ -54,6 +55,50 @@ npm run dev
 
 5. Seed the database with sample courts
    Visit `http://localhost:3000/api/seed?reset=true` in your browser
+
+## Production Deployment
+
+### Option 1: Deploy to Vercel (Recommended)
+
+1. Push your code to a GitHub repository
+2. Sign up for a [Vercel account](https://vercel.com)
+3. Import your repository in Vercel
+4. Configure environment variables in the Vercel dashboard:
+   - `MONGODB_URI`
+   - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
+   - `PRODUCTION_URL` (your Vercel deployment URL)
+5. Deploy your application
+
+### Option 2: Deploy to a Custom Server
+
+1. Build the application for production:
+
+```bash
+npm run build
+```
+
+2. Start the production server:
+
+```bash
+npm start
+```
+
+3. Set up a reverse proxy (Nginx, Apache) to serve your application
+4. Configure SSL with Let's Encrypt or another provider
+
+### Option 3: Deploy to Docker
+
+1. Build the Docker image:
+
+```bash
+docker build -t court-finder .
+```
+
+2. Run the container:
+
+```bash
+docker run -p 3000:3000 --env-file .env.production court-finder
+```
 
 ## Usage
 

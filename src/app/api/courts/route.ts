@@ -10,6 +10,7 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const address = searchParams.get("address");
+    const city = searchParams.get("city");
     const state = searchParams.get("state");
     const zipCode = searchParams.get("zipCode");
     const indoor = searchParams.get("indoor");
@@ -18,39 +19,61 @@ export async function GET(request: Request) {
       10
     );
 
-    // Return all courts if no filters are provided
-    if (!address && !state && !zipCode && indoor === null) {
-      const allCourts = await Court.find({}).limit(100);
-      console.log(`Returning all ${allCourts.length} courts (limited to 100)`);
-
-      if (!allCourts || allCourts.length === 0) {
-        console.log("No courts found in database");
-        return NextResponse.json([]);
-      }
-
-      return NextResponse.json(allCourts);
-    }
-
     // Build the query based on filters
     const query: any = {};
 
     if (state) {
       query.state = state.toUpperCase();
+      console.log("Filtering by state:", query.state);
     }
 
     if (zipCode) {
       query.zipCode = zipCode;
+      console.log("Filtering by zip code:", query.zipCode);
+    }
+
+    if (city) {
+      // Case-insensitive search for city
+      query.city = new RegExp(city, "i");
+      console.log("Filtering by city:", city);
     }
 
     if (indoor !== null) {
       query.indoor = indoor === "true";
+      console.log("Filtering by indoor:", query.indoor);
     }
 
-    console.log("Executing query with filters:", query);
-    const courts = await Court.find(query).limit(50);
+    // If address is provided, try to perform a geospatial search
+    if (address) {
+      console.log("Geocoding address for search:", address);
+      try {
+        const geoData = await geocodeAddress(address);
+        if (geoData) {
+          console.log("Successfully geocoded to:", geoData);
+          query.location = {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [geoData.lng, geoData.lat],
+              },
+              $maxDistance: maxDistance,
+            },
+          };
+        }
+      } catch (error) {
+        console.error("Failed to geocode for search:", error);
+        // Continue with other filters if geocoding fails
+      }
+    }
+
+    console.log("Executing query with filters:", JSON.stringify(query));
+    const courts = await Court.find(query).limit(100);
     console.log(`Found ${courts.length} courts matching filters`);
 
-    return NextResponse.json(courts);
+    return NextResponse.json({
+      courts,
+      count: courts.length,
+    });
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
