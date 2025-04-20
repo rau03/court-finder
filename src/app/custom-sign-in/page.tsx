@@ -40,14 +40,14 @@ export default function CustomSignInPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-xl border border-gray-200">
-        <h1 className="text-3xl font-bold text-black text-center mb-6">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-md p-8 bg-white border border-gray-200 shadow-xl rounded-xl">
+        <h1 className="mb-6 text-3xl font-bold text-center text-black">
           Sign In
         </h1>
 
         {error && (
-          <div className="p-3 mb-4 bg-red-100 border border-red-300 text-red-700 rounded">
+          <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
             {error}
           </div>
         )}
@@ -56,7 +56,7 @@ export default function CustomSignInPage() {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block mb-2 text-black font-medium"
+              className="block mb-2 font-medium text-black"
             >
               Email
             </label>
@@ -65,7 +65,7 @@ export default function CustomSignInPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border-2 border-gray-300 rounded-md text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="your@email.com"
               required
             />
@@ -74,7 +74,7 @@ export default function CustomSignInPage() {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block mb-2 text-black font-medium"
+              className="block mb-2 font-medium text-black"
             >
               Password
             </label>
@@ -83,7 +83,7 @@ export default function CustomSignInPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border-2 border-gray-300 rounded-md text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="••••••••"
               required
             />
@@ -92,7 +92,7 @@ export default function CustomSignInPage() {
           <button
             type="submit"
             disabled={loading || !isLoaded}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out"
+            className="w-full px-4 py-3 font-medium text-white transition duration-150 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>
@@ -103,7 +103,7 @@ export default function CustomSignInPage() {
             Don't have an account?{" "}
             <Link
               href="/sign-up"
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="font-medium text-blue-600 hover:text-blue-800"
             >
               Sign Up
             </Link>
@@ -118,7 +118,7 @@ export default function CustomSignInPage() {
 
         {/* Map */}
         {isGoogleMapsLoaded ? (
-          <div className="rounded-xl overflow-hidden shadow-lg border-4 border-white">
+          <div className="overflow-hidden border-4 border-white shadow-lg rounded-xl">
             <Map
               courts={courts}
               center={mapCenter || undefined}
@@ -126,11 +126,11 @@ export default function CustomSignInPage() {
             />
           </div>
         ) : loadError ? (
-          <div className="p-4 bg-red-100 text-red-700 rounded">
+          <div className="p-4 text-red-700 bg-red-100 rounded">
             Error loading maps: {loadError.message}
           </div>
         ) : (
-          <div className="p-4 bg-gray-100 text-gray-700 rounded">
+          <div className="p-4 text-gray-700 bg-gray-100 rounded">
             Loading maps...
           </div>
         )}

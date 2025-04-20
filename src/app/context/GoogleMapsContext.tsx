@@ -1,98 +1,93 @@
 "use client";
 
 import React, {
-  createContext,
-  useContext,
   useState,
   useEffect,
+  createContext,
+  useContext,
   ReactNode,
 } from "react";
-import { LoadScript } from "@react-google-maps/api";
 
 interface GoogleMapsContextType {
   isLoaded: boolean;
   loadError: Error | null;
 }
 
-const GoogleMapsContext = createContext<GoogleMapsContextType>({
-  isLoaded: false,
-  loadError: null,
-});
+const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(
+  undefined
+);
 
-export const useGoogleMaps = () => useContext(GoogleMapsContext);
+export const useGoogleMaps = () => {
+  const context = useContext(GoogleMapsContext);
+  if (context === undefined) {
+    throw new Error("useGoogleMaps must be used within a GoogleMapsProvider");
+  }
+  return context;
+};
 
-let isGoogleMapsLoaded = false;
+interface GoogleMapsProviderProps {
+  children: ReactNode;
+}
 
-export function GoogleMapsProvider({ children }: { children: ReactNode }) {
-  const [isLoaded, setIsLoaded] = useState<boolean>(isGoogleMapsLoaded);
+export const GoogleMapsProvider: React.FC<GoogleMapsProviderProps> = ({
+  children,
+}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [loadError, setLoadError] = useState<Error | null>(null);
-  const [apiKey, setApiKey] = useState<string>("");
 
   useEffect(() => {
-    // Already loaded through the provider
-    if (isGoogleMapsLoaded) {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+    if (!apiKey || apiKey === "YOUR_API_KEY") {
+      setLoadError(new Error("Google Maps API key is not configured."));
+      return;
+    }
+
+    // Check if Google Maps JavaScript API is already loaded
+    if (window.google && window.google.maps) {
       setIsLoaded(true);
       return;
     }
 
-    // Check if Google Maps API is already loaded
-    if (typeof window !== "undefined" && window.google && window.google.maps) {
-      setIsLoaded(true);
-      isGoogleMapsLoaded = true;
-      return;
-    }
+    // Function to load the Google Maps JavaScript API
+    const loadGoogleMapsApi = () => {
+      try {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry`;
+        script.async = true;
+        script.defer = true;
 
-    // Check if script is already being loaded
-    const existingScript = document.querySelector(
-      'script[src*="maps.googleapis.com/maps/api/js"]'
-    );
-    if (existingScript) {
-      const checkGoogleMaps = setInterval(() => {
-        if (window.google && window.google.maps) {
-          clearInterval(checkGoogleMaps);
+        script.addEventListener("load", () => {
           setIsLoaded(true);
-          isGoogleMapsLoaded = true;
-        }
-      }, 100);
+          console.log("Google Maps API loaded successfully");
+        });
 
-      return () => {
-        clearInterval(checkGoogleMaps);
-      };
-    }
+        script.addEventListener("error", (error) => {
+          setLoadError(new Error("Failed to load Google Maps API"));
+          console.error("Google Maps loading error:", error);
+        });
 
-    const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-    setApiKey(key);
+        document.head.appendChild(script);
+      } catch (error) {
+        setLoadError(
+          error instanceof Error
+            ? error
+            : new Error("Unknown error loading Google Maps")
+        );
+      }
+    };
+
+    loadGoogleMapsApi();
   }, []);
 
-  const handleLoad = () => {
-    setIsLoaded(true);
-    isGoogleMapsLoaded = true;
-  };
-
-  const handleError = (err: Error) => {
-    setLoadError(err);
-    console.error("Google Maps loading error:", err);
+  const value = {
+    isLoaded,
+    loadError,
   };
 
   return (
-    <GoogleMapsContext.Provider value={{ isLoaded, loadError }}>
-      {isLoaded ? (
-        // API already loaded, just render children
-        children
-      ) : apiKey ? (
-        <LoadScript
-          googleMapsApiKey={apiKey}
-          onLoad={handleLoad}
-          onError={handleError}
-          libraries={["places"]}
-        >
-          {children}
-        </LoadScript>
-      ) : (
-        <div className="p-4 bg-yellow-100 text-yellow-700 border border-yellow-400 rounded m-4">
-          <h3 className="font-bold">Loading Google Maps...</h3>
-        </div>
-      )}
+    <GoogleMapsContext.Provider value={value}>
+      {children}
     </GoogleMapsContext.Provider>
   );
-}
+};

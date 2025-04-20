@@ -50,6 +50,9 @@ export async function GET(request: Request) {
         const geoData = await geocodeAddress(address);
         if (geoData) {
           console.log("Successfully geocoded to:", geoData);
+
+          // Use a $near geospatial query with the maximum distance provided
+          // This will find all courts within the specified radius
           query.location = {
             $near: {
               $geometry: {
@@ -59,6 +62,22 @@ export async function GET(request: Request) {
               $maxDistance: maxDistance,
             },
           };
+
+          // If we have state filtering, make it optional when we have coordinates
+          // This helps find more results in case state data is missing or inconsistent
+          if (query.state) {
+            // Store the state condition
+            const stateCondition = query.state;
+            // Remove strict state requirement from main query
+            delete query.state;
+
+            // Use $or to find courts either with the right state OR nearby without state info
+            query.$or = [
+              { state: stateCondition },
+              { state: { $exists: false } },
+              { state: "" },
+            ];
+          }
         }
       } catch (error) {
         console.error("Failed to geocode for search:", error);

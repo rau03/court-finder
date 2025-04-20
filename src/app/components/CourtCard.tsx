@@ -61,34 +61,34 @@ export default function CourtCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-200 overflow-hidden border-l-4 border-yellow-400">
+    <div className="overflow-hidden bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transform transition">
       <div className="p-4">
-        <div className="flex justify-between items-start">
-          <h3 className="font-bold text-xl text-blue-900 mb-2">{court.name}</h3>
+        <div className="flex items-start justify-between">
+          <h3 className="mb-2 text-xl font-black text-black">{court.name}</h3>
           <button
             onClick={toggleFavorite}
             disabled={loading}
-            className="text-2xl focus:outline-none"
+            className="text-2xl transition-transform transform hover:scale-125 focus:outline-none"
             aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
           >
             {favorite ? "❤️" : "🤍"}
           </button>
         </div>
-        <p className="text-gray-600 mb-3">{court.address}</p>
+        <p className="mb-3 font-bold text-black">{court.address}</p>
         <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="bg-blue-50 rounded-lg p-2">
-            <span className="font-semibold text-black">State:</span>{" "}
-            <span className="text-black">{court.state}</span>
+          <div className="p-2 bg-[var(--accent)] border-2 border-black">
+            <span className="font-black text-black">State:</span>{" "}
+            <span className="font-bold text-black">{court.state}</span>
           </div>
-          <div className="bg-green-50 rounded-lg p-2">
-            <span className="font-semibold text-black">Type:</span>{" "}
-            <span className="text-black">
+          <div className="p-2 bg-[var(--secondary)] border-2 border-black">
+            <span className="font-black text-white">Type:</span>{" "}
+            <span className="font-bold text-white">
               {court.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
             </span>
           </div>
-          <div className="bg-purple-50 rounded-lg p-2 col-span-2">
-            <span className="font-semibold text-black">Courts:</span>{" "}
-            <span className="text-black">{court.numberOfCourts}</span>
+          <div className="p-2 col-span-2 bg-[var(--primary)] border-2 border-black">
+            <span className="font-black text-white">Courts:</span>{" "}
+            <span className="font-bold text-white">{court.numberOfCourts}</span>
           </div>
         </div>
       </div>
