@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { geocodeAddress } from "@/lib/geocoder";
 import { nationalCourtDatabase } from "../../../../lib/nationalCourts";
+import {
+  searchPickleballCourts,
+  convertPickleballApiCourt,
+} from "@/lib/pickleballApi";
 
 interface PlaceResult {
   place_id: string;
@@ -467,6 +471,64 @@ export async function GET(request: Request) {
     }));
 
     console.log(`Returning ${courts.length} courts from external search`);
+
+    // Search the Pickleball.com API
+    console.log("Searching Pickleball API for additional courts");
+    let pickleballApiCourts = [];
+    try {
+      // If we have geocoded location, use it
+      if (location) {
+        const apiCourts = await searchPickleballCourts({
+          latitude: location.lat,
+          longitude: location.lng,
+          state: searchParams.get("state") || undefined,
+          zipCode: searchParams.get("zipCode") || undefined,
+          indoor:
+            searchParams.get("indoor") === "true"
+              ? true
+              : searchParams.get("indoor") === "false"
+              ? false
+              : undefined,
+          maxDistance,
+        });
+
+        // Convert to our application's court format
+        pickleballApiCourts = apiCourts.map(convertPickleballApiCourt);
+        console.log(
+          `Found ${pickleballApiCourts.length} courts from Pickleball API`
+        );
+
+        // Add unique courts to results
+        if (pickleballApiCourts.length > 0) {
+          // Filter out duplicates based on coordinates
+          const newCourts = pickleballApiCourts.filter((apiCourt) => {
+            // Skip if missing coordinates
+            if (!apiCourt.location || !apiCourt.location.coordinates)
+              return false;
+
+            // Check if this court is already in our results
+            const isDuplicate = courts.some((existingCourt) =>
+              areLocationsNearby(
+                existingCourt.location.coordinates,
+                apiCourt.location.coordinates,
+                0.01 // ~10 meters
+              )
+            );
+
+            return !isDuplicate;
+          });
+
+          console.log(
+            `Adding ${newCourts.length} unique courts from Pickleball API`
+          );
+          courts.push(...newCourts);
+        }
+      }
+    } catch (pickleballApiError) {
+      console.error("Pickleball API error:", pickleballApiError);
+      // Continue with other results if this fails
+    }
+
     return NextResponse.json(courts);
   } catch (error) {
     console.error("External search error:", error);

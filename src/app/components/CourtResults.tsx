@@ -19,9 +19,9 @@ const CourtResults: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div className="overflow-y-auto h-[calc(100vh-250px)] p-4 bg-white border-3 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]">
+      <div className="overflow-y-auto h-[calc(100vh-250px)] p-4 bg-[#e9f5ff] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative">
         {error && (
-          <div className="p-4 mb-4 text-red-700 bg-red-100 border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+          <div className="p-4 mb-4 text-red-700 bg-red-100 border-3 border-[#222] shadow-[3px_3px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg]">
             {error}
           </div>
         )}
@@ -29,15 +29,15 @@ const CourtResults: React.FC = () => {
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <div className="flex flex-col items-center">
-              <div className="w-12 h-12 border-4 border-t-4 border-black rounded-full animate-spin" />
-              <p className="mt-4 text-2xl font-black text-black">
+              <div className="w-12 h-12 border-4 border-t-4 border-[#222] rounded-full animate-spin" />
+              <p className="mt-4 text-2xl font-black text-[#222]">
                 Searching for courts...
               </p>
             </div>
           </div>
         ) : courts.length > 0 ? (
           <>
-            <h3 className="pb-2 mb-4 text-2xl font-black text-black border-black border-b-3">
+            <h3 className="pb-2 mb-4 text-2xl font-black text-[#222] border-[#222] border-b-3 inline-block rotate-[0.2deg]">
               {courts.length} Courts Found
             </h3>
             <div className="space-y-6">
@@ -48,8 +48,8 @@ const CourtResults: React.FC = () => {
           </>
         ) : !loading && !error ? (
           <div className="flex flex-col items-center justify-center h-full">
-            <div className="p-6 text-center border-3 border-black bg-[var(--accent)] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <p className="text-xl font-black text-black">
+            <div className="p-6 text-center border-3 border-[#222] bg-[var(--accent)] shadow-[4px_4px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.6deg]">
+              <p className="text-xl font-black text-[#222]">
                 Use the search form
                 <br />
                 to find pickleball courts
@@ -59,7 +59,7 @@ const CourtResults: React.FC = () => {
         ) : null}
       </div>
 
-      <div className="h-[calc(100vh-250px)] border-3 border-black overflow-hidden shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]">
+      <div className="h-[calc(100vh-250px)] border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative">
         <Map markers={markers} center={mapCenter || undefined} zoom={mapZoom} />
       </div>
     </div>

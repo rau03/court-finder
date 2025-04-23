@@ -15,8 +15,8 @@ const SearchContainer = () => {
   return (
     <div className="max-w-6xl p-6 mx-auto">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <div className="p-5 bg-white md:col-span-1 border-3 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]">
-          <h2 className="pb-2 mb-6 text-3xl font-black text-black border-b-4 border-black">
+        <div className="p-5 bg-[#f29b29dd] md:col-span-1 border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.3deg] relative">
+          <h2 className="pb-2 mb-6 text-3xl font-black text-[#222] border-b-4 border-[#222] inline-block">
             Find Courts
           </h2>
           <SearchForm
@@ -30,11 +30,11 @@ const SearchContainer = () => {
         </div>
       </div>
 
-      <div className="mt-10 p-5 bg-[var(--primary)] border-3 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]">
-        <h2 className="text-2xl font-black text-white">
+      <div className="mt-10 p-5 bg-[var(--primary)] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.3deg] relative">
+        <h2 className="text-2xl font-black text-white underline decoration-2 underline-offset-4">
           About Pickleball Court Finder
         </h2>
-        <p className="mt-2 text-white font-bold">
+        <p className="mt-2 font-bold text-white">
           Find the best pickleball courts near you! Use our search tool to
           locate courts based on location, indoor/outdoor preferences, and
           distance. Help grow the community by submitting courts you know about.
@@ -47,7 +47,7 @@ const SearchContainer = () => {
 export default function Home() {
   return (
     <CourtSearchProvider>
-      <main className="min-h-screen">
+      <main className="min-h-screen bg-[#fcfcfc]">
         <Header />
         <SearchContainer />
       </main>
