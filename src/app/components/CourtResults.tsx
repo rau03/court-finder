@@ -18,8 +18,8 @@ const CourtResults: React.FC = () => {
   }));
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div className="overflow-y-auto h-[calc(100vh-250px)] p-4 bg-[#3bdf72dd] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative">
+    <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="overflow-y-auto p-4 bg-[#3bdf72dd] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative h-full">
         {error && (
           <div className="p-4 mb-4 text-red-700 bg-red-100 border-3 border-[#222] shadow-[3px_3px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg]">
             {error}
@@ -40,7 +40,7 @@ const CourtResults: React.FC = () => {
             <h3 className="pb-2 mb-4 text-2xl font-black text-[#222] border-[#222] border-b-3 inline-block rotate-[0.2deg]">
               {courts.length} Courts Found
             </h3>
-            <div className="space-y-6">
+            <div className="space-y-6 overflow-y-auto h-[380px]">
               {courts.map((court) => (
                 <CourtCard key={court._id} court={court} />
               ))}
@@ -59,7 +59,7 @@ const CourtResults: React.FC = () => {
         ) : null}
       </div>
 
-      <div className="h-[calc(100vh-250px)] border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33]">
+      <div className="border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33] h-full">
         <Map markers={markers} center={mapCenter || undefined} zoom={mapZoom} />
       </div>
     </div>
