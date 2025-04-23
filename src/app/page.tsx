@@ -15,7 +15,7 @@ const SearchContainer = () => {
   return (
     <div className="max-w-6xl p-6 mx-auto">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <div className="p-5 bg-[#f29b29dd] md:col-span-1 border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.3deg] relative">
+        <div className="p-5 bg-[#f2de29de] md:col-span-1 border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.3deg] relative">
           <h2 className="pb-2 mb-6 text-3xl font-black text-[#222] border-b-4 border-[#222] inline-block">
             Find Courts
           </h2>
@@ -47,7 +47,7 @@ const SearchContainer = () => {
 export default function Home() {
   return (
     <CourtSearchProvider>
-      <main className="min-h-screen bg-[#fcfcfc]">
+      <main className="min-h-screen bg-[#e5e1ff]">
         <Header />
         <SearchContainer />
       </main>

@@ -19,7 +19,7 @@ const CourtResults: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div className="overflow-y-auto h-[calc(100vh-250px)] p-4 bg-[#e9f5ff] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative">
+      <div className="overflow-y-auto h-[calc(100vh-250px)] p-4 bg-[#3bdf72dd] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative">
         {error && (
           <div className="p-4 mb-4 text-red-700 bg-red-100 border-3 border-[#222] shadow-[3px_3px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg]">
             {error}
@@ -59,7 +59,7 @@ const CourtResults: React.FC = () => {
         ) : null}
       </div>
 
-      <div className="h-[calc(100vh-250px)] border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative">
+      <div className="h-[calc(100vh-250px)] border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33]">
         <Map markers={markers} center={mapCenter || undefined} zoom={mapZoom} />
       </div>
     </div>
