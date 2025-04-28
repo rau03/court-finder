@@ -1,13 +1,94 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-// Initialize the Convex client with the URL from environment variables
-const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "";
-const convex = new ConvexReactClient(convexUrl);
+// Create a component to handle environment validation and initialization
+function EnvValidatedProviders({ children }: { children: React.ReactNode }) {
+  const [error, setError] = useState<string | null>(null);
+  const [client, setClient] = useState<ConvexReactClient | null>(null);
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    // Initialize Convex client
+    const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+
+    if (!convexUrl) {
+      console.error("Missing NEXT_PUBLIC_CONVEX_URL environment variable");
+      setError(
+        "Convex URL is not configured. Please check your environment variables."
+      );
+      return;
+    }
+
+    try {
+      const newClient = new ConvexReactClient(convexUrl);
+      setClient(newClient);
+    } catch (e) {
+      console.error("Error initializing Convex client:", e);
+      setError(
+        "Failed to initialize Convex client. Please check your configuration."
+      );
+    }
+  }, []);
+
+  // Check Clerk configuration
+  useEffect(() => {
+    const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+    if (!clerkPublishableKey) {
+      console.error(
+        "Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY environment variable"
+      );
+      setError(
+        (prev) =>
+          prev ||
+          "Clerk publishable key is not configured. Please check your environment variables."
+      );
+    }
+  }, []);
+
+  // Display error if environment variables are missing
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-red-50 p-4">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
+          <div className="text-red-600 text-xl font-bold mb-4">
+            Configuration Error
+          </div>
+          <p className="text-gray-700 mb-4">{error}</p>
+          <p className="text-sm text-gray-500">
+            Please check your environment variables and restart the application.
+            {process.env.NODE_ENV !== "production" && (
+              <>
+                <br />
+                <br />
+                <strong>Development Setup Instructions:</strong>
+                <ol className="list-decimal pl-5 mt-2">
+                  <li>Create a .env.local file in the project root</li>
+                  <li>Add NEXT_PUBLIC_CONVEX_URL from your Convex dashboard</li>
+                  <li>
+                    Add NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY from your Clerk
+                    dashboard
+                  </li>
+                  <li>Restart the development server</li>
+                </ol>
+              </>
+            )}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Only render providers when client is initialized
+  if (!client) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <ClerkProvider
       appearance={{
@@ -23,7 +104,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         },
       }}
     >
-      <ConvexProvider client={convex}>{children}</ConvexProvider>
+      <ConvexProvider client={client}>{children}</ConvexProvider>
     </ClerkProvider>
   );
+}
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  return <EnvValidatedProviders>{children}</EnvValidatedProviders>;
 }

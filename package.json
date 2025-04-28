@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "convex": "convex dev",
-    "dev:all": "concurrently \"npm run convex\" \"npm run dev\""
+    "dev:all": "concurrently \"npm run convex\" \"npm run dev\"",
+    "setup": "node setup-env.js"
   },
   "dependencies": {
     "@clerk/clerk-js": "^5.62.2",
