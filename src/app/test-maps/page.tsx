@@ -1,20 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { useGoogleMaps } from "../context/GoogleMapsContext";
-import Map from "../components/Map";
+import { useGoogleMaps } from "../../context/GoogleMapsContext";
+import Map from "../../components/Map";
 
 export default function TestMapPage() {
   const { isLoaded, loadError } = useGoogleMaps();
 
   useEffect(() => {
-    console.log("Google Maps loaded:", isLoaded);
-    console.log("Google Maps error:", loadError);
-    console.log("API Key:", !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-    console.log(
-      "API Key Length:",
-      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.length || 0
-    );
+    if (loadError) {
+      console.error("Google Maps error:", loadError);
+    }
   }, [isLoaded, loadError]);
 
   return (
@@ -37,15 +33,7 @@ export default function TestMapPage() {
 
       <div className="p-4 border-2 border-black">
         <h2 className="mb-4 text-xl font-bold">Debug Information:</h2>
-        <p>
-          API Key available:{" "}
-          {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? "Yes" : "No"}
-        </p>
-        <p>
-          API Key length:{" "}
-          {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.length || 0}
-        </p>
-        <p>Google Maps loaded: {isLoaded ? "Yes" : "No"}</p>
+        <p>Google Maps API initialized: {isLoaded ? "Yes" : "No"}</p>
         <p>Error: {loadError ? loadError.message : "None"}</p>
       </div>
 
