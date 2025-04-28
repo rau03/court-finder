@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
-import { useGoogleMaps } from "../context/GoogleMapsContext";
 
 interface MarkerData {
   position: {
@@ -28,7 +27,6 @@ const Map: React.FC<MapProps> = ({
 }) => {
   const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
-  const { isLoaded, loadError } = useGoogleMaps();
 
   const onLoad = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
@@ -37,28 +35,6 @@ const Map: React.FC<MapProps> = ({
   const onUnmount = useCallback(() => {
     mapRef.current = null;
   }, []);
-
-  // If Google Maps failed to load, show error
-  if (loadError) {
-    return (
-      <div className="p-4 text-red-700 bg-red-100 border-2 border-black rounded">
-        <h3 className="font-bold">Error loading map</h3>
-        <p>{loadError.message}</p>
-      </div>
-    );
-  }
-
-  // If Google Maps is still loading, show loading state
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center w-full h-full bg-gray-100">
-        <div className="text-center">
-          <div className="w-10 h-10 mx-auto border-4 border-t-4 border-black rounded-full animate-spin"></div>
-          <p className="mt-2">Loading map...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <GoogleMap

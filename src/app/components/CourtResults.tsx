@@ -3,7 +3,7 @@
 import React from "react";
 import { useCourtSearch } from "../context/CourtSearchContext";
 import CourtCard from "./CourtCard";
-import Map from "./Map";
+import MapWrapper from "./MapWrapper";
 
 const CourtResults: React.FC = () => {
   const { courts, loading, error, mapCenter, mapZoom } = useCourtSearch();
@@ -60,7 +60,11 @@ const CourtResults: React.FC = () => {
       </div>
 
       <div className="border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33] h-full">
-        <Map markers={markers} center={mapCenter || undefined} zoom={mapZoom} />
+        <MapWrapper
+          markers={markers}
+          center={mapCenter || undefined}
+          zoom={mapZoom}
+        />
       </div>
     </div>
   );

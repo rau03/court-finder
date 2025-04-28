@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 export default function Header() {
   const { isSignedIn, user, isLoaded } = useUser();
+  const isAdmin = useQuery(api.users.isAdmin);
 
   return (
     <header className="bg-white border-b-[5px] border-[#222] relative z-10">
@@ -17,6 +20,14 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-4">
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[-0.5deg]"
+            >
+              Admin
+            </Link>
+          )}
           <Link
             href="/submit-court"
             className="px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[0.5deg]"

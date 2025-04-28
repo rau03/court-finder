@@ -1,8 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+
+// Define the form data structure
+interface FormData {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  numberOfCourts: number;
+  surfaceType: string;
+  cost: string;
+  amenities: {
+    indoorCourts: boolean;
+    outdoorCourts: boolean;
+    lightsAvailable: boolean;
+    restroomsAvailable: boolean;
+    waterFountain: boolean;
+  };
+  contact: {
+    website: string;
+    phone: string;
+    email: string;
+  };
+  indoor: boolean;
+  hours: {
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
+  };
+}
 
 export default function SubmitCourt() {
   const router = useRouter();
@@ -11,7 +47,7 @@ export default function SubmitCourt() {
   const [success, setSuccess] = useState(false);
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     address: "",
     city: "",
@@ -32,21 +68,54 @@ export default function SubmitCourt() {
       phone: "",
       email: "",
     },
+    indoor: false,
+    hours: {
+      monday: "",
+      tuesday: "",
+      wednesday: "",
+      thursday: "",
+      friday: "",
+      saturday: "",
+      sunday: "",
+    },
   });
 
+  const submitCourtMutation = useMutation(api.courts.submitCourt);
+
   // Form handlers
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
-      setFormData((prev) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent],
-          [child]: value,
-        },
-      }));
+
+      if (parent === "amenities") {
+        setFormData((prev) => ({
+          ...prev,
+          amenities: {
+            ...prev.amenities,
+            [child]: value,
+          },
+        }));
+      } else if (parent === "contact") {
+        setFormData((prev) => ({
+          ...prev,
+          contact: {
+            ...prev.contact,
+            [child]: value,
+          },
+        }));
+      } else if (parent === "hours") {
+        setFormData((prev) => ({
+          ...prev,
+          hours: {
+            ...prev.hours,
+            [child]: value,
+          },
+        }));
+      }
     } else {
       setFormData((prev) => ({
         ...prev,
@@ -55,39 +124,65 @@ export default function SubmitCourt() {
     }
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     const [parent, child] = name.split(".");
 
-    setFormData((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [child]: checked,
-      },
-    }));
+    if (parent === "amenities") {
+      setFormData((prev) => ({
+        ...prev,
+        amenities: {
+          ...prev.amenities,
+          [child]: checked,
+        },
+      }));
+    }
   };
 
   // Form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/courts/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      // Submit the court data to Convex
+      await submitCourtMutation({
+        name: formData.name,
+        address: formData.address,
+        city: formData.city || "",
+        state: formData.state,
+        zipCode: formData.zipCode,
+        indoor: formData.indoor,
+        numberOfCourts: Number(formData.numberOfCourts),
+        amenities: {
+          indoorCourts: Boolean(formData.amenities?.indoorCourts),
+          outdoorCourts: Boolean(formData.amenities?.outdoorCourts),
+          lightsAvailable: Boolean(formData.amenities?.lightsAvailable),
+          restroomsAvailable: Boolean(formData.amenities?.restroomsAvailable),
+          waterFountain: Boolean(formData.amenities?.waterFountain),
         },
-        body: JSON.stringify(formData),
+        surfaceType: formData.surfaceType || "",
+        cost: formData.cost || "",
+        hours: {
+          monday: formData.hours?.monday || "",
+          tuesday: formData.hours?.tuesday || "",
+          wednesday: formData.hours?.wednesday || "",
+          thursday: formData.hours?.thursday || "",
+          friday: formData.hours?.friday || "",
+          saturday: formData.hours?.saturday || "",
+          sunday: formData.hours?.sunday || "",
+        },
+        contact: {
+          website: formData.contact?.website || "",
+          phone: formData.contact?.phone || "",
+          email: formData.contact?.email || "",
+        },
+        location: {
+          type: "Point",
+          coordinates: [0, 0], // Replace with actual geocoding
+        },
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit court");
-      }
 
       setSuccess(true);
       setTimeout(() => router.push("/"), 3000);
@@ -102,16 +197,16 @@ export default function SubmitCourt() {
   // Success message
   if (success) {
     return (
-      <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+      <div className="max-w-4xl p-6 mx-auto mt-10 bg-white shadow-md rounded-xl">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-green-600 mb-4">Thank You!</h1>
-          <p className="text-lg mb-6">
+          <h1 className="mb-4 text-3xl font-bold text-green-600">Thank You!</h1>
+          <p className="mb-6 text-lg">
             Your court submission has been received and will be reviewed soon.
           </p>
           <p className="mb-4">Redirecting to homepage in 3 seconds...</p>
           <Link
             href="/"
-            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg font-bold"
+            className="px-6 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
             Return to Home
           </Link>
@@ -122,26 +217,26 @@ export default function SubmitCourt() {
 
   // Main form
   return (
-    <div className="max-w-4xl mx-auto mt-6 p-6 bg-white rounded-xl shadow-md">
-      <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">
+    <div className="max-w-4xl p-6 mx-auto mt-6 bg-white shadow-md rounded-xl">
+      <h1 className="mb-6 text-3xl font-bold text-center text-blue-800">
         Submit a Pickleball Court
       </h1>
 
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+        <div className="p-4 mb-6 border-l-4 border-red-500 bg-red-50">
           <p className="text-red-700">{error}</p>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Information */}
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 rounded-lg bg-blue-50">
+          <h2 className="mb-4 text-xl font-semibold">Basic Information</h2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Court Name *
               </label>
@@ -160,7 +255,7 @@ export default function SubmitCourt() {
             <div>
               <label
                 htmlFor="numberOfCourts"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Number of Courts
               </label>
@@ -178,7 +273,7 @@ export default function SubmitCourt() {
             <div>
               <label
                 htmlFor="surfaceType"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Surface Type
               </label>
@@ -201,7 +296,7 @@ export default function SubmitCourt() {
             <div>
               <label
                 htmlFor="cost"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Cost
               </label>
@@ -221,13 +316,13 @@ export default function SubmitCourt() {
         </div>
 
         {/* Location Information */}
-        <div className="bg-green-50 p-4 rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Location</h2>
+        <div className="p-4 rounded-lg bg-green-50">
+          <h2 className="mb-4 text-xl font-semibold">Location</h2>
           <div className="space-y-4">
             <div>
               <label
                 htmlFor="address"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Street Address *
               </label>
@@ -243,11 +338,11 @@ export default function SubmitCourt() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
                 <label
                   htmlFor="city"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block mb-1 text-sm font-medium text-gray-700"
                 >
                   City
                 </label>
@@ -265,7 +360,7 @@ export default function SubmitCourt() {
               <div>
                 <label
                   htmlFor="state"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block mb-1 text-sm font-medium text-gray-700"
                 >
                   State
                 </label>
@@ -298,7 +393,7 @@ export default function SubmitCourt() {
               <div>
                 <label
                   htmlFor="zipCode"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block mb-1 text-sm font-medium text-gray-700"
                 >
                   Zip Code
                 </label>
@@ -317,9 +412,9 @@ export default function SubmitCourt() {
         </div>
 
         {/* Amenities */}
-        <div className="bg-yellow-50 p-4 rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Amenities</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 rounded-lg bg-yellow-50">
+          <h2 className="mb-4 text-xl font-semibold">Amenities</h2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex items-center">
               <input
                 type="checkbox"
@@ -327,11 +422,11 @@ export default function SubmitCourt() {
                 name="amenities.indoorCourts"
                 checked={formData.amenities.indoorCourts}
                 onChange={handleCheckboxChange}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
                 htmlFor="amenities.indoorCourts"
-                className="ml-2 block text-sm text-gray-700"
+                className="block ml-2 text-sm text-gray-700"
               >
                 Indoor Courts
               </label>
@@ -344,11 +439,11 @@ export default function SubmitCourt() {
                 name="amenities.outdoorCourts"
                 checked={formData.amenities.outdoorCourts}
                 onChange={handleCheckboxChange}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
                 htmlFor="amenities.outdoorCourts"
-                className="ml-2 block text-sm text-gray-700"
+                className="block ml-2 text-sm text-gray-700"
               >
                 Outdoor Courts
               </label>
@@ -361,11 +456,11 @@ export default function SubmitCourt() {
                 name="amenities.lightsAvailable"
                 checked={formData.amenities.lightsAvailable}
                 onChange={handleCheckboxChange}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
                 htmlFor="amenities.lightsAvailable"
-                className="ml-2 block text-sm text-gray-700"
+                className="block ml-2 text-sm text-gray-700"
               >
                 Lights Available
               </label>
@@ -378,11 +473,11 @@ export default function SubmitCourt() {
                 name="amenities.restroomsAvailable"
                 checked={formData.amenities.restroomsAvailable}
                 onChange={handleCheckboxChange}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
                 htmlFor="amenities.restroomsAvailable"
-                className="ml-2 block text-sm text-gray-700"
+                className="block ml-2 text-sm text-gray-700"
               >
                 Restrooms Available
               </label>
@@ -395,11 +490,11 @@ export default function SubmitCourt() {
                 name="amenities.waterFountain"
                 checked={formData.amenities.waterFountain}
                 onChange={handleCheckboxChange}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
                 htmlFor="amenities.waterFountain"
-                className="ml-2 block text-sm text-gray-700"
+                className="block ml-2 text-sm text-gray-700"
               >
                 Water Fountain
               </label>
@@ -408,15 +503,15 @@ export default function SubmitCourt() {
         </div>
 
         {/* Contact Information */}
-        <div className="bg-purple-50 p-4 rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">
+        <div className="p-4 rounded-lg bg-purple-50">
+          <h2 className="mb-4 text-xl font-semibold">
             Contact Information (Optional)
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label
                 htmlFor="contact.website"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Website
               </label>
@@ -434,7 +529,7 @@ export default function SubmitCourt() {
             <div>
               <label
                 htmlFor="contact.phone"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Phone
               </label>
@@ -452,7 +547,7 @@ export default function SubmitCourt() {
             <div className="md:col-span-2">
               <label
                 htmlFor="contact.email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block mb-1 text-sm font-medium text-gray-700"
               >
                 Email
               </label>
@@ -474,7 +569,7 @@ export default function SubmitCourt() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold text-lg shadow-md hover:shadow-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3 text-lg font-bold text-white transition duration-200 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Submitting..." : "Submit Court 🏓"}
           </button>

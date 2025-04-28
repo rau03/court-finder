@@ -17,6 +17,9 @@ const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(
   undefined
 );
 
+// Add this to prevent multiple script loading
+const GOOGLE_MAPS_SCRIPT_ID = "google-maps-script";
+
 export const useGoogleMaps = () => {
   const context = useContext(GoogleMapsContext);
   if (context === undefined) {
@@ -49,11 +52,25 @@ export const GoogleMapsProvider: React.FC<GoogleMapsProviderProps> = ({
       return;
     }
 
+    // Check if script tag already exists
+    if (document.getElementById(GOOGLE_MAPS_SCRIPT_ID)) {
+      // Script is already loading, wait for it
+      const waitForGoogleMaps = setInterval(() => {
+        if (window.google && window.google.maps) {
+          clearInterval(waitForGoogleMaps);
+          setIsLoaded(true);
+        }
+      }, 100);
+
+      return () => clearInterval(waitForGoogleMaps);
+    }
+
     // Function to load the Google Maps JavaScript API
     const loadGoogleMapsApi = () => {
       try {
         const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry`;
+        script.id = GOOGLE_MAPS_SCRIPT_ID;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,geometry&loading=async`;
         script.async = true;
         script.defer = true;
 
