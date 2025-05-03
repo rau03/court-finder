@@ -31,7 +31,7 @@ export default function AdminSetup() {
       <Header />
 
       <div className="max-w-xl p-8 mx-auto">
-        <h1 className="inline-block pb-2 mb-6 text-3xl font-black border-b-4 border-black">
+        <h1 className="inline-block pb-2 mb-6 text-3xl font-black text-black border-b-4 border-black">
           Admin Setup
         </h1>
 
@@ -44,24 +44,26 @@ export default function AdminSetup() {
         )}
 
         <div className="p-6 bg-white rounded-lg border-3 border-black shadow-[4px_4px_0px_0px_rgba(30,30,30,0.8)]">
-          <p className="mb-4">
+          <p className="mb-4 font-medium text-black">
             This page allows you to set yourself up as an admin. This will only
             work for:
           </p>
 
-          <ul className="pl-5 mb-6 list-disc">
+          <ul className="pl-5 mb-6 font-medium text-black list-disc">
             <li>The very first user of the system</li>
             <li>Users who are already admins</li>
           </ul>
 
           <div className="mb-6">
-            <h2 className="mb-2 text-xl font-bold">Current Status</h2>
+            <h2 className="mb-2 text-xl font-bold text-black">
+              Current Status
+            </h2>
             {user === undefined ? (
-              <p>Loading...</p>
+              <p className="text-black">Loading...</p>
             ) : user === null ? (
-              <p className="text-red-600">Not logged in</p>
+              <p className="font-bold text-red-600">Not logged in</p>
             ) : (
-              <p>
+              <p className="text-black">
                 <span className="font-bold">Logged in as:</span>{" "}
                 {user.name || user.email || "User"}
                 <br />

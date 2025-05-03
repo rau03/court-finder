@@ -50,12 +50,12 @@ function EnvValidatedProviders({ children }: { children: React.ReactNode }) {
   // Display error if environment variables are missing
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-red-50 p-4">
-        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
-          <div className="text-red-600 text-xl font-bold mb-4">
+      <div className="flex items-center justify-center min-h-screen p-4 bg-red-50">
+        <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+          <div className="mb-4 text-xl font-bold text-red-600">
             Configuration Error
           </div>
-          <p className="text-gray-700 mb-4">{error}</p>
+          <p className="mb-4 text-gray-700">{error}</p>
           <p className="text-sm text-gray-500">
             Please check your environment variables and restart the application.
             {process.env.NODE_ENV !== "production" && (
@@ -63,7 +63,7 @@ function EnvValidatedProviders({ children }: { children: React.ReactNode }) {
                 <br />
                 <br />
                 <strong>Development Setup Instructions:</strong>
-                <ol className="list-decimal pl-5 mt-2">
+                <ol className="pl-5 mt-2 list-decimal">
                   <li>Create a .env.local file in the project root</li>
                   <li>Add NEXT_PUBLIC_CONVEX_URL from your Convex dashboard</li>
                   <li>
@@ -83,8 +83,8 @@ function EnvValidatedProviders({ children }: { children: React.ReactNode }) {
   // Only render providers when client is initialized
   if (!client) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-12 h-12 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
       </div>
     );
   }

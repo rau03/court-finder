@@ -217,7 +217,10 @@ export default function SubmitCourt() {
 
   // Main form
   return (
-    <div className="max-w-4xl p-6 mx-auto mt-6 bg-white shadow-md rounded-xl">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-4xl p-6 mx-auto mt-10 bg-white shadow-md submit-court-form rounded-xl"
+    >
       <h1 className="mb-6 text-3xl font-bold text-center text-blue-800">
         Submit a Pickleball Court
       </h1>
@@ -228,16 +231,13 @@ export default function SubmitCourt() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-6">
         {/* Basic Information */}
         <div className="p-4 rounded-lg bg-blue-50">
-          <h2 className="mb-4 text-xl font-semibold">Basic Information</h2>
+          <h2 className="section-heading">Basic Information</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label
-                htmlFor="name"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="name" className="form-label">
                 Court Name *
               </label>
               <input
@@ -247,16 +247,13 @@ export default function SubmitCourt() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="shadow-sm form-input"
                 placeholder="Westside Recreation Center"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="numberOfCourts"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="numberOfCourts" className="form-label">
                 Number of Courts
               </label>
               <input
@@ -266,15 +263,12 @@ export default function SubmitCourt() {
                 value={formData.numberOfCourts}
                 onChange={handleChange}
                 min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="surfaceType"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="surfaceType" className="form-label">
                 Surface Type
               </label>
               <select
@@ -282,7 +276,7 @@ export default function SubmitCourt() {
                 name="surfaceType"
                 value={formData.surfaceType}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
               >
                 <option value="Concrete">Concrete</option>
                 <option value="Asphalt">Asphalt</option>
@@ -294,10 +288,7 @@ export default function SubmitCourt() {
             </div>
 
             <div>
-              <label
-                htmlFor="cost"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="cost" className="form-label">
                 Cost
               </label>
               <select
@@ -305,7 +296,7 @@ export default function SubmitCourt() {
                 name="cost"
                 value={formData.cost}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
               >
                 <option value="Free">Free</option>
                 <option value="Paid">Paid</option>
@@ -317,13 +308,10 @@ export default function SubmitCourt() {
 
         {/* Location Information */}
         <div className="p-4 rounded-lg bg-green-50">
-          <h2 className="mb-4 text-xl font-semibold">Location</h2>
+          <h2 className="section-heading">Location</h2>
           <div className="space-y-4">
             <div>
-              <label
-                htmlFor="address"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="address" className="form-label">
                 Street Address *
               </label>
               <input
@@ -333,17 +321,14 @@ export default function SubmitCourt() {
                 value={formData.address}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
                 placeholder="123 Main Street"
               />
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div>
-                <label
-                  htmlFor="city"
-                  className="block mb-1 text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="city" className="form-label">
                   City
                 </label>
                 <input
@@ -352,16 +337,13 @@ export default function SubmitCourt() {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="form-input"
                   placeholder="Anytown"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="state"
-                  className="block mb-1 text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="state" className="form-label">
                   State
                 </label>
                 <select
@@ -369,7 +351,7 @@ export default function SubmitCourt() {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="form-input"
                 >
                   <option value="">Select State</option>
                   <option value="AL">Alabama</option>
@@ -386,15 +368,47 @@ export default function SubmitCourt() {
                   <option value="ID">Idaho</option>
                   <option value="IL">Illinois</option>
                   <option value="IN">Indiana</option>
-                  {/* More states... */}
+                  <option value="IA">Iowa</option>
+                  <option value="KS">Kansas</option>
+                  <option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option>
+                  <option value="ME">Maine</option>
+                  <option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="MI">Michigan</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option>
+                  <option value="MO">Missouri</option>
+                  <option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option>
+                  <option value="NV">Nevada</option>
+                  <option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option>
+                  <option value="NM">New Mexico</option>
+                  <option value="NY">New York</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="ND">North Dakota</option>
+                  <option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option>
+                  <option value="OR">Oregon</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="SC">South Carolina</option>
+                  <option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option>
+                  <option value="TX">Texas</option>
+                  <option value="UT">Utah</option>
+                  <option value="VT">Vermont</option>
+                  <option value="VA">Virginia</option>
+                  <option value="WA">Washington</option>
+                  <option value="WV">West Virginia</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="WY">Wyoming</option>
                 </select>
               </div>
 
               <div>
-                <label
-                  htmlFor="zipCode"
-                  className="block mb-1 text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="zipCode" className="form-label">
                   Zip Code
                 </label>
                 <input
@@ -403,7 +417,7 @@ export default function SubmitCourt() {
                   name="zipCode"
                   value={formData.zipCode}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="form-input"
                   placeholder="12345"
                 />
               </div>
@@ -413,7 +427,7 @@ export default function SubmitCourt() {
 
         {/* Amenities */}
         <div className="p-4 rounded-lg bg-yellow-50">
-          <h2 className="mb-4 text-xl font-semibold">Amenities</h2>
+          <h2 className="section-heading">Amenities</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex items-center">
               <input
@@ -422,12 +436,9 @@ export default function SubmitCourt() {
                 name="amenities.indoorCourts"
                 checked={formData.amenities.indoorCourts}
                 onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="form-input"
               />
-              <label
-                htmlFor="amenities.indoorCourts"
-                className="block ml-2 text-sm text-gray-700"
-              >
+              <label htmlFor="amenities.indoorCourts" className="form-label">
                 Indoor Courts
               </label>
             </div>
@@ -439,12 +450,9 @@ export default function SubmitCourt() {
                 name="amenities.outdoorCourts"
                 checked={formData.amenities.outdoorCourts}
                 onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="form-input"
               />
-              <label
-                htmlFor="amenities.outdoorCourts"
-                className="block ml-2 text-sm text-gray-700"
-              >
+              <label htmlFor="amenities.outdoorCourts" className="form-label">
                 Outdoor Courts
               </label>
             </div>
@@ -456,12 +464,9 @@ export default function SubmitCourt() {
                 name="amenities.lightsAvailable"
                 checked={formData.amenities.lightsAvailable}
                 onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="form-input"
               />
-              <label
-                htmlFor="amenities.lightsAvailable"
-                className="block ml-2 text-sm text-gray-700"
-              >
+              <label htmlFor="amenities.lightsAvailable" className="form-label">
                 Lights Available
               </label>
             </div>
@@ -473,11 +478,11 @@ export default function SubmitCourt() {
                 name="amenities.restroomsAvailable"
                 checked={formData.amenities.restroomsAvailable}
                 onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="form-input"
               />
               <label
                 htmlFor="amenities.restroomsAvailable"
-                className="block ml-2 text-sm text-gray-700"
+                className="form-label"
               >
                 Restrooms Available
               </label>
@@ -490,12 +495,9 @@ export default function SubmitCourt() {
                 name="amenities.waterFountain"
                 checked={formData.amenities.waterFountain}
                 onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="form-input"
               />
-              <label
-                htmlFor="amenities.waterFountain"
-                className="block ml-2 text-sm text-gray-700"
-              >
+              <label htmlFor="amenities.waterFountain" className="form-label">
                 Water Fountain
               </label>
             </div>
@@ -504,15 +506,10 @@ export default function SubmitCourt() {
 
         {/* Contact Information */}
         <div className="p-4 rounded-lg bg-purple-50">
-          <h2 className="mb-4 text-xl font-semibold">
-            Contact Information (Optional)
-          </h2>
+          <h2 className="section-heading">Contact Information (Optional)</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label
-                htmlFor="contact.website"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="contact.website" className="form-label">
                 Website
               </label>
               <input
@@ -521,16 +518,13 @@ export default function SubmitCourt() {
                 name="contact.website"
                 value={formData.contact.website}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
                 placeholder="https://example.com"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="contact.phone"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="contact.phone" className="form-label">
                 Phone
               </label>
               <input
@@ -539,16 +533,13 @@ export default function SubmitCourt() {
                 name="contact.phone"
                 value={formData.contact.phone}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
                 placeholder="(123) 456-7890"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label
-                htmlFor="contact.email"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="contact.email" className="form-label">
                 Email
               </label>
               <input
@@ -557,7 +548,7 @@ export default function SubmitCourt() {
                 name="contact.email"
                 value={formData.contact.email}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="form-input"
                 placeholder="info@example.com"
               />
             </div>
@@ -574,7 +565,7 @@ export default function SubmitCourt() {
             {loading ? "Submitting..." : "Submit Court 🏓"}
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

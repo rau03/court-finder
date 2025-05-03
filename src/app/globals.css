@@ -85,7 +85,9 @@ body {
   background-color: white;
   border: var(--border-width) solid var(--border-color);
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .neo-card:hover {
@@ -104,21 +106,24 @@ body {
 .neo-input {
   background-color: white;
   border: var(--border-width) solid var(--border-color);
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   font-weight: 600;
-  color: black;
+  color: #000000;
   caret-color: black;
+  width: 100%;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .neo-input:focus {
   outline: none;
   box-shadow: var(--shadow);
   background-color: white;
-  color: black;
+  color: #000000;
 }
 
 .neo-input::placeholder {
-  color: #666666;
+  color: #444444;
   opacity: 1;
 }
 
@@ -160,7 +165,9 @@ body {
   box-shadow: var(--shadow) !important;
   border-radius: var(--border-radius) !important;
   transform: translateY(0) !important;
-  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out !important;
+  transition:
+    transform 0.1s ease-in-out,
+    box-shadow 0.1s ease-in-out !important;
 }
 
 .cl-formButtonPrimary:hover {
@@ -236,4 +243,55 @@ body {
 .cl-formFieldInput::placeholder {
   color: #6b7280 !important;
   opacity: 1 !important;
+}
+
+/* Add to src/app/globals.css */
+.section-heading {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Add to src/app/globals.css */
+input,
+select {
+  color: #000000 !important;
+  font-weight: 500 !important;
+}
+
+input::placeholder {
+  color: #666666 !important;
+}
+
+/* Add or update in src/app/globals.css */
+.form-input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 3px solid #000000;
+  background-color: white;
+  color: #000000;
+  font-weight: 600;
+}
+
+.form-input:focus {
+  outline: none;
+}
+
+/* Update label styles */
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000000;
 }
