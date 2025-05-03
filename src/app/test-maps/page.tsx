@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import GoogleMapsContext from "../context/GoogleMapsContext";
+import { useGoogleMaps } from "../context/GoogleMapsContext";
 import Map from "../components/Map";
 
 export default function TestMapPage() {
