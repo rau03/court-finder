@@ -3,12 +3,13 @@
 import { api } from "../../../convex/_generated/api";
 import { useQuery, useMutation } from "convex/react";
 import { useState } from "react";
+import CourtCard from "./CourtCard";
 
 export default function CourtList() {
   const [newCourtName, setNewCourtName] = useState("");
 
   // Use Convex query to fetch verified courts
-  const courts = useQuery(api.courts.getVerifiedCourts);
+  const courts = useQuery(api.courts.getVerifiedCourts, {});
 
   // Use Convex mutation to submit a new court
   const submitCourt = useMutation(api.courts.submitCourt);
@@ -38,6 +39,10 @@ export default function CourtList() {
     }
   };
 
+  if (!courts) {
+    return <div>Loading courts...</div>;
+  }
+
   return (
     <div className="p-4">
       <h2 className="mb-4 text-2xl font-bold">Pickleball Courts</h2>
@@ -60,26 +65,10 @@ export default function CourtList() {
       </div>
 
       {/* Display courts */}
-      <div className="space-y-4">
-        {courts === undefined ? (
-          <div>Loading...</div>
-        ) : courts === null ? (
-          <div>Error loading courts</div>
-        ) : (
-          courts.map((court) => (
-            <div
-              key={court._id}
-              className="p-4 transition-shadow border rounded shadow-sm hover:shadow-md"
-            >
-              <h3 className="font-semibold">{court.name}</h3>
-              <p className="text-gray-600">{court.address}</p>
-              <p className="text-sm text-gray-500">
-                {court.indoor ? "Indoor" : "Outdoor"} • {court.numberOfCourts}{" "}
-                courts
-              </p>
-            </div>
-          ))
-        )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {courts.map((court) => (
+          <CourtCard key={court._id} court={court} />
+        ))}
       </div>
     </div>
   );

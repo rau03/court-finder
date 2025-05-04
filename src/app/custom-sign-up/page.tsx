@@ -4,20 +4,20 @@ import { useState } from "react";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Map from "../components/Map";
-import MapWrapper from "../components/MapWrapper";
 
 export default function CustomSignUpPage() {
-  const { signUp, isLoaded } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pendingVerification, setPendingVerification] = useState(false);
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLoaded) return;
 
@@ -37,23 +37,20 @@ export default function CustomSignUpPage() {
       if (result.status === "complete") {
         // If complete, redirect to home page
         router.push("/");
-      } else {
+      } else if (result.status === "missing_requirements") {
         // Handle email verification if needed
-        if (result.status === "needs_verification") {
-          // Prepare verification data
-          await signUp.prepareVerification({
-            strategy: "email_code",
-          });
-
-          // Redirect to verification page (you'd need to create this)
-          router.push("/verify");
-        } else {
-          setError("Sign up process incomplete. Please try again.");
-        }
+        await signUp.prepareEmailAddressVerification({
+          strategy: "email_code",
+        });
+        setPendingVerification(true);
+      } else {
+        setError("Sign up process incomplete. Please try again.");
       }
     } catch (err) {
       console.error("Sign up error:", err);
-      setError(err.message || "An error occurred during sign up");
+      setError(
+        err instanceof Error ? err.message : "An error occurred during sign up"
+      );
     } finally {
       setLoading(false);
     }

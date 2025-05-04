@@ -4,24 +4,30 @@ import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Map from "../components/Map";
+import MapWrapper from "../components/MapWrapper";
+
+interface MapMarker {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  title: string;
+}
 
 export default function CustomSignInPage() {
-  const { signIn, isLoaded } = useSignIn();
+  const { isLoaded, signIn } = useSignIn();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLoaded) return;
 
-    setLoading(true);
-    setError("");
-
     try {
+      setError("");
       const result = await signIn.create({
         identifier: email,
         password,
@@ -30,14 +36,26 @@ export default function CustomSignInPage() {
       if (result.status === "complete") {
         router.push("/");
       } else {
-        setError("Sign in failed. Please check your credentials.");
+        setError("Sign in process incomplete. Please try again.");
       }
     } catch (err) {
       console.error("Sign in error:", err);
-      setError(err.message || "An error occurred");
-    } finally {
-      setLoading(false);
+      setError(
+        err instanceof Error ? err.message : "An error occurred during sign in"
+      );
     }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleMapLoad = () => {
+    setIsMapLoaded(true);
   };
 
   return (
@@ -65,7 +83,7 @@ export default function CustomSignInPage() {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="your@email.com"
               required
@@ -83,7 +101,7 @@ export default function CustomSignInPage() {
               id="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="••••••••"
               required
@@ -92,16 +110,16 @@ export default function CustomSignInPage() {
 
           <button
             type="submit"
-            disabled={loading || !isLoaded}
+            disabled={!isLoaded}
             className="w-full px-4 py-3 font-medium text-white transition duration-150 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            Sign In
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-black">
-            Don&apos;t have an account?{" "}
+            Don't have an account?{" "}
             <Link
               href="/sign-up"
               className="font-medium text-blue-600 hover:text-blue-800"
@@ -111,30 +129,16 @@ export default function CustomSignInPage() {
           </p>
         </div>
 
-        <div className="mt-6 text-center">
-          <Link href="/" className="text-blue-600 hover:text-blue-800">
-            ← Back to Home
-          </Link>
-        </div>
-
-        {/* Map */}
-        {isGoogleMapsLoaded ? (
-          <div className="overflow-hidden border-4 border-white shadow-lg rounded-xl">
-            <Map
-              courts={courts}
-              center={mapCenter || undefined}
-              zoom={mapZoom}
+        <div className="mt-6">
+          <div className="h-64">
+            <MapWrapper
+              markers={[]}
+              center={{ lat: 39.8283, lng: -98.5795 }}
+              zoom={4}
+              onLoad={handleMapLoad}
             />
           </div>
-        ) : loadError ? (
-          <div className="p-4 text-red-700 bg-red-100 rounded">
-            Error loading maps: {loadError.message}
-          </div>
-        ) : (
-          <div className="p-4 text-gray-700 bg-gray-100 rounded">
-            Loading maps...
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

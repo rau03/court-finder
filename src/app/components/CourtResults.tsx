@@ -61,8 +61,14 @@ const CourtResults: React.FC = () => {
 
       <div className="border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33] h-full">
         <MapWrapper
-          markers={markers}
-          center={mapCenter || undefined}
+          markers={courts.map((court) => ({
+            position: {
+              lat: court.location.coordinates[1],
+              lng: court.location.coordinates[0],
+            },
+            title: court.name,
+          }))}
+          center={mapCenter || { lat: 39.8283, lng: -98.5795 }}
           zoom={mapZoom}
         />
       </div>

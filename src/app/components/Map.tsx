@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
-import Map from "../components/Map";
 
 interface MarkerData {
   position: {
@@ -21,7 +20,7 @@ interface MapProps {
 const defaultCenter = { lat: 39.8283, lng: -98.5795 }; // Center of USA
 const defaultZoom = 4;
 
-const Map: React.FC<MapProps> = ({
+const PickleballMap: React.FC<MapProps> = ({
   markers = [],
   center = defaultCenter,
   zoom = defaultZoom,
@@ -81,4 +80,4 @@ const Map: React.FC<MapProps> = ({
   );
 };
 
-export default Map;
+export default PickleballMap;

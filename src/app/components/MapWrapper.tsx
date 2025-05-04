@@ -1,42 +1,70 @@
 "use client";
 
-import { useLoadScript } from "@react-google-maps/api";
-import MapWrapper from "../components/MapWrapper";
+import { useState, useEffect } from "react";
+import { LoadScript } from "@react-google-maps/api";
+import PickleballMap from "./Map";
 
 // Libraries to load with Google Maps
 const libraries = ["places", "geometry"];
 
 interface MapWrapperProps {
-  markers: { lat: number; lng: number; [key: string]: unknown }[];
-  center?: { lat: number; lng: number };
-  zoom?: number;
+  markers?: Array<{
+    position: {
+      lat: number;
+      lng: number;
+    };
+    title: string;
+  }>;
+  center: {
+    lat: number;
+    lng: number;
+  };
+  zoom: number;
+  onLoad?: () => void;
 }
 
-export default function MapWrapper({ markers, center, zoom }: MapWrapperProps) {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-    libraries: libraries as ("places" | "geometry")[],
-  });
+const MapWrapper: React.FC<MapWrapperProps> = ({
+  markers = [],
+  center,
+  zoom,
+  onLoad,
+}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadError, setLoadError] = useState<Error | null>(null);
 
-  if (loadError) {
+  useEffect(() => {
+    if (isLoaded && onLoad) {
+      onLoad();
+    }
+  }, [isLoaded, onLoad]);
+
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
     return (
-      <div className="p-4 text-red-700 bg-red-100 border-2 border-black rounded">
-        <h3 className="font-bold">Error loading map</h3>
-        <p>{loadError.message}</p>
+      <div className="p-4 text-red-700 bg-red-100 rounded">
+        Google Maps API key is not configured
       </div>
     );
   }
 
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center w-full h-full bg-gray-100">
-        <div className="text-center">
-          <div className="w-10 h-10 mx-auto border-4 border-t-4 border-black rounded-full animate-spin"></div>
-          <p className="mt-2">Loading map...</p>
+  return (
+    <LoadScript
+      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+      onLoad={() => setIsLoaded(true)}
+      onError={(error) => setLoadError(error)}
+    >
+      {isLoaded ? (
+        <PickleballMap markers={markers} center={center} zoom={zoom} />
+      ) : loadError ? (
+        <div className="p-4 text-red-700 bg-red-100 rounded">
+          Error loading maps: {loadError.message}
         </div>
-      </div>
-    );
-  }
+      ) : (
+        <div className="p-4 text-gray-700 bg-gray-100 rounded">
+          Loading maps...
+        </div>
+      )}
+    </LoadScript>
+  );
+};
 
-  return <MapWrapper markers={markers} center={center} zoom={zoom} />;
-}
+export default MapWrapper;

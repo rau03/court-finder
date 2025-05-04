@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
 import { geocodeAddress } from "@/lib/geocoder";
-import { nationalCourtDatabase } from "../../../../lib/nationalCourts";
+import { nationalCourtDatabase } from "@/lib/nationalCourts";
 import {
   searchPickleballCourts,
   convertPickleballApiCourt,
 } from "@/lib/pickleballApi";
+import { areLocationsNearby } from "@/lib/geocoding-utils";
+import type { Court, CourtInput } from "@/types/court";
 
 interface PlaceResult {
   place_id: string;
   name: string;
-  vicinity: string;
-  geometry: {
+  vicinity?: string;
+  geometry?: {
     location: {
       lat: number;
       lng: number;
@@ -228,11 +230,11 @@ export async function GET(request: Request) {
       }
     }
 
-    // Try one last method - findplacefromtext
+    // Update the findplacefromtext API call
     if (uniqueResults.length === 0) {
       console.log("Still no results, trying findplacefromtext API");
       try {
-        const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=pickleball&inputtype=textquery&locationbias=circle:${radius}@${location.lat},${location.lng}&fields=place_id,name,formatted_address,geometry&key=${apiKey}`;
+        const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=pickleball&inputtype=textquery&locationbias=circle:${radius}@${location.lat},${location.lng}&fields=place_id,name,vicinity,geometry&key=${apiKey}`;
         console.log("Find place URL:", url);
         const response = await fetch(url);
         const data = await response.json();
@@ -247,7 +249,7 @@ export async function GET(request: Request) {
               uniqueResults.push({
                 place_id: place.place_id,
                 name: place.name,
-                vicinity: place.formatted_address,
+                vicinity: place.vicinity,
                 geometry: place.geometry,
               });
             }
@@ -449,87 +451,131 @@ export async function GET(request: Request) {
       }
     }
 
-    // Transform Google Places results to match our court schema
-    const courts = uniqueResults.map((place) => ({
-      _id: `gp_${place.place_id}`,
-      placeId: place.place_id,
-      name: place.name,
-      address: place.vicinity || "Address unavailable",
-      // Include placeholder values for required fields
-      state: "",
-      zipCode: "",
-      indoor: false, // Default to outdoor
-      numberOfCourts: 1, // Default to 1
-      location: {
-        type: "Point",
-        coordinates: [place.geometry.location.lng, place.geometry.location.lat],
-      },
-      isVerified: false,
-      addedByUser: false,
-      source: "google_places",
-      lastVerified: new Date(),
-    }));
+    // Fix the place transformation
+    const places = uniqueResults
+      .map((place: PlaceResult): Court | null => {
+        if (place.geometry?.location) {
+          return {
+            _id: place.place_id,
+            placeId: place.place_id,
+            name: place.name || "Unknown Court",
+            address: place.vicinity || "Address unavailable",
+            state: "", // Will be filled by geocoding
+            zipCode: "", // Will be filled by geocoding
+            indoor: false,
+            numberOfCourts: 1,
+            location: {
+              type: "Point",
+              coordinates: [
+                place.geometry.location.lng,
+                place.geometry.location.lat,
+              ],
+            },
+            isVerified: false,
+            addedByUser: false,
+            source: "google_places",
+            lastVerified: new Date(),
+          };
+        }
+        return null;
+      })
+      .filter((place): place is Court => place !== null);
 
-    console.log(`Returning ${courts.length} courts from external search`);
+    console.log(`Returning ${places.length} courts from external search`);
 
     // Search the Pickleball.com API
     console.log("Searching Pickleball API for additional courts");
-    let pickleballApiCourts = [];
     try {
-      // If we have geocoded location, use it
-      if (location) {
-        const apiCourts = await searchPickleballCourts({
-          latitude: location.lat,
-          longitude: location.lng,
-          state: searchParams.get("state") || undefined,
-          zipCode: searchParams.get("zipCode") || undefined,
-          indoor:
-            searchParams.get("indoor") === "true"
-              ? true
-              : searchParams.get("indoor") === "false"
-                ? false
-                : undefined,
-          maxDistance,
+      const pickleballApiCourts = await searchPickleballCourts({
+        latitude: location.lat,
+        longitude: location.lng,
+        maxDistance,
+      });
+
+      console.log(
+        `Found ${pickleballApiCourts.length} courts from Pickleball API`
+      );
+
+      if (pickleballApiCourts.length > 0) {
+        const transformPickleballCourt = (apiCourt: any): Court => ({
+          _id: `pickleball_api_${Math.random().toString(36).substr(2, 9)}`,
+          placeId: `pickleball_api_${Math.random().toString(36).substr(2, 9)}`,
+          name: apiCourt.name,
+          address: apiCourt.address,
+          state: apiCourt.state,
+          zipCode: apiCourt.zipCode,
+          indoor: apiCourt.indoor,
+          numberOfCourts: apiCourt.numberOfCourts,
+          location: {
+            type: "Point",
+            coordinates: [
+              apiCourt.location.longitude,
+              apiCourt.location.latitude,
+            ],
+          },
+          isVerified: apiCourt.isVerified,
+          addedByUser: apiCourt.addedByUser,
+          source: "pickleball_api",
+          lastVerified: new Date(),
         });
 
-        // Convert to our application's court format
-        pickleballApiCourts = apiCourts.map(convertPickleballApiCourt);
-        console.log(
-          `Found ${pickleballApiCourts.length} courts from Pickleball API`
-        );
-
-        // Add unique courts to results
-        if (pickleballApiCourts.length > 0) {
-          // Filter out duplicates based on coordinates
-          const newCourts = pickleballApiCourts.filter((apiCourt) => {
-            // Skip if missing coordinates
-            if (!apiCourt.location || !apiCourt.location.coordinates)
+        // Filter out duplicates based on coordinates
+        const newCourts = pickleballApiCourts
+          .filter((apiCourt) => {
+            if (
+              !apiCourt.location ||
+              !apiCourt.location.latitude ||
+              !apiCourt.location.longitude
+            ) {
               return false;
+            }
 
             // Check if this court is already in our results
-            const isDuplicate = courts.some((existingCourt) =>
+            return !places.some((existingCourt) =>
               areLocationsNearby(
-                existingCourt.location.coordinates,
-                apiCourt.location.coordinates,
-                0.01 // ~10 meters
+                {
+                  location: { coordinates: existingCourt.location.coordinates },
+                },
+                {
+                  location: {
+                    coordinates: [
+                      apiCourt.location.longitude,
+                      apiCourt.location.latitude,
+                    ],
+                  },
+                }
               )
             );
+          })
+          .map(transformPickleballCourt);
 
-            return !isDuplicate;
-          });
-
-          console.log(
-            `Adding ${newCourts.length} unique courts from Pickleball API`
-          );
-          courts.push(...newCourts);
-        }
+        console.log(
+          `Adding ${newCourts.length} unique courts from Pickleball API`
+        );
+        places.push(...newCourts);
       }
     } catch (pickleballApiError) {
       console.error("Pickleball API error:", pickleballApiError);
-      // Continue with other results if this fails
     }
 
-    return NextResponse.json(courts);
+    // Update the court transformation
+    const transformedCourts = places.map((court) => ({
+      _id: court._id,
+      placeId: court.placeId || `generated_${court._id}`,
+      name: court.name,
+      address: court.address,
+      state: court.state,
+      zipCode: court.zipCode,
+      indoor: court.indoor,
+      numberOfCourts: court.numberOfCourts,
+      location: court.location,
+      isVerified: court.isVerified,
+      addedByUser: court.addedByUser,
+      source: court.source,
+      lastVerified: new Date(),
+    }));
+
+    return NextResponse.json(transformedCourts);
   } catch (error) {
     console.error("External search error:", error);
     return NextResponse.json(
