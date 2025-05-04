@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import Header from "../components/Header";
@@ -8,7 +7,6 @@ import Link from "next/link";
 import { Id } from "../../../convex/_generated/dataModel";
 
 export default function AdminDashboard() {
-  const user = useQuery(api.users.getMe);
   const isAdmin = useQuery(api.users.isAdmin);
   const pendingCourts = useQuery(api.courts.getPendingCourts);
   const approveMutation = useMutation(api.courts.approveCourt);

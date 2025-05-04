@@ -242,7 +242,7 @@ export async function GET(request: Request) {
         );
 
         if (data.candidates && Array.isArray(data.candidates)) {
-          data.candidates.forEach((place: any) => {
+          data.candidates.forEach((place: PlaceResult) => {
             if (place && place.place_id && !placeIdsSet.has(place.place_id)) {
               uniqueResults.push({
                 place_id: place.place_id,
@@ -277,7 +277,7 @@ export async function GET(request: Request) {
       );
 
       // Add national courts to our results
-      nearbyNationalCourts.forEach((court: any) => {
+      nearbyNationalCourts.forEach((court) => {
         const courtResult: PlaceResult = {
           place_id: `nat_${court.id}`,
           name: court.name,
@@ -395,7 +395,7 @@ export async function GET(request: Request) {
           },
         ];
 
-        miamiCourts.forEach((court: any) => {
+        miamiCourts.forEach((court) => {
           if (!placeIdsSet.has(court.place_id)) {
             placeIdsSet.add(court.place_id);
             uniqueResults.push(court as PlaceResult);
@@ -440,7 +440,7 @@ export async function GET(request: Request) {
           },
         ];
 
-        laCourts.forEach((court: any) => {
+        laCourts.forEach((court) => {
           if (!placeIdsSet.has(court.place_id)) {
             placeIdsSet.add(court.place_id);
             uniqueResults.push(court as PlaceResult);
@@ -487,8 +487,8 @@ export async function GET(request: Request) {
             searchParams.get("indoor") === "true"
               ? true
               : searchParams.get("indoor") === "false"
-              ? false
-              : undefined,
+                ? false
+                : undefined,
           maxDistance,
         });
 

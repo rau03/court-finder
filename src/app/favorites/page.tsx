@@ -68,11 +68,11 @@ export default function Favorites() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
         <Header />
-        <div className="max-w-4xl mx-auto p-8 text-center">
+        <div className="max-w-4xl p-8 mx-auto text-center">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-8"></div>
-            <div className="h-32 bg-gray-200 rounded mb-4"></div>
-            <div className="h-32 bg-gray-200 rounded mb-4"></div>
+            <div className="w-1/3 h-8 mx-auto mb-8 bg-gray-200 rounded"></div>
+            <div className="h-32 mb-4 bg-gray-200 rounded"></div>
+            <div className="h-32 mb-4 bg-gray-200 rounded"></div>
           </div>
         </div>
       </div>
@@ -87,20 +87,20 @@ export default function Favorites() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
       <Header />
 
-      <div className="max-w-4xl mx-auto p-8">
-        <h1 className="text-3xl font-bold mb-6 text-blue-900">
+      <div className="max-w-4xl p-8 mx-auto">
+        <h1 className="mb-6 text-3xl font-bold text-blue-900">
           My Favorite Courts
         </h1>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-6">
+          <div className="p-4 mb-6 text-red-700 border border-red-200 rounded-lg bg-red-50">
             {error}
           </div>
         )}
 
         {favorites.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <p className="text-gray-600 mb-4">
+          <div className="p-6 bg-white rounded-lg shadow-md">
+            <p className="mb-4 text-gray-600">
               You don&apos;t have any favorite courts yet. Find courts and add
               them to your favorites!
             </p>
@@ -108,14 +108,14 @@ export default function Favorites() {
             <div className="mt-4">
               <Link
                 href="/"
-                className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                className="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
               >
                 Find Courts
               </Link>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {favorites.map((favorite) => (
               <CourtCard
                 key={favorite._id}

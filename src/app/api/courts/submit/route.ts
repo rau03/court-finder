@@ -45,8 +45,8 @@ export async function POST(request: Request) {
         if (!body.city) body.city = addressComponents.city;
         if (!body.state) body.state = addressComponents.state;
         if (!body.zipCode) body.zipCode = addressComponents.zipCode;
-      } catch (error) {
-        console.error("Error extracting address components:", error);
+      } catch {
+        // (removed unused variable 'address')
       }
     }
 

@@ -151,7 +151,7 @@ export async function GET(request: Request) {
             ];
           }
         }
-      } catch (error) {
+      } catch {
         safeErrorLog("Failed to geocode for search");
         // Continue with other filters if geocoding fails
       }
