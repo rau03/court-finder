@@ -1,7 +1,7 @@
 "use client";
 
 import { useLoadScript } from "@react-google-maps/api";
-import Map from "./Map";
+import MapWrapper from "../components/MapWrapper";
 
 // Libraries to load with Google Maps
 const libraries = ["places", "geometry"];
@@ -38,5 +38,5 @@ export default function MapWrapper({ markers, center, zoom }: MapWrapperProps) {
     );
   }
 
-  return <Map markers={markers} center={center} zoom={zoom} />;
+  return <MapWrapper markers={markers} center={center} zoom={zoom} />;
 }

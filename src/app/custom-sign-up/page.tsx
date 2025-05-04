@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Map from "../components/Map";
+import MapWrapper from "../components/MapWrapper";
 
 export default function CustomSignUpPage() {
   const { signUp, isLoaded } = useSignUp();
@@ -18,10 +20,10 @@ export default function CustomSignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isLoaded) return;
-    
+
     setLoading(true);
     setError("");
-    
+
     try {
       // Start the sign up process
       const result = await signUp.create({
@@ -30,7 +32,7 @@ export default function CustomSignUpPage() {
         emailAddress: email,
         password,
       });
-      
+
       // Check if sign up was successful
       if (result.status === "complete") {
         // If complete, redirect to home page
@@ -42,7 +44,7 @@ export default function CustomSignUpPage() {
           await signUp.prepareVerification({
             strategy: "email_code",
           });
-          
+
           // Redirect to verification page (you'd need to create this)
           router.push("/verify");
         } else {
@@ -58,20 +60,25 @@ export default function CustomSignUpPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-xl border border-gray-200">
-        <h1 className="text-3xl font-bold text-black text-center mb-6">Create Account</h1>
-        
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-md p-8 bg-white border border-gray-200 shadow-xl rounded-xl">
+        <h1 className="mb-6 text-3xl font-bold text-center text-black">
+          Create Account
+        </h1>
+
         {error && (
-          <div className="p-3 mb-4 bg-red-100 border border-red-300 text-red-700 rounded">
+          <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-300 rounded">
             {error}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <label htmlFor="firstName" className="block mb-2 text-black font-medium">
+              <label
+                htmlFor="firstName"
+                className="block mb-2 font-medium text-black"
+              >
                 First Name
               </label>
               <input
@@ -79,12 +86,15 @@ export default function CustomSignUpPage() {
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full p-3 border-2 border-gray-300 rounded-md text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               />
             </div>
             <div>
-              <label htmlFor="lastName" className="block mb-2 text-black font-medium">
+              <label
+                htmlFor="lastName"
+                className="block mb-2 font-medium text-black"
+              >
                 Last Name
               </label>
               <input
@@ -92,13 +102,16 @@ export default function CustomSignUpPage() {
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full p-3 border-2 border-gray-300 rounded-md text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
-          
+
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 text-black font-medium">
+            <label
+              htmlFor="email"
+              className="block mb-2 font-medium text-black"
+            >
               Email
             </label>
             <input
@@ -106,14 +119,17 @@ export default function CustomSignUpPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border-2 border-gray-300 rounded-md text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="your@email.com"
               required
             />
           </div>
-          
+
           <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-black font-medium">
+            <label
+              htmlFor="password"
+              className="block mb-2 font-medium text-black"
+            >
               Password
             </label>
             <input
@@ -121,34 +137,37 @@ export default function CustomSignUpPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border-2 border-gray-300 rounded-md text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="••••••••"
               minLength={8}
               required
             />
-            <p className="mt-1 text-gray-600 text-sm">
+            <p className="mt-1 text-sm text-gray-600">
               Password must be at least 8 characters
             </p>
           </div>
-          
+
           <button
             type="submit"
             disabled={loading || !isLoaded}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out"
+            className="w-full px-4 py-3 font-medium text-white transition duration-150 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700"
           >
             {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
-        
+
         <div className="mt-6 text-center">
           <p className="text-black">
             Already have an account?{" "}
-            <Link href="/sign-in" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link
+              href="/sign-in"
+              className="font-medium text-blue-600 hover:text-blue-800"
+            >
               Sign In
             </Link>
           </p>
         </div>
-        
+
         <div className="mt-6 text-center">
           <Link href="/" className="text-blue-600 hover:text-blue-800">
             ← Back to Home

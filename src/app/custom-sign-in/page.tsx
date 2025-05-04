@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Map } from "../components/MapWrapper";
+import Map from "../components/Map";
 
 export default function CustomSignInPage() {
   const { signIn, isLoaded } = useSignIn();

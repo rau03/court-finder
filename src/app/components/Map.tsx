@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
+import Map from "../components/Map";
 
 interface MarkerData {
   position: {

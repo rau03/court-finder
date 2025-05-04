@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
-import Court from "@/models/Court";
 import mongoose from "mongoose";
 
 export async function GET(request: Request) {
