@@ -6,7 +6,7 @@ import mongoose from "mongoose";
  * during API Route usage.
  */
 declare global {
-  var mongoose: {
+  let mongoose: {
     conn: typeof mongoose | null;
     promise: Promise<typeof mongoose> | null;
   };

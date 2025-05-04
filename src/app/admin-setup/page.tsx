@@ -5,7 +5,6 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import Header from "../components/Header";
 import Link from "next/link";
-import { Id } from "../../../convex/_generated/dataModel";
 
 export default function AdminSetup() {
   const [message, setMessage] = useState<string | null>(null);

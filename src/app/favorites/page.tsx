@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import CourtCard from "../components/CourtCard";
+import Link from "next/link";
 
 interface Court {
   _id: string;
@@ -100,17 +101,17 @@ export default function Favorites() {
         {favorites.length === 0 ? (
           <div className="bg-white rounded-lg shadow-md p-6">
             <p className="text-gray-600 mb-4">
-              You don't have any favorite courts yet. Find courts and add them
-              to your favorites!
+              You don&apos;t have any favorite courts yet. Find courts and add
+              them to your favorites!
             </p>
 
             <div className="mt-4">
-              <a
+              <Link
                 href="/"
                 className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 Find Courts
-              </a>
+              </Link>
             </div>
           </div>
         ) : (

@@ -122,7 +122,7 @@ export const CourtSearchProvider: React.FC<CourtSearchProviderProps> = ({
       }
 
       const localData = await localResponse.json();
-      let allCourts = localData.courts || [];
+      const allCourts = localData.courts || [];
 
       console.log(`Found ${allCourts.length} courts in local database`);
 
@@ -148,7 +148,7 @@ export const CourtSearchProvider: React.FC<CourtSearchProviderProps> = ({
             if (externalCourts.length > 0) {
               console.log(
                 "Sample external courts:",
-                externalCourts.slice(0, 3).map((court: any) => court.name)
+                externalCourts.slice(0, 3).map((court: Court) => court.name)
               );
             }
 

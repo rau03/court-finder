@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useGoogleMaps } from "../context/GoogleMapsContext";
 import Map from "../components/Map";
+import Link from "next/link";
 
 export default function TestMapPage() {
   const { isLoaded, loadError } = useGoogleMaps();
@@ -38,9 +39,9 @@ export default function TestMapPage() {
       </div>
 
       <div className="mt-6">
-        <a href="/" className="text-blue-500 hover:underline">
+        <Link href="/" className="text-blue-500 hover:underline">
           Back to home
-        </a>
+        </Link>
       </div>
     </div>
   );

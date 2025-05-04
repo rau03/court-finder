@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function TestSignInPage() {
   const router = useRouter();
@@ -37,9 +38,9 @@ export default function TestSignInPage() {
           : "Not set"}
       </pre>
       <div style={{ marginTop: "20px" }}>
-        <a href="/" style={{ color: "blue" }}>
+        <Link href="/" style={{ color: "blue" }}>
           Back to Home
-        </a>
+        </Link>
       </div>
     </div>
   );

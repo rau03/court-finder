@@ -7,7 +7,7 @@ import Map from "./Map";
 const libraries = ["places", "geometry"];
 
 interface MapWrapperProps {
-  markers: any[];
+  markers: { lat: number; lng: number; [key: string]: unknown }[];
   center?: { lat: number; lng: number };
   zoom?: number;
 }
@@ -15,7 +15,7 @@ interface MapWrapperProps {
 export default function MapWrapper({ markers, center, zoom }: MapWrapperProps) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
-    libraries: libraries as any,
+    libraries: libraries as ("places" | "geometry")[],
   });
 
   if (loadError) {

@@ -28,7 +28,7 @@ const isProduction = process.env.NODE_ENV === "production";
  * @param message The message to log
  * @param data Optional data to log in development only
  */
-function safeLog(message: string, data?: any) {
+function safeLog(message: string, data?: unknown) {
   if (isProduction) {
     // In production, don't log sensitive data
     console.log(message);
@@ -43,7 +43,7 @@ function safeLog(message: string, data?: any) {
  * @param message The error message
  * @param error The error object
  */
-function safeErrorLog(message: string, error?: any) {
+function safeErrorLog(message: string, error?: unknown) {
   if (isProduction) {
     // In production, don't log potentially sensitive error details
     console.error(message);

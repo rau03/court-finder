@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Map } from "../components/MapWrapper";
 
 export default function CustomSignInPage() {
   const { signIn, isLoaded } = useSignIn();
@@ -100,7 +101,7 @@ export default function CustomSignInPage() {
 
         <div className="mt-6 text-center">
           <p className="text-black">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
               className="font-medium text-blue-600 hover:text-blue-800"

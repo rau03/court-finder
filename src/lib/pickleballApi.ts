@@ -20,7 +20,7 @@ export interface PickleballCourt {
   };
   indoor: boolean;
   numberOfCourts?: number;
-  amenities?: any;
+  amenities?: Record<string, unknown>;
   website?: string;
   phoneNumber?: string;
   // Add other fields as they become available in the API documentation
