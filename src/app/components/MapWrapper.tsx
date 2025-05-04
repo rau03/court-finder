@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import { LoadScript } from "@react-google-maps/api";
 import PickleballMap from "./Map";
 
-// Libraries to load with Google Maps
-const libraries = ["places", "geometry"];
-
 interface MapWrapperProps {
   markers?: Array<{
     position: {

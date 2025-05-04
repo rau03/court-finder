@@ -6,7 +6,8 @@ interface MongooseCache {
 }
 
 declare global {
-  var mongoose: MongooseCache;
+  // eslint-disable-next-line no-var
+  var mongoose: MongooseCache | undefined;
 }
 
 if (!process.env.MONGODB_URI) {
@@ -17,11 +18,8 @@ if (!process.env.MONGODB_URI) {
 
 const MONGODB_URI: string = process.env.MONGODB_URI;
 
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+const cached = global.mongoose || { conn: null, promise: null };
+global.mongoose = cached;
 
 async function connectDB() {
   if (cached.conn) {

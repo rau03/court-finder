@@ -6,21 +6,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import MapWrapper from "../components/MapWrapper";
 
-interface MapMarker {
-  position: {
-    lat: number;
-    lng: number;
-  };
-  title: string;
-}
-
 export default function CustomSignInPage() {
   const { isLoaded, signIn } = useSignIn();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,10 +43,6 @@ export default function CustomSignInPage() {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-  };
-
-  const handleMapLoad = () => {
-    setIsMapLoaded(true);
   };
 
   return (
@@ -119,7 +106,7 @@ export default function CustomSignInPage() {
 
         <div className="mt-6 text-center">
           <p className="text-black">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
               className="font-medium text-blue-600 hover:text-blue-800"
@@ -135,7 +122,6 @@ export default function CustomSignInPage() {
               markers={[]}
               center={{ lat: 39.8283, lng: -98.5795 }}
               zoom={4}
-              onLoad={handleMapLoad}
             />
           </div>
         </div>

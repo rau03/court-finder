@@ -8,15 +8,6 @@ import MapWrapper from "./MapWrapper";
 const CourtResults: React.FC = () => {
   const { courts, loading, error, mapCenter, mapZoom } = useCourtSearch();
 
-  // Convert courts to markers for the map
-  const markers = courts.map((court) => ({
-    position: {
-      lat: court.location.coordinates[1],
-      lng: court.location.coordinates[0],
-    },
-    title: court.name,
-  }));
-
   return (
     <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
       <div className="overflow-y-auto p-4 bg-[#3bdf72dd] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative h-full">

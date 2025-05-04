@@ -1,68 +1,62 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import { getAuth } from "@clerk/nextjs/server";
+import type { NextRequest } from "next/server";
 import Court from "@/models/Court";
-import { geocodeAddress } from "@/lib/geocoder";
+import connectDB from "@/lib/mongodb";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const auth = getAuth(request);
+
+  if (!auth.userId) {
+    return NextResponse.json(
+      { error: "Unauthorized - Must be signed in" },
+      { status: 401 }
+    );
+  }
+
   try {
-    await dbConnect();
-    const body = await request.json();
+    const data = await request.json();
+    const {
+      name,
+      location,
+      numberOfCourts,
+      surface,
+      indoor,
+      lighting,
+      courtType,
+      amenities,
+    } = data;
 
     // Validate required fields
-    if (!body.name || !body.address) {
+    if (!name || !location) {
       return NextResponse.json(
-        { error: "Name and address are required" },
+        { error: "Name and location are required" },
         { status: 400 }
       );
     }
 
-    // Check for duplicate courts
-    const existing = await Court.findOne({
-      name: body.name,
-      address: body.address,
+    await connectDB();
+
+    const court = new Court({
+      name,
+      location,
+      numberOfCourts,
+      surface,
+      indoor,
+      lighting,
+      courtType,
+      amenities,
+      source: "user-submitted",
+      submittedBy: auth.userId,
+      submittedAt: new Date(),
     });
 
-    if (existing) {
-      return NextResponse.json(
-        { error: "This court already exists in our database" },
-        { status: 409 }
-      );
-    }
+    await court.save();
 
-    // Geocode the address
-    const geoData = await geocodeAddress(body.address);
-    if (!geoData) {
-      return NextResponse.json(
-        { error: "Could not geocode address" },
-        { status: 400 }
-      );
-    }
-
-    // Extract city and state from address if not provided
-    if (!body.city || !body.state) {
-      try {
-        const addressComponents = await getAddressComponents(body.address);
-        if (!body.city) body.city = addressComponents.city;
-        if (!body.state) body.state = addressComponents.state;
-        if (!body.zipCode) body.zipCode = addressComponents.zipCode;
-      } catch {
-        // (removed unused variable 'address')
-      }
-    }
-
-    // Create court with geocoded location
-    const court = await Court.create({
-      ...body,
-      location: {
-        type: "Point",
-        coordinates: [geoData.lng, geoData.lat],
-      },
-      isVerified: false,
-      addedByUser: true,
-      lastVerified: new Date(),
+    return NextResponse.json({
+      message: "Court submitted successfully",
+      court,
     });
-
-    return NextResponse.json(court, { status: 201 });
   } catch (error) {
     console.error("Error submitting court:", error);
     return NextResponse.json(
@@ -70,11 +64,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-}
-
-// Helper function to extract address components
-async function getAddressComponents(address: string) {
-  // You can implement this using Google's Geocoding API or similar service
-  // For now, returning empty values
-  return { city: "", state: "", zipCode: "" };
 }
