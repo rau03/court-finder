@@ -1,12 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/mongodb";
 import Favorite from "@/models/Favorite";
 
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+  request: NextRequest,
+  props: Props
+): Promise<NextResponse> {
   try {
     const user = await currentUser();
 
@@ -14,7 +20,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const courtId = params.id;
+    const courtId = props.params.id;
 
     await dbConnect();
 
