@@ -49,7 +49,12 @@ export default defineSchema({
     submittedBy: v.optional(v.string()), // ID of user who submitted
     createdAt: v.number(), // timestamp
     updatedAt: v.number(), // timestamp
-  }),
+  })
+    .index("by_location", ["location"])
+    .index("by_state", ["state"])
+    .index("by_zipCode", ["zipCode"])
+    .index("by_indoor", ["indoor"])
+    .index("by_verified", ["isVerified"]),
 
   // Users table
   users: defineTable({

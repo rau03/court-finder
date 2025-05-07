@@ -44,6 +44,7 @@ export const submitCourt = mutation({
       coordinates: v.array(v.number()),
     }),
   },
+  returns: v.id("courts"),
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
@@ -67,6 +68,7 @@ export const submitCourt = mutation({
 // Get all courts pending approval (admin only)
 export const getPendingCourts = query({
   args: {},
+  returns: v.array(v.any()),
   handler: async (ctx) => {
     // Check if user is admin
     const identity = await ctx.auth.getUserIdentity();
@@ -80,9 +82,10 @@ export const getPendingCourts = query({
       throw new Error("Unauthorized: Admin access required");
     }
 
+    // Use index for isVerified = false
     return await ctx.db
       .query("courts")
-      .filter((q) => q.eq(q.field("isVerified"), false))
+      .withIndex("by_verified", (q) => q.eq("isVerified", false))
       .collect();
   },
 });
@@ -92,6 +95,7 @@ export const approveCourt = mutation({
   args: {
     courtId: v.id("courts"),
   },
+  returns: v.id("courts"),
   handler: async (ctx, args) => {
     // Check if user is admin
     const identity = await ctx.auth.getUserIdentity();
@@ -121,6 +125,7 @@ export const rejectCourt = mutation({
   args: {
     courtId: v.id("courts"),
   },
+  returns: v.id("courts"),
   handler: async (ctx, args) => {
     // Check if user is admin
     const identity = await ctx.auth.getUserIdentity();
@@ -146,24 +151,68 @@ export const getVerifiedCourts = query({
     zipCode: v.optional(v.string()),
     indoor: v.optional(v.boolean()),
   },
+  returns: v.array(v.any()),
   handler: async (ctx, args) => {
-    let query = ctx.db
+    // Always filter by isVerified = true using index
+    let courts = await ctx.db
       .query("courts")
-      .filter((q) => q.eq(q.field("isVerified"), true));
+      .withIndex("by_verified", (q) => q.eq("isVerified", true))
+      .collect();
 
-    // Apply filters if provided
+    // Additional filters in-memory
     if (args.state) {
-      query = query.filter((q) => q.eq(q.field("state"), args.state));
+      courts = courts.filter((court: any) => court.state === args.state);
     }
-
     if (args.zipCode) {
-      query = query.filter((q) => q.eq(q.field("zipCode"), args.zipCode));
+      courts = courts.filter((court: any) => court.zipCode === args.zipCode);
     }
-
     if (args.indoor !== undefined) {
-      query = query.filter((q) => q.eq(q.field("indoor"), args.indoor));
+      courts = courts.filter((court: any) => court.indoor === args.indoor);
     }
+    return courts;
+  },
+});
 
-    return await query.collect();
+// Search courts by location and filters
+export const searchCourts = query({
+  args: {
+    latitude: v.optional(v.number()),
+    longitude: v.optional(v.number()),
+    maxDistance: v.optional(v.number()), // in meters
+    state: v.optional(v.string()),
+    zipCode: v.optional(v.string()),
+    indoor: v.optional(v.boolean()),
+  },
+  returns: v.array(v.any()),
+  handler: async (ctx, args) => {
+    // Always filter by isVerified = true using index
+    let courts = await ctx.db
+      .query("courts")
+      .withIndex("by_verified", (q) => q.eq("isVerified", true))
+      .collect();
+
+    // Geospatial filter in-memory
+    if (args.latitude !== undefined && args.longitude !== undefined) {
+      const maxDistance = args.maxDistance ?? 50000; // Default 50km
+      courts = courts.filter((court: any) => {
+        if (!court.location || !court.location.coordinates) return false;
+        const [lng, lat] = court.location.coordinates;
+        const dx = lng - args.longitude!;
+        const dy = lat - args.latitude!;
+        const distance = Math.sqrt(dx * dx + dy * dy) * 111320; // rough meters per degree
+        return distance <= maxDistance;
+      });
+    }
+    // Additional filters in-memory
+    if (args.state) {
+      courts = courts.filter((court: any) => court.state === args.state);
+    }
+    if (args.zipCode) {
+      courts = courts.filter((court: any) => court.zipCode === args.zipCode);
+    }
+    if (args.indoor !== undefined) {
+      courts = courts.filter((court: any) => court.indoor === args.indoor);
+    }
+    return courts;
   },
 });

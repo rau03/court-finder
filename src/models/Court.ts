@@ -1,7 +1,8 @@
 import { Schema, models, model } from "mongoose";
 
+
 // Define the Court interface
-interface ICourt {
+interface Court {
   name: string;
   address: string;
   city: string;
@@ -51,7 +52,7 @@ interface ICourt {
 }
 
 // Define the schema
-const CourtSchema = new Schema<ICourt>({
+const CourtSchema = new Schema<Court>({
   name: { type: String, required: true },
   address: { type: String, required: true },
   city: { type: String, default: "" },
@@ -113,6 +114,6 @@ const CourtSchema = new Schema<ICourt>({
 CourtSchema.index({ location: "2dsphere" });
 
 // Export the model
-const Court = models.Court || model<ICourt>("Court", CourtSchema);
+const Court = models.Court || model<Court>("Court", CourtSchema);
 
 export default Court;
