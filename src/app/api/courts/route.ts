@@ -87,45 +87,45 @@ function validateParams(params: URLSearchParams) {
 
 export async function GET(request: Request) {
   try {
+    console.log("Attempting to connect to MongoDB...");
     await dbConnect();
-    safeLog("MongoDB connected successfully");
+    console.log("MongoDB connected successfully");
 
     const { searchParams } = new URL(request.url);
     const params = validateParams(searchParams);
+    console.log("Search parameters:", params);
 
     // Build the query based on filters
     const query: Record<string, unknown> = {};
 
     if (params.state) {
       query.state = params.state;
-      safeLog("Filtering by state:", params.state);
+      console.log("Filtering by state:", params.state);
     }
 
     if (params.zipCode) {
       query.zipCode = params.zipCode;
-      safeLog("Filtering by zip code");
+      console.log("Filtering by zip code:", params.zipCode);
     }
 
     if (params.city) {
-      // Case-insensitive search for city
       query.city = new RegExp(params.city, "i");
-      safeLog("Filtering by city");
+      console.log("Filtering by city:", params.city);
     }
 
     if (params.indoor !== null) {
       query.indoor = params.indoor;
-      safeLog("Filtering by indoor status");
+      console.log("Filtering by indoor status:", params.indoor);
     }
 
     // If address is provided, try to perform a geospatial search
     if (params.address) {
-      safeLog("Geocoding address for search");
+      console.log("Geocoding address for search:", params.address);
       try {
         const geoData = await geocodeAddress(params.address);
         if (geoData) {
-          safeLog("Successfully geocoded location");
+          console.log("Successfully geocoded location:", geoData);
 
-          // Use a $near geospatial query with the maximum distance provided
           query.location = {
             $near: {
               $geometry: {
@@ -136,14 +136,9 @@ export async function GET(request: Request) {
             },
           };
 
-          // If we have state filtering, make it optional when we have coordinates
           if (query.state) {
-            // Store the state condition
             const stateCondition = query.state;
-            // Remove strict state requirement from main query
             delete query.state;
-
-            // Use $or to find courts either with the right state OR nearby without state info
             query.$or = [
               { state: stateCondition },
               { state: { $exists: false } },
@@ -151,30 +146,25 @@ export async function GET(request: Request) {
             ];
           }
         }
-      } catch {
-        safeErrorLog("Failed to geocode for search");
-        // Continue with other filters if geocoding fails
+      } catch (error) {
+        console.error("Geocoding error:", error);
       }
     }
 
-    safeLog("Executing query with filters");
+    console.log("Executing query:", JSON.stringify(query));
     const courts = await Court.find(query).limit(100);
-    safeLog(`Found ${courts.length} courts matching filters`);
+    console.log(`Found ${courts.length} courts matching filters`);
 
     return NextResponse.json({
       courts,
       count: courts.length,
     });
   } catch (error) {
-    safeErrorLog("Database error:", error);
+    console.error("Database error:", error);
     return NextResponse.json(
       {
         error: "Failed to search courts",
-        details: isProduction
-          ? "Server error"
-          : error instanceof Error
-            ? error.message
-            : "Unknown error",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
