@@ -295,3 +295,34 @@ input::placeholder {
   font-weight: 700;
   color: #000000;
 }
+
+/* Fix for Clerk form input overlapping */
+.cl-formFieldInput {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.cl-formFieldInput:focus {
+  z-index: 2 !important;
+}
+
+.cl-formField {
+  position: relative !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Ensure proper spacing between form fields */
+.cl-formField + .cl-formField {
+  margin-top: 1.5rem !important;
+}
+
+/* Ensure proper stacking of form elements */
+.cl-formFieldLabel {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Ensure the form container has proper spacing */
+.cl-card {
+  padding: 2rem !important;
+}

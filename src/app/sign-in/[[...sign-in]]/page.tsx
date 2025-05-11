@@ -42,8 +42,20 @@ const darkTextTheme = {
 
 export default function SignInPage() {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <SignIn appearance={darkTextTheme} />
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-50">
+      <SignIn
+        appearance={darkTextTheme}
+        routing="path"
+        path="/sign-in"
+        signUpUrl="/sign-up"
+        redirectUrl="/"
+        afterSignInUrl="/"
+        afterSignUpUrl="/"
+        initialValues={{
+          emailAddress: "",
+          password: "",
+        }}
+      />
     </div>
   );
 }
