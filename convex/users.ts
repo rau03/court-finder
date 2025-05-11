@@ -71,29 +71,26 @@ export const setUserAsAdmin = mutation({
       .withIndex("by_clerkId", (q) => q.eq("clerkId", identity.subject))
       .first();
 
-    // Only allow first user to become admin if no users exist
+    // If no user exists, create one
+    if (!currentUser) {
+      return await ctx.db.insert("users", {
+        name: identity.name || "",
+        email: identity.email || "",
+        clerkId: identity.subject,
+        role: "admin",
+      });
+    }
+
+    // Check if there are any users in the system
     const allUsers = await ctx.db.query("users").collect();
 
-    if (
-      allUsers.length === 0 ||
-      (currentUser && currentUser.role === "admin")
-    ) {
-      // Create or update user as admin
-      if (currentUser) {
-        await ctx.db.patch(currentUser._id, { role: "admin" });
-        return currentUser._id;
-      } else {
-        // Create new admin user
-        return await ctx.db.insert("users", {
-          name: identity.name || "",
-          email: identity.email || "",
-          clerkId: identity.subject,
-          role: "admin",
-        });
-      }
-    } else {
-      throw new Error("Unauthorized: Only admins can create admins");
+    // Allow if this is the first user or if current user is already an admin
+    if (allUsers.length === 0 || currentUser.role === "admin") {
+      await ctx.db.patch(currentUser._id, { role: "admin" });
+      return currentUser._id;
     }
+
+    throw new Error("Unauthorized: Only admins can create admins");
   },
 });
 

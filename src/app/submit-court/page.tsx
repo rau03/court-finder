@@ -146,6 +146,22 @@ export default function SubmitCourt() {
     setError(null);
 
     try {
+      // First, geocode the address
+      const addressString = `${formData.address}, ${formData.city}, ${formData.state} ${formData.zipCode}`;
+      const geocodeResponse = await fetch(
+        `/api/geocode?address=${encodeURIComponent(addressString)}`
+      );
+
+      if (!geocodeResponse.ok) {
+        throw new Error("Failed to geocode address");
+      }
+
+      const geocodeData = await geocodeResponse.json();
+
+      if (!geocodeData.lat || !geocodeData.lng) {
+        throw new Error("Could not determine location coordinates");
+      }
+
       // Submit the court data to Convex
       await submitCourtMutation({
         name: formData.name,
@@ -180,7 +196,7 @@ export default function SubmitCourt() {
         },
         location: {
           type: "Point",
-          coordinates: [0, 0], // Replace with actual geocoding
+          coordinates: [geocodeData.lng, geocodeData.lat],
         },
       });
 

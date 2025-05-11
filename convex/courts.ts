@@ -47,21 +47,29 @@ export const submitCourt = mutation({
   returns: v.id("courts"),
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
 
-    // Create court with unverified status
-    const now = Date.now();
-    const courtId = await ctx.db.insert("courts", {
-      ...args,
-      isVerified: false, // All submitted courts need verification
-      addedByUser: true,
-      lastVerified: now,
-      rating: 0,
-      submittedBy: identity?.subject,
-      createdAt: now,
-      updatedAt: now,
-    });
+    try {
+      // Create court with unverified status
+      const now = Date.now();
+      const courtId = await ctx.db.insert("courts", {
+        ...args,
+        isVerified: false, // All submitted courts need verification
+        addedByUser: true,
+        lastVerified: now,
+        rating: 0,
+        submittedBy: identity.subject,
+        createdAt: now,
+        updatedAt: now,
+      });
 
-    return courtId;
+      return courtId;
+    } catch (error) {
+      console.error("Error submitting court:", error);
+      throw new Error("Failed to submit court. Please try again.");
+    }
   },
 });
 

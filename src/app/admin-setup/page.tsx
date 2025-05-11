@@ -3,20 +3,27 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import Header from "../components/Header";
-import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 export default function AdminSetup() {
   const [message, setMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
+  const { isSignedIn, user } = useUser();
 
-  const user = useQuery(api.users.getMe);
+  const userData = useQuery(api.users.getMe);
   const isAdmin = useQuery(api.users.isAdmin);
   const setUserAsAdminMutation = useMutation(api.users.setUserAsAdmin);
 
   const handleSetAdmin = async () => {
+    if (!isSignedIn) {
+      setMessage("Please sign in first");
+      setIsError(true);
+      return;
+    }
+
     try {
-      await setUserAsAdminMutation({});
+      // First create/update the user
+      await setUserAsAdminMutation();
       setIsError(false);
       setMessage("Success! You are now an admin.");
     } catch (error) {
@@ -25,70 +32,53 @@ export default function AdminSetup() {
     }
   };
 
+  if (!isSignedIn) {
+    return (
+      <div className="min-h-screen px-4 py-12 bg-gray-100 sm:px-6 lg:px-8">
+        <div className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-md">
+          <h1 className="mb-4 text-2xl font-bold text-gray-900">Admin Setup</h1>
+          <p className="text-red-600">
+            Please sign in first to access this page.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen px-4 py-12 bg-gray-100 sm:px-6 lg:px-8">
+        <div className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-md">
+          <h1 className="mb-4 text-2xl font-bold text-gray-900">
+            Admin Status
+          </h1>
+          <p className="text-green-600">You are already an admin!</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <Header />
-
-      <div className="max-w-xl p-8 mx-auto">
-        <h1 className="inline-block pb-2 mb-6 text-3xl font-black text-black border-b-4 border-black">
-          Admin Setup
-        </h1>
-
+    <div className="min-h-screen px-4 py-12 bg-gray-100 sm:px-6 lg:px-8">
+      <div className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-md">
+        <h1 className="mb-4 text-2xl font-bold text-gray-900">Admin Setup</h1>
         {message && (
           <div
-            className={`p-4 mb-6 rounded ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
+            className={`p-4 mb-4 rounded ${
+              isError
+                ? "bg-red-100 text-red-700"
+                : "bg-green-100 text-green-700"
+            }`}
           >
             {message}
           </div>
         )}
-
-        <div className="p-6 bg-white rounded-lg border-3 border-black shadow-[4px_4px_0px_0px_rgba(30,30,30,0.8)]">
-          <p className="mb-4 font-medium text-black">
-            This page allows you to set yourself up as an admin. This will only
-            work for:
-          </p>
-
-          <ul className="pl-5 mb-6 font-medium text-black list-disc">
-            <li>The very first user of the system</li>
-            <li>Users who are already admins</li>
-          </ul>
-
-          <div className="mb-6">
-            <h2 className="mb-2 text-xl font-bold text-black">
-              Current Status
-            </h2>
-            {user === undefined ? (
-              <p className="text-black">Loading...</p>
-            ) : user === null ? (
-              <p className="font-bold text-red-600">Not logged in</p>
-            ) : (
-              <p className="text-black">
-                <span className="font-bold">Logged in as:</span>{" "}
-                {user.name || user.email || "User"}
-                <br />
-                <span className="font-bold">Role:</span>{" "}
-                {isAdmin ? "Admin ✅" : "Regular user"}
-              </p>
-            )}
-          </div>
-
-          <div className="flex space-x-4">
-            <button
-              onClick={handleSetAdmin}
-              disabled={isAdmin === true}
-              className="px-4 py-2 bg-[var(--primary)] text-white font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(30,30,30,1)] hover:shadow-[5px_5px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isAdmin ? "Already Admin" : "Make Me Admin"}
-            </button>
-
-            <Link
-              href="/"
-              className="px-4 py-2 bg-[var(--secondary)] text-white font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(30,30,30,1)] hover:shadow-[5px_5px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition"
-            >
-              Return Home
-            </Link>
-          </div>
-        </div>
+        <button
+          onClick={handleSetAdmin}
+          className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Make Me Admin
+        </button>
       </div>
     </div>
   );

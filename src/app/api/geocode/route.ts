@@ -63,45 +63,28 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const address = searchParams.get("address");
 
-  // Validate input
   if (!address) {
-    return NextResponse.json(
-      { error: "Address parameter is required" },
-      { status: 400 }
-    );
-  }
-
-  // Basic input validation for address
-  if (
-    typeof address !== "string" ||
-    address.length < 3 ||
-    address.length > 250
-  ) {
-    return NextResponse.json(
-      { error: "Invalid address parameter" },
-      { status: 400 }
-    );
-  }
-
-  // Check for potentially harmful characters
-  if (/[<>]/.test(address)) {
-    return NextResponse.json(
-      { error: "Invalid characters in address" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Address is required" }, { status: 400 });
   }
 
   try {
-    const location = await geocodeAddress(address);
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        address
+      )}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+    );
 
-    if (!location) {
-      return NextResponse.json(
-        { error: "Could not geocode the provided address" },
-        { status: 404 }
-      );
+    const data = await response.json();
+
+    if (data.status !== "OK") {
+      throw new Error(data.error_message || "Geocoding failed");
     }
 
-    return NextResponse.json(location);
+    const location = data.results[0].geometry.location;
+    return NextResponse.json({
+      lat: location.lat,
+      lng: location.lng,
+    });
   } catch (error) {
     console.error("Geocoding error:", error);
     return NextResponse.json(
