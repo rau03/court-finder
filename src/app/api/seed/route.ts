@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import mongoose from "mongoose";
 
+// Add this line to mark the route as dynamic
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   try {
     console.log("Attempting to connect to MongoDB...");
