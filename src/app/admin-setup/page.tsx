@@ -8,7 +8,7 @@ import { useUser } from "@clerk/nextjs";
 export default function AdminSetup() {
   const [message, setMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn } = useUser();
 
   const userData = useQuery(api.users.getMe);
   const isAdmin = useQuery(api.users.isAdmin);
