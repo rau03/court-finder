@@ -53,7 +53,6 @@ export default function SignInPage() {
         afterSignUpUrl="/"
         initialValues={{
           emailAddress: "",
-          password: "",
         }}
       />
     </div>
