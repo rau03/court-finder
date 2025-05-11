@@ -27,9 +27,9 @@ const darkTextTheme = {
     socialButtonsBlockButtonArrow: "text-gray-900",
     dividerLine: "bg-gray-300",
     dividerText: "text-gray-900",
-    formFieldLabel: "text-black font-medium",
+    formFieldLabel: "block mb-2 font-medium text-black",
     formFieldInput:
-      "text-black border-gray-300 focus:border-blue-500 focus:ring-blue-500",
+      "w-full p-3 text-black border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
     formButtonPrimary: "bg-blue-600 hover:bg-blue-700",
     formButtonReset: "text-black hover:text-blue-600",
     footerActionText: "text-black",
@@ -37,6 +37,9 @@ const darkTextTheme = {
     identityPreview: "bg-gray-100 border border-gray-300",
     identityPreviewText: "text-black",
     identityPreviewEditButton: "text-blue-600 hover:text-blue-800",
+    formField: "mb-4",
+    formFieldInputWrapper: "relative",
+    formFieldAction: "hidden",
   },
 };
 
