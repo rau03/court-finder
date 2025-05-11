@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { geocodeAddress } from "@/lib/geocoder";
 
 // Simple in-memory rate limiter
 const rateLimiter = {

@@ -10,7 +10,6 @@ export default function AdminSetup() {
   const [isError, setIsError] = useState(false);
   const { isSignedIn } = useUser();
 
-  const userData = useQuery(api.users.getMe);
   const isAdmin = useQuery(api.users.isAdmin);
   const setUserAsAdminMutation = useMutation(api.users.setUserAsAdmin);
 
