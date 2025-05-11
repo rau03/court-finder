@@ -4,21 +4,27 @@ import mongoose from "mongoose";
 
 export async function GET(request: Request) {
   try {
+    console.log("Attempting to connect to MongoDB...");
     await dbConnect();
+    console.log("MongoDB connected successfully");
 
     const { searchParams } = new URL(request.url);
     const resetDB = searchParams.get("reset") === "true";
+    console.log("Reset database requested:", resetDB);
 
     // Reset the database if requested
     if (resetDB) {
+      console.log("Clearing existing courts...");
       await mongoose.connection.collection("courts").deleteMany({});
       console.log("Cleared existing courts");
     }
 
     // Check if we already have courts
+    console.log("Checking existing courts...");
     const count = await mongoose.connection
       .collection("courts")
       .countDocuments();
+    console.log("Current court count:", count);
 
     if (count === 0 || resetDB) {
       // Sample courts from across the United States with all metadata
@@ -154,16 +160,23 @@ export async function GET(request: Request) {
 
       console.log(`Adding ${sampleCourts.length} courts to database...`);
 
-      // Insert all courts directly using MongoDB driver
-      await mongoose.connection.collection("courts").insertMany(sampleCourts);
+      try {
+        // Insert all courts directly using MongoDB driver
+        await mongoose.connection.collection("courts").insertMany(sampleCourts);
+        console.log("Successfully inserted courts");
 
-      const insertedCount = await mongoose.connection
-        .collection("courts")
-        .countDocuments();
+        const insertedCount = await mongoose.connection
+          .collection("courts")
+          .countDocuments();
+        console.log("New court count:", insertedCount);
 
-      return NextResponse.json({
-        message: `Database seeded with ${insertedCount} sample courts from across the US`,
-      });
+        return NextResponse.json({
+          message: `Database seeded with ${insertedCount} sample courts from across the US`,
+        });
+      } catch (insertError) {
+        console.error("Error inserting courts:", insertError);
+        throw insertError;
+      }
     } else {
       return NextResponse.json({
         message: `Database already has ${count} courts. Use ?reset=true to reseed.`,
@@ -171,8 +184,18 @@ export async function GET(request: Request) {
     }
   } catch (error) {
     console.error("Error seeding database:", error);
+    // Return more detailed error information
     return NextResponse.json(
-      { error: "Failed to seed database" },
+      {
+        error: "Failed to seed database",
+        details: error instanceof Error ? error.message : "Unknown error",
+        stack:
+          process.env.NODE_ENV === "development"
+            ? error instanceof Error
+              ? error.stack
+              : undefined
+            : undefined,
+      },
       { status: 500 }
     );
   }
