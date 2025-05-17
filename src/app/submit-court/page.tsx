@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { Id } from "../../../convex/_generated/dataModel";
 
-// Define the form data structure
+// Define the form data structure matching Convex schema
 interface FormData {
   name: string;
   address: string;
@@ -146,24 +147,44 @@ export default function SubmitCourt() {
     setError(null);
 
     try {
+      // Validate required fields
+      if (!formData.address || !formData.state || !formData.zipCode) {
+        throw new Error("Please fill in all required address fields");
+      }
+
+      // Format the address string
+      const addressParts = [
+        formData.address,
+        formData.city,
+        formData.state,
+        formData.zipCode,
+      ].filter(Boolean); // Remove empty strings
+
+      const addressString = addressParts.join(", ");
+      console.log("Attempting to geocode address:", addressString);
+
       // First, geocode the address
-      const addressString = `${formData.address}, ${formData.city}, ${formData.state} ${formData.zipCode}`;
       const geocodeResponse = await fetch(
         `/api/geocode?address=${encodeURIComponent(addressString)}`
       );
 
       if (!geocodeResponse.ok) {
-        throw new Error("Failed to geocode address");
+        const errorData = await geocodeResponse.json();
+        console.error("Geocoding error response:", errorData);
+        throw new Error(errorData.error || "Failed to geocode address");
       }
 
       const geocodeData = await geocodeResponse.json();
+      console.log("Geocoding response:", geocodeData);
 
       if (!geocodeData.lat || !geocodeData.lng) {
-        throw new Error("Could not determine location coordinates");
+        throw new Error(
+          "Could not determine location coordinates. Please check the address and try again."
+        );
       }
 
       // Submit the court data to Convex
-      await submitCourtMutation({
+      const courtId = await submitCourtMutation({
         name: formData.name,
         address: formData.address,
         city: formData.city || "",
@@ -201,10 +222,14 @@ export default function SubmitCourt() {
       });
 
       setSuccess(true);
-      setTimeout(() => router.push("/"), 3000);
+      setTimeout(() => router.push("/"), 7000);
     } catch (err) {
       console.error("Submission error:", err);
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An error occurred while submitting the court"
+      );
     } finally {
       setLoading(false);
     }
@@ -215,11 +240,13 @@ export default function SubmitCourt() {
     return (
       <div className="max-w-4xl p-6 mx-auto mt-10 bg-white shadow-md rounded-xl">
         <div className="text-center">
-          <h1 className="mb-4 text-3xl font-bold text-green-600">Thank You!</h1>
-          <p className="mb-6 text-lg">
+          <h1 className="mb-4 text-3xl font-bold text-green-700">Thank You!</h1>
+          <p className="mb-6 text-lg text-gray-800">
             Your court submission has been received and will be reviewed soon.
           </p>
-          <p className="mb-4">Redirecting to homepage in 3 seconds...</p>
+          <p className="mb-4 text-gray-800">
+            Redirecting to homepage in 7 seconds...
+          </p>
           <Link
             href="/"
             className="px-6 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
@@ -367,6 +394,7 @@ export default function SubmitCourt() {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
+                  required
                   className="form-input"
                 >
                   <option value="">Select State</option>
@@ -444,76 +472,88 @@ export default function SubmitCourt() {
         {/* Amenities */}
         <div className="p-4 rounded-lg bg-yellow-50">
           <h2 className="section-heading">Amenities</h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="flex items-center">
+          <div className="grid max-w-2xl grid-cols-1 gap-4 mx-auto md:grid-cols-3">
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 id="amenities.indoorCourts"
                 name="amenities.indoorCourts"
                 checked={formData.amenities.indoorCourts}
                 onChange={handleCheckboxChange}
-                className="form-input"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="amenities.indoorCourts" className="form-label">
+              <label
+                htmlFor="amenities.indoorCourts"
+                className="text-sm font-medium text-gray-700"
+              >
                 Indoor Courts
               </label>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 id="amenities.outdoorCourts"
                 name="amenities.outdoorCourts"
                 checked={formData.amenities.outdoorCourts}
                 onChange={handleCheckboxChange}
-                className="form-input"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="amenities.outdoorCourts" className="form-label">
+              <label
+                htmlFor="amenities.outdoorCourts"
+                className="text-sm font-medium text-gray-700"
+              >
                 Outdoor Courts
               </label>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 id="amenities.lightsAvailable"
                 name="amenities.lightsAvailable"
                 checked={formData.amenities.lightsAvailable}
                 onChange={handleCheckboxChange}
-                className="form-input"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="amenities.lightsAvailable" className="form-label">
+              <label
+                htmlFor="amenities.lightsAvailable"
+                className="text-sm font-medium text-gray-700"
+              >
                 Lights Available
               </label>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 id="amenities.restroomsAvailable"
                 name="amenities.restroomsAvailable"
                 checked={formData.amenities.restroomsAvailable}
                 onChange={handleCheckboxChange}
-                className="form-input"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
               <label
                 htmlFor="amenities.restroomsAvailable"
-                className="form-label"
+                className="text-sm font-medium text-gray-700"
               >
                 Restrooms Available
               </label>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 id="amenities.waterFountain"
                 name="amenities.waterFountain"
                 checked={formData.amenities.waterFountain}
                 onChange={handleCheckboxChange}
-                className="form-input"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="amenities.waterFountain" className="form-label">
+              <label
+                htmlFor="amenities.waterFountain"
+                className="text-sm font-medium text-gray-700"
+              >
                 Water Fountain
               </label>
             </div>

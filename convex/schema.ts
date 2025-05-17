@@ -56,6 +56,16 @@ export default defineSchema({
     .index("by_indoor", ["indoor"])
     .index("by_verified", ["isVerified"]),
 
+  // Favorites table
+  favorites: defineTable({
+    userId: v.string(),
+    courtId: v.id("courts"),
+    createdAt: v.number(), // timestamp
+  })
+    .index("by_user", ["userId"])
+    .index("by_court", ["courtId"])
+    .index("by_user_and_court", ["userId", "courtId"]),
+
   // Users table
   users: defineTable({
     name: v.optional(v.string()),

@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as auth from "../auth.js";
 import type * as courts from "../courts.js";
+import type * as favorites from "../favorites.js";
 import type * as users from "../users.js";
 
 /**
@@ -28,6 +29,7 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   courts: typeof courts;
+  favorites: typeof favorites;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

@@ -1,6 +1,7 @@
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../convex/_generated/api";
 import Court from "../src/models/Court";
+import Favorite from "../src/models/Favorite";
 import dbConnect from "../src/lib/mongodb";
 
 // Initialize Convex client
@@ -76,9 +77,40 @@ async function migrateCourts() {
       }
     }
 
-    console.log("\nMigration complete!");
+    console.log("\nCourt migration complete!");
     console.log(`Successfully migrated: ${successCount} courts`);
     console.log(`Failed to migrate: ${errorCount} courts`);
+
+    // Migrate favorites
+    console.log("\nStarting favorites migration...");
+    const favorites = await Favorite.find({}).lean();
+    console.log(`Found ${favorites.length} favorites in MongoDB`);
+
+    successCount = 0;
+    errorCount = 0;
+
+    for (const favorite of favorites) {
+      try {
+        // Add favorite to Convex
+        await convex.mutation(api.favorites.addFavorite, {
+          userId: favorite.userId,
+          courtId: favorite.courtId.toString(),
+          createdAt: favorite.createdAt?.getTime() || Date.now(),
+        });
+        successCount++;
+        console.log(`Migrated favorite for user: ${favorite.userId}`);
+      } catch (error) {
+        errorCount++;
+        console.error(
+          `Failed to migrate favorite for user ${favorite.userId}:`,
+          error
+        );
+      }
+    }
+
+    console.log("\nFavorites migration complete!");
+    console.log(`Successfully migrated: ${successCount} favorites`);
+    console.log(`Failed to migrate: ${errorCount} favorites`);
   } catch (error) {
     console.error("Migration failed:", error);
   } finally {

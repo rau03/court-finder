@@ -184,14 +184,34 @@ export const getVerifiedCourts = query({
 // Search courts by location and filters
 export const searchCourts = query({
   args: {
-    latitude: v.optional(v.number()),
-    longitude: v.optional(v.number()),
-    maxDistance: v.optional(v.number()), // in meters
+    address: v.optional(v.string()),
     state: v.optional(v.string()),
     zipCode: v.optional(v.string()),
     indoor: v.optional(v.boolean()),
+    maxDistance: v.optional(v.number()),
   },
-  returns: v.array(v.any()),
+  returns: v.array(
+    v.object({
+      _id: v.id("courts"),
+      name: v.string(),
+      address: v.string(),
+      state: v.string(),
+      zipCode: v.string(),
+      indoor: v.boolean(),
+      numberOfCourts: v.number(),
+      location: v.object({
+        type: v.literal("Point"),
+        coordinates: v.array(v.number()),
+      }),
+      isVerified: v.boolean(),
+      addedByUser: v.boolean(),
+      lastVerified: v.number(),
+      rating: v.number(),
+      submittedBy: v.string(),
+      createdAt: v.number(),
+      updatedAt: v.number(),
+    })
+  ),
   handler: async (ctx, args) => {
     // Always filter by isVerified = true using index
     let courts = await ctx.db
@@ -199,28 +219,44 @@ export const searchCourts = query({
       .withIndex("by_verified", (q) => q.eq("isVerified", true))
       .collect();
 
-    // Geospatial filter in-memory
-    if (args.latitude !== undefined && args.longitude !== undefined) {
-      const maxDistance = args.maxDistance ?? 50000; // Default 50km
-      courts = courts.filter((court: any) => {
-        if (!court.location || !court.location.coordinates) return false;
-        const [lng, lat] = court.location.coordinates;
-        const dx = lng - args.longitude!;
-        const dy = lat - args.latitude!;
-        const distance = Math.sqrt(dx * dx + dy * dy) * 111320; // rough meters per degree
-        return distance <= maxDistance;
-      });
-    }
-    // Additional filters in-memory
+    // Filter by state if provided
     if (args.state) {
-      courts = courts.filter((court: any) => court.state === args.state);
+      courts = courts.filter(
+        (court: { state: string }) => court.state === args.state
+      );
     }
+
+    // Filter by zip code if provided
     if (args.zipCode) {
-      courts = courts.filter((court: any) => court.zipCode === args.zipCode);
+      courts = courts.filter(
+        (court: { zipCode: string }) => court.zipCode === args.zipCode
+      );
     }
+
+    // Filter by indoor/outdoor if provided
     if (args.indoor !== undefined) {
-      courts = courts.filter((court: any) => court.indoor === args.indoor);
+      courts = courts.filter(
+        (court: { indoor: boolean }) => court.indoor === args.indoor
+      );
     }
-    return courts;
+
+    // Map the courts to match the return type
+    return courts.map((court) => ({
+      _id: court._id,
+      name: court.name,
+      address: court.address,
+      state: court.state,
+      zipCode: court.zipCode,
+      indoor: court.indoor,
+      numberOfCourts: court.numberOfCourts,
+      location: court.location,
+      isVerified: court.isVerified,
+      addedByUser: court.addedByUser,
+      lastVerified: court.lastVerified,
+      rating: court.rating || 0,
+      submittedBy: court.submittedBy || "",
+      createdAt: court.createdAt,
+      updatedAt: court.updatedAt,
+    }));
   },
 });

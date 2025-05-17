@@ -2,15 +2,47 @@
 
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import { Id } from "../../../convex/_generated/dataModel";
 
 interface CourtCardProps {
   court: {
-    _id: string;
+    _id: Id<"courts">;
     name: string;
     address: string;
+    city: string;
     state: string;
-    indoor: boolean;
+    zipCode: string;
     numberOfCourts: number;
+    surfaceType: string;
+    cost: string;
+    amenities: {
+      indoorCourts: boolean;
+      outdoorCourts: boolean;
+      lightsAvailable: boolean;
+      restroomsAvailable: boolean;
+      waterFountain: boolean;
+    };
+    contact: {
+      website: string;
+      phone: string;
+      email: string;
+    };
+    indoor: boolean;
+    hours: {
+      monday: string;
+      tuesday: string;
+      wednesday: string;
+      thursday: string;
+      friday: string;
+      saturday: string;
+      sunday: string;
+    };
+    location: {
+      type: string;
+      coordinates: [number, number];
+    };
   };
   isFavorite?: boolean;
 }
@@ -19,12 +51,19 @@ export default function CourtCard({
   court,
   isFavorite = false,
 }: CourtCardProps) {
-  const { isSignedIn } = useUser();
-  const [favorite, setFavorite] = useState(isFavorite);
+  const { isSignedIn, user } = useUser();
   const [loading, setLoading] = useState(false);
 
+  // Use Convex queries and mutations
+  const isFavorited = useQuery(api.favorites.isFavorited, {
+    userId: user?.id ?? "",
+    courtId: court._id,
+  });
+  const addFavorite = useMutation(api.favorites.addFavorite);
+  const removeFavorite = useMutation(api.favorites.removeFavorite);
+
   const toggleFavorite = async () => {
-    if (!isSignedIn) {
+    if (!isSignedIn || !user) {
       // Redirect to sign in if not signed in
       window.location.href = "/sign-in";
       return;
@@ -32,26 +71,18 @@ export default function CourtCard({
 
     setLoading(true);
     try {
-      if (favorite) {
+      if (isFavorited) {
         // Remove from favorites
-        const response = await fetch(`/api/favorites/${court._id}`, {
-          method: "DELETE",
+        await removeFavorite({
+          userId: user.id,
+          courtId: court._id,
         });
-        if (response.ok) {
-          setFavorite(false);
-        }
       } else {
         // Add to favorites
-        const response = await fetch("/api/favorites", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ courtId: court._id }),
+        await addFavorite({
+          userId: user.id,
+          courtId: court._id,
         });
-        if (response.ok) {
-          setFavorite(true);
-        }
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
@@ -77,12 +108,16 @@ export default function CourtCard({
             onClick={toggleFavorite}
             disabled={loading}
             className="text-2xl transition-transform transform hover:scale-125 focus:outline-none"
-            aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
+            aria-label={
+              isFavorited ? "Remove from favorites" : "Add to favorites"
+            }
           >
-            {favorite ? "❤️" : "🤍"}
+            {isFavorited ? "❤️" : "🤍"}
           </button>
         </div>
-        <p className="mb-3 font-bold text-[#222]">{court.address}</p>
+        <p className="mb-3 font-bold text-[#222]">
+          {court.address}, {court.city}, {court.state} {court.zipCode}
+        </p>
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div className="p-2 bg-[var(--accent)] border-2 border-[#222]">
             <span className="font-black text-[#222]">State:</span>{" "}

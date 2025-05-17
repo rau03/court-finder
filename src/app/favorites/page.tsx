@@ -1,37 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import Header from "../components/Header";
 import CourtCard from "../components/CourtCard";
 import Link from "next/link";
 
-interface Court {
-  _id: string;
-  name: string;
-  address: string;
-  state: string;
-  indoor: boolean;
-  numberOfCourts: number;
-  location: {
-    type: string;
-    coordinates: number[];
-  };
-}
-
-interface Favorite {
-  _id: string;
-  userId: string;
-  courtId: Court;
-}
-
 export default function Favorites() {
-  const { isSignedIn, isLoaded } = useUser();
+  const { isSignedIn, isLoaded, user } = useUser();
   const router = useRouter();
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+
+  // Use Convex query to fetch favorites with court details
+  const favorites = useQuery(api.favorites.getUserFavoritesWithDetails, {
+    userId: user?.id ?? "",
+  });
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -39,32 +24,7 @@ export default function Favorites() {
     }
   }, [isSignedIn, isLoaded, router]);
 
-  useEffect(() => {
-    if (isSignedIn) {
-      fetchFavorites();
-    }
-  }, [isSignedIn]);
-
-  const fetchFavorites = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/favorites");
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch favorites");
-      }
-
-      const data = await response.json();
-      setFavorites(data.favorites);
-    } catch (err) {
-      console.error("Error fetching favorites:", err);
-      setError("Failed to load your favorite courts");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (!isLoaded || loading) {
+  if (!isLoaded) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
         <Header />
@@ -92,13 +52,14 @@ export default function Favorites() {
           My Favorite Courts
         </h1>
 
-        {error && (
-          <div className="p-4 mb-6 text-red-700 border border-red-200 rounded-lg bg-red-50">
-            {error}
+        {favorites === undefined ? (
+          <div className="p-6 bg-white rounded-lg shadow-md">
+            <div className="animate-pulse">
+              <div className="h-32 mb-4 bg-gray-200 rounded"></div>
+              <div className="h-32 mb-4 bg-gray-200 rounded"></div>
+            </div>
           </div>
-        )}
-
-        {favorites.length === 0 ? (
+        ) : favorites.length === 0 ? (
           <div className="p-6 bg-white rounded-lg shadow-md">
             <p className="mb-4 text-gray-600">
               You don&apos;t have any favorite courts yet. Find courts and add

@@ -16,7 +16,7 @@ export default function Header() {
           href="/"
           className="text-3xl font-black text-[#222] hover:text-[var(--primary)] transition-colors relative"
         >
-          Pickleball Court Finder
+          Pickleball Court Hub
         </Link>
 
         <div className="flex items-center gap-4">

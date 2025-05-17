@@ -76,14 +76,16 @@ export default function AdminDashboard() {
       <Header />
 
       <div className="max-w-6xl p-8 mx-auto">
-        <h1 className="inline-block pb-2 mb-8 text-3xl font-black border-b-4 border-black">
+        <h1 className="inline-block pb-2 mb-8 text-3xl font-black text-white border-b-4 border-white">
           Admin Dashboard
         </h1>
 
-        <h2 className="mb-4 text-2xl font-bold">Courts Pending Approval</h2>
+        <h2 className="mb-4 text-2xl font-bold text-white">
+          Courts Pending Approval
+        </h2>
 
         {!pendingCourts || pendingCourts.length === 0 ? (
-          <p className="p-4 text-gray-500 bg-gray-100 rounded">
+          <p className="p-4 text-white bg-gray-800 rounded">
             No courts pending approval
           </p>
         ) : (
@@ -91,35 +93,37 @@ export default function AdminDashboard() {
             {pendingCourts.map((court) => (
               <div
                 key={court._id}
-                className="border-3 border-black p-4 bg-[#f2de29] shadow-[4px_4px_0px_0px_rgba(30,30,30,0.8)]"
+                className="border-3 border-white p-4 bg-[#f2de29] shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)]"
               >
-                <h3 className="text-xl font-bold">{court.name}</h3>
-                <p>
+                <h3 className="text-xl font-bold text-[#222]">{court.name}</h3>
+                <p className="text-[#222]">
                   {court.address}, {court.city || ""}, {court.state}{" "}
                   {court.zipCode}
                 </p>
 
                 <div className="grid grid-cols-2 gap-2 mt-2">
-                  <div className="p-2 bg-white border-2 border-black">
-                    <span className="font-bold">Type:</span>{" "}
-                    {court.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
+                  <div className="p-2 bg-white border-2 border-[#222]">
+                    <span className="font-bold text-[#222]">Type:</span>{" "}
+                    <span className="text-[#222]">
+                      {court.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
+                    </span>
                   </div>
-                  <div className="p-2 bg-white border-2 border-black">
-                    <span className="font-bold">Courts:</span>{" "}
-                    {court.numberOfCourts}
+                  <div className="p-2 bg-white border-2 border-[#222]">
+                    <span className="font-bold text-[#222]">Courts:</span>{" "}
+                    <span className="text-[#222]">{court.numberOfCourts}</span>
                   </div>
                 </div>
 
                 <div className="flex mt-4 space-x-4">
                   <button
                     onClick={() => handleApprove(court._id)}
-                    className="px-4 py-2 bg-[var(--primary)] text-white font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(30,30,30,1)] hover:shadow-[5px_5px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition"
+                    className="px-4 py-2 bg-[var(--primary)] text-white font-bold border-3 border-white shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-[5px_5px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 transform transition"
                   >
                     Approve
                   </button>
                   <button
                     onClick={() => handleReject(court._id)}
-                    className="px-4 py-2 bg-[var(--secondary)] text-white font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(30,30,30,1)] hover:shadow-[5px_5px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition"
+                    className="px-4 py-2 bg-[var(--secondary)] text-white font-bold border-3 border-white shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-[5px_5px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 transform transition"
                   >
                     Reject
                   </button>
