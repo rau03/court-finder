@@ -14,7 +14,7 @@ interface Court {
   numberOfCourts: number;
   location: {
     type: "Point";
-    coordinates: number[];
+    coordinates: [number, number];
   };
 }
 
