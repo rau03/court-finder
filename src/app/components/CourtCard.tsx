@@ -11,26 +11,31 @@ interface CourtCardProps {
     _id: Id<"courts">;
     name: string;
     address: string;
-    city: string;
     state: string;
     zipCode: string;
     numberOfCourts: number;
-    surfaceType: string;
-    cost: string;
-    amenities: {
+    indoor: boolean;
+    location: {
+      type: string;
+      coordinates: [number, number];
+    };
+    // Optional properties
+    city?: string;
+    surfaceType?: string;
+    cost?: string;
+    amenities?: {
       indoorCourts: boolean;
       outdoorCourts: boolean;
       lightsAvailable: boolean;
       restroomsAvailable: boolean;
       waterFountain: boolean;
     };
-    contact: {
+    contact?: {
       website: string;
       phone: string;
       email: string;
     };
-    indoor: boolean;
-    hours: {
+    hours?: {
       monday: string;
       tuesday: string;
       wednesday: string;
@@ -38,10 +43,6 @@ interface CourtCardProps {
       friday: string;
       saturday: string;
       sunday: string;
-    };
-    location: {
-      type: string;
-      coordinates: [number, number];
     };
   };
   isFavorite?: boolean;
@@ -62,6 +63,9 @@ export default function CourtCard({
   const addFavorite = useMutation(api.favorites.addFavorite);
   const removeFavorite = useMutation(api.favorites.removeFavorite);
 
+  // Use isFavorite prop as fallback while query is loading
+  const favoriteStatus = isFavorited ?? isFavorite;
+
   const toggleFavorite = async () => {
     if (!isSignedIn || !user) {
       // Redirect to sign in if not signed in
@@ -71,7 +75,7 @@ export default function CourtCard({
 
     setLoading(true);
     try {
-      if (isFavorited) {
+      if (favoriteStatus) {
         // Remove from favorites
         await removeFavorite({
           userId: user.id,
@@ -109,10 +113,10 @@ export default function CourtCard({
             disabled={loading}
             className="text-2xl transition-transform transform hover:scale-125 focus:outline-none"
             aria-label={
-              isFavorited ? "Remove from favorites" : "Add to favorites"
+              favoriteStatus ? "Remove from favorites" : "Add to favorites"
             }
           >
-            {isFavorited ? "❤️" : "🤍"}
+            {favoriteStatus ? "❤️" : "🤍"}
           </button>
         </div>
         <p className="mb-3 font-bold text-[#222]">
