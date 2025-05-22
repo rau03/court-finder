@@ -77,8 +77,6 @@ interface Court {
   indoor: boolean;
   numberOfCourts: number;
   amenities: {
-    indoorCourts: boolean;
-    outdoorCourts: boolean;
     lightsAvailable: boolean;
     restroomsAvailable: boolean;
     waterFountain: boolean;
@@ -100,31 +98,27 @@ function createOverpassQuery(bounds: Bounds): string {
   return `
     [out:json][timeout:25];
     (
-      // Get all sports facilities and courts
+      // Direct pickleball court matches
+      node["sport"="pickleball"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
+      way["sport"="pickleball"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
+      
+      // Places with pickleball in name or description
+      node["name"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
+      way["name"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
+      node["description"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
+      way["description"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
+      
+      // Sports facilities that might have pickleball
       node["leisure"="sports_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       node["leisure"="pitch"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       node["leisure"="stadium"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       node["leisure"="fitness_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["leisure"="sports_centre"]["sport"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["leisure"="pitch"]["sport"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       
-      // Get all ways (areas) for sports facilities
+      // Areas that might have pickleball
       way["leisure"="sports_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       way["leisure"="pitch"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       way["leisure"="stadium"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       way["leisure"="fitness_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["leisure"="sports_centre"]["sport"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["leisure"="pitch"]["sport"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      
-      // Get any nodes or ways that mention pickleball or tennis
-      node["name"~"pickleball|tennis|court",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["name"~"pickleball|tennis|court",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["description"~"pickleball|tennis|court",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["description"~"pickleball|tennis|court",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      
-      // Get any nodes or ways with sport tags
-      node["sport"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["sport"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
       
       // Get the nodes that make up the ways
       >;
@@ -202,8 +196,6 @@ function processOSMData(osmData: OSMResponse): Court[] {
             indoor: node.tags.indoor === "yes",
             numberOfCourts: parseInt(node.tags.courts ?? "1"),
             amenities: {
-              indoorCourts: node.tags.indoor === "yes",
-              outdoorCourts: node.tags.indoor !== "yes",
               lightsAvailable: node.tags.lit === "yes",
               restroomsAvailable: node.tags.toilets === "yes",
               waterFountain: node.tags.drinking_water === "yes",
@@ -311,8 +303,6 @@ function processOSMData(osmData: OSMResponse): Court[] {
               indoor: way.tags.indoor === "yes",
               numberOfCourts: parseInt(way.tags.courts ?? "1"),
               amenities: {
-                indoorCourts: way.tags.indoor === "yes",
-                outdoorCourts: way.tags.indoor !== "yes",
                 lightsAvailable: way.tags.lit === "yes",
                 restroomsAvailable: way.tags.toilets === "yes",
                 waterFountain: way.tags.drinking_water === "yes",
@@ -365,8 +355,6 @@ export async function GET(request: Request) {
       indoor: false,
       numberOfCourts: 2,
       amenities: {
-        indoorCourts: false,
-        outdoorCourts: true,
         lightsAvailable: true,
         restroomsAvailable: true,
         waterFountain: true,
@@ -390,15 +378,25 @@ export async function GET(request: Request) {
 
     try {
       console.log("Attempting to save test court to Convex...");
-      const result = await convex.mutation(api.courts.submitCourt, {
-        name: testCourt.name,
-        address: testCourt.address,
-        state: testCourt.state,
-        zipCode: testCourt.zipCode,
-        indoor: testCourt.indoor,
-        numberOfCourts: testCourt.numberOfCourts,
-        amenities: testCourt.amenities,
-        location: testCourt.location,
+      const result = await convex.mutation(api.courts.importExternalCourts, {
+        courts: [
+          {
+            name: testCourt.name,
+            address: testCourt.address,
+            state: testCourt.state,
+            zipCode: testCourt.zipCode,
+            indoor: testCourt.indoor,
+            numberOfCourts: testCourt.numberOfCourts,
+            amenities: testCourt.amenities,
+            location: testCourt.location,
+            isVerified: false,
+            addedByUser: false,
+            lastVerified: Date.now(),
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+            submittedBy: "system",
+          },
+        ],
       });
       console.log("Successfully saved test court to Convex:", result);
     } catch (error) {
@@ -462,19 +460,21 @@ export async function GET(request: Request) {
       if (courts.length > 0) {
         try {
           console.log("Attempting to save processed courts to Convex...");
-          for (const court of courts) {
-            const result = await convex.mutation(api.courts.submitCourt, {
-              name: court.name,
-              address: court.address,
-              state: court.state,
-              zipCode: court.zipCode,
-              indoor: court.indoor,
-              numberOfCourts: court.numberOfCourts,
-              amenities: court.amenities,
-              location: court.location,
-            });
-            console.log("Successfully saved court to Convex:", result);
-          }
+          const result = await convex.mutation(
+            api.courts.importExternalCourts,
+            {
+              courts: courts.map((court) => ({
+                ...court,
+                isVerified: false,
+                addedByUser: false,
+                lastVerified: Date.now(),
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                submittedBy: "osm",
+              })),
+            }
+          );
+          console.log("Successfully saved courts to Convex:", result);
         } catch (error) {
           console.error("Error saving processed courts to Convex:", error);
           if (error instanceof Error) {

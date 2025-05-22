@@ -127,7 +127,9 @@ export default function CourtCard({
             <span className="font-black text-[#222]">State:</span>{" "}
             <span className="font-bold text-[#222]">{court.state}</span>
           </div>
-          <div className="p-2 bg-[var(--secondary)] border-2 border-[#222]">
+          <div
+            className={`p-2 border-2 border-[#222] ${court.indoor ? "bg-blue-500" : "bg-green-500"}`}
+          >
             <span className="font-black text-white">Type:</span>{" "}
             <span className="font-bold text-white">
               {court.indoor ? "Indoor 🏢" : "Outdoor 🌳"}
