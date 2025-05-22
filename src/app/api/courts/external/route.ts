@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
-import Court from "@/models/Court";
-import connectDB from "@/lib/mongodb";
+import { api } from "@/convex/_generated/api";
+import { ConvexHttpClient } from "convex/browser";
 import type { NextRequest } from "next/server";
+
+// Initialize Convex client
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 interface ExternalCourt {
   id: string;
@@ -27,11 +30,8 @@ interface ExternalApiResponse {
 
 export async function GET() {
   try {
-    await connectDB();
-
-    const courts = await Court.find({
-      source: { $ne: "user-submitted" },
-    }).lean();
+    // Use Convex query to get external courts
+    const courts = await convex.query(api.courts.getExternalCourts);
 
     return NextResponse.json({ courts });
   } catch (error) {
@@ -55,22 +55,32 @@ export async function POST(request: NextRequest) {
 
   try {
     const data = (await request.json()) as ExternalApiResponse;
-    await connectDB();
 
+    // Convert external courts to Convex format
     const courts = data.courts.map((court) => ({
       name: court.name,
-      location: court.location,
+      location: {
+        type: "Point",
+        coordinates: court.location.coordinates,
+      },
       address: court.address,
       numberOfCourts: court.numberOfCourts,
-      surface: court.surface,
+      surfaceType: court.surface,
       indoor: court.indoor,
-      lighting: court.lighting,
-      courtType: court.courtType,
-      amenities: court.amenities,
+      amenities: {
+        lightsAvailable: court.lighting,
+        // Map other amenities as needed
+      },
       source: court.source,
+      isVerified: true, // External courts are pre-verified
+      addedByUser: false,
+      lastVerified: Date.now(),
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     }));
 
-    await Court.insertMany(courts);
+    // Use Convex mutation to import courts
+    await convex.mutation(api.courts.importExternalCourts, { courts });
 
     return NextResponse.json({ message: "Courts imported successfully" });
   } catch (error) {

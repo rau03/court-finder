@@ -62,6 +62,13 @@ const nextConfig = {
     // number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 2,
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@convex": "./convex",
+    };
+    return config;
+  },
 };
 
 module.exports = nextConfig;

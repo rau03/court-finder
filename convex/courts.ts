@@ -260,3 +260,81 @@ export const searchCourts = query({
     }));
   },
 });
+
+// Import courts from external sources
+export const importExternalCourts = mutation({
+  args: {
+    courts: v.array(
+      v.object({
+        name: v.string(),
+        address: v.string(),
+        state: v.string(),
+        zipCode: v.string(),
+        indoor: v.boolean(),
+        numberOfCourts: v.number(),
+        amenities: v.object({
+          indoorCourts: v.optional(v.boolean()),
+          outdoorCourts: v.optional(v.boolean()),
+          lightsAvailable: v.optional(v.boolean()),
+          restroomsAvailable: v.optional(v.boolean()),
+          waterFountain: v.optional(v.boolean()),
+        }),
+        location: v.object({
+          type: v.literal("Point"),
+          coordinates: v.array(v.number()),
+        }),
+        isVerified: v.boolean(),
+        addedByUser: v.boolean(),
+        lastVerified: v.number(),
+        createdAt: v.number(),
+        updatedAt: v.number(),
+        city: v.optional(v.string()),
+        surfaceType: v.optional(v.string()),
+        cost: v.optional(v.string()),
+        hours: v.optional(
+          v.object({
+            monday: v.optional(v.string()),
+            tuesday: v.optional(v.string()),
+            wednesday: v.optional(v.string()),
+            thursday: v.optional(v.string()),
+            friday: v.optional(v.string()),
+            saturday: v.optional(v.string()),
+            sunday: v.optional(v.string()),
+          })
+        ),
+        contact: v.optional(
+          v.object({
+            website: v.optional(v.string()),
+            phone: v.optional(v.string()),
+            email: v.optional(v.string()),
+          })
+        ),
+        rating: v.optional(v.number()),
+        submittedBy: v.optional(v.string()),
+      })
+    ),
+  },
+  returns: v.array(v.id("courts")),
+  handler: async (ctx, args) => {
+    const courtIds = [];
+    for (const court of args.courts) {
+      // Check if court already exists
+      const existingCourts = await ctx.db
+        .query("courts")
+        .filter((q) =>
+          q.and(
+            q.eq(q.field("name"), court.name),
+            q.eq(q.field("address"), court.address)
+          )
+        )
+        .collect();
+
+      if (existingCourts.length === 0) {
+        // Insert new court
+        const courtId = await ctx.db.insert("courts", court);
+        courtIds.push(courtId);
+      }
+    }
+    return courtIds;
+  },
+});

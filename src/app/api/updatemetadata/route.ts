@@ -1,62 +1,59 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import mongoose from "mongoose";
+import { api } from "@/convex/_generated/api";
+import { ConvexHttpClient } from "convex/browser";
+
+// Initialize Convex client
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export async function GET() {
   try {
-    await dbConnect();
+    // Get all courts
+    const courts = await convex.query(api.courts.getAllCourts);
 
-    // Direct database update for California court
-    const caCourt = await mongoose.connection.collection("courts").findOne({
-      name: "Morley Field Pickleball Courts",
-    });
+    // Find specific courts
+    const caCourt = courts.find(
+      (court) => court.name === "Morley Field Pickleball Courts"
+    );
+    const tnCourt = courts.find(
+      (court) => court.name === "Nolensville Recreation Center"
+    );
 
+    // Update California court
     if (caCourt) {
-      await mongoose.connection.collection("courts").updateOne(
-        { _id: caCourt._id },
-        {
-          $set: {
-            state: "CA",
-            zipCode: "92104",
-            indoor: false,
-            numberOfCourts: 12,
-          },
-        }
-      );
-
+      await convex.mutation(api.courts.updateCourt, {
+        courtId: caCourt._id,
+        updates: {
+          state: "CA",
+          zipCode: "92104",
+          indoor: false,
+          numberOfCourts: 12,
+          updatedAt: Date.now(),
+        },
+      });
       console.log("Updated CA court");
     }
 
-    // Direct database update for Tennessee court
-    const tnCourt = await mongoose.connection.collection("courts").findOne({
-      name: "Nolensville Recreation Center",
-    });
-
+    // Update Tennessee court
     if (tnCourt) {
-      await mongoose.connection.collection("courts").updateOne(
-        { _id: tnCourt._id },
-        {
-          $set: {
-            state: "TN",
-            zipCode: "37135",
-            indoor: true,
-            numberOfCourts: 4,
-          },
-        }
-      );
-
+      await convex.mutation(api.courts.updateCourt, {
+        courtId: tnCourt._id,
+        updates: {
+          state: "TN",
+          zipCode: "37135",
+          indoor: true,
+          numberOfCourts: 4,
+          updatedAt: Date.now(),
+        },
+      });
       console.log("Updated TN court");
     }
 
-    // Get all courts to verify updates
-    const allCourts = await mongoose.connection
-      .collection("courts")
-      .find({})
-      .toArray();
+    // Get updated courts
+    const updatedCourts = await convex.query(api.courts.getAllCourts);
 
     return NextResponse.json({
-      message: "Attempted direct metadata update",
-      courts: allCourts,
+      message: "Metadata update completed",
+      courts: updatedCourts,
     });
   } catch (error) {
     console.error("Error updating metadata:", error);

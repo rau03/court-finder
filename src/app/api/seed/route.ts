@@ -1,25 +1,16 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
-import mongoose from "mongoose";
+import { api } from "@/convex/_generated/api";
+import { ConvexHttpClient } from "convex/browser";
 
 // Add this line to mark the route as dynamic
 export const dynamic = "force-dynamic";
 
+// Initialize Convex client
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+
 export async function GET(request: Request) {
   try {
     console.log("Starting database seed process...");
-
-    // Test MongoDB connection
-    console.log("Testing MongoDB connection...");
-    try {
-      await dbConnect();
-      console.log("MongoDB connection successful");
-    } catch (dbError) {
-      console.error("MongoDB connection failed:", dbError);
-      throw new Error(
-        `Database connection failed: ${dbError instanceof Error ? dbError.message : "Unknown error"}`
-      );
-    }
 
     const { searchParams } = new URL(request.url);
     const resetDB = searchParams.get("reset") === "true";
@@ -29,7 +20,7 @@ export async function GET(request: Request) {
     if (resetDB) {
       console.log("Attempting to clear existing courts...");
       try {
-        await mongoose.connection.collection("courts").deleteMany({});
+        await convex.mutation(api.courts.clearAllCourts);
         console.log("Successfully cleared existing courts");
       } catch (clearError) {
         console.error("Failed to clear courts:", clearError);
@@ -43,7 +34,8 @@ export async function GET(request: Request) {
     console.log("Checking existing courts...");
     let count;
     try {
-      count = await mongoose.connection.collection("courts").countDocuments();
+      const courts = await convex.query(api.courts.getAllCourts);
+      count = courts.length;
       console.log("Current court count:", count);
     } catch (countError) {
       console.error("Failed to count courts:", countError);
@@ -67,6 +59,11 @@ export async function GET(request: Request) {
           zipCode: "37135",
           indoor: true,
           numberOfCourts: 4,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         {
           name: "Edmondson Park",
@@ -79,6 +76,11 @@ export async function GET(request: Request) {
           zipCode: "37211",
           indoor: false,
           numberOfCourts: 2,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         {
           name: "Brentwood Community Center",
@@ -91,6 +93,11 @@ export async function GET(request: Request) {
           zipCode: "37027",
           indoor: true,
           numberOfCourts: 6,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         // California
         {
@@ -104,6 +111,11 @@ export async function GET(request: Request) {
           zipCode: "92104",
           indoor: false,
           numberOfCourts: 12,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         {
           name: "Bobby Riggs Racket & Paddle",
@@ -116,6 +128,11 @@ export async function GET(request: Request) {
           zipCode: "92024",
           indoor: true,
           numberOfCourts: 8,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         // New York
         {
@@ -129,6 +146,11 @@ export async function GET(request: Request) {
           zipCode: "10025",
           indoor: false,
           numberOfCourts: 4,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         // Florida
         {
@@ -142,6 +164,11 @@ export async function GET(request: Request) {
           zipCode: "34112",
           indoor: false,
           numberOfCourts: 64,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         // Texas
         {
@@ -155,6 +182,11 @@ export async function GET(request: Request) {
           zipCode: "78717",
           indoor: true,
           numberOfCourts: 10,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         // Washington
         {
@@ -168,6 +200,11 @@ export async function GET(request: Request) {
           zipCode: "98005",
           indoor: true,
           numberOfCourts: 14,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
         // Arizona
         {
@@ -181,29 +218,28 @@ export async function GET(request: Request) {
           zipCode: "85122",
           indoor: false,
           numberOfCourts: 24,
+          isVerified: true,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         },
       ];
 
       console.log(`Attempting to insert ${sampleCourts.length} courts...`);
 
       try {
-        // Insert all courts directly using MongoDB driver
-        const result = await mongoose.connection
-          .collection("courts")
-          .insertMany(sampleCourts);
-        console.log("Insert result:", result);
+        // Insert all courts using Convex mutation
+        await convex.mutation(api.courts.seedCourts, { courts: sampleCourts });
+        console.log("Successfully inserted sample courts");
 
-        const insertedCount = await mongoose.connection
-          .collection("courts")
-          .countDocuments();
-        console.log("New court count:", insertedCount);
+        const courts = await convex.query(api.courts.getAllCourts);
+        console.log("New court count:", courts.length);
 
         return NextResponse.json({
-          message: `Database seeded with ${insertedCount} sample courts from across the US`,
-          details: {
-            inserted: result.insertedCount,
-            total: insertedCount,
-          },
+          success: true,
+          message: "Database seeded successfully",
+          count: courts.length,
         });
       } catch (insertError) {
         console.error("Failed to insert courts:", insertError);
@@ -213,21 +249,18 @@ export async function GET(request: Request) {
       }
     } else {
       return NextResponse.json({
-        message: `Database already has ${count} courts. Use ?reset=true to reseed.`,
+        success: true,
+        message: "Database already seeded",
+        count,
       });
     }
   } catch (error) {
-    console.error("Error seeding database:", error);
+    console.error("Seed process failed:", error);
     return NextResponse.json(
       {
+        success: false,
         error: "Failed to seed database",
         details: error instanceof Error ? error.message : "Unknown error",
-        stack:
-          process.env.NODE_ENV === "development"
-            ? error instanceof Error
-              ? error.stack
-              : undefined
-            : undefined,
       },
       { status: 500 }
     );

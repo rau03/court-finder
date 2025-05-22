@@ -140,11 +140,6 @@ NODE_ENV=development
     }
   }
 
-  // Add MongoDB connection string if not present
-  if (!envContent.includes("MONGODB_URI=")) {
-    envContent += `\nMONGODB_URI=mongodb://localhost:27017/pickleball_courts`;
-  }
-
   // Write the updated content to the file
   fs.writeFileSync(envPath, envContent);
 }

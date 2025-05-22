@@ -1,106 +1,196 @@
 #!/usr/bin/env node
 
 /**
- * Helper script to update the .env.local file with API keys
- * Usage: node update-env.js --google YOUR_GOOGLE_API_KEY --pickleball YOUR_PICKLEBALL_API_KEY
+ * Helper script to update environment variables for Court Finder
+ * Usage: node update-env.js --convex CONVEX_URL --clerk-pub CLERK_PUB_KEY --clerk-secret CLERK_SECRET_KEY --google GOOGLE_API_KEY
  */
 
 const fs = require("fs");
 const path = require("path");
+const readline = require("readline");
 
-// Parse arguments
-let googleApiKey = null;
-let pickleballApiKey = null;
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-for (let i = 2; i < process.argv.length; i++) {
-  if (process.argv[i] === "--google" && i + 1 < process.argv.length) {
-    googleApiKey = process.argv[i + 1];
-    i++; // Skip next arg
-  } else if (process.argv[i] === "--pickleball" && i + 1 < process.argv.length) {
-    pickleballApiKey = process.argv[i + 1];
-    i++; // Skip next arg
+// Parse command line arguments
+const args = process.argv.slice(2);
+const params = {};
+
+for (let i = 0; i < args.length; i += 2) {
+  if (args[i].startsWith("--") && i + 1 < args.length) {
+    const key = args[i].substring(2);
+    params[key] = args[i + 1];
   }
-}
-
-// Check for old format (just positional arg)
-if (!googleApiKey && process.argv[2] && !process.argv[2].startsWith("--")) {
-  googleApiKey = process.argv[2];
-  console.log("\x1b[33mWarning: Using deprecated argument format. Please use --google API_KEY in the future.\x1b[0m");
 }
 
 // Path to the environment file
 const envPath = path.join(process.cwd(), ".env.local");
 
-// Check if the file exists
-if (!fs.existsSync(envPath)) {
-  console.log(
-    "\x1b[33mWarning: .env.local file not found. Creating a new one.\x1b[0m"
-  );
-
-  // Create basic template
-  const envTemplate = `# Sensitive information - Do not expose these keys in version control
-MONGODB_URI=mongodb://localhost:27017/pickleball_courts
-GOOGLE_MAPS_API_KEY=${googleApiKey || ""}
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${googleApiKey || ""}
-PICKLEBALL_API_KEY=${pickleballApiKey || ""}
-NODE_ENV=development
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_cG9wdWxhci1iYXQtNjIuY2xlcmsuYWNjb3VudHMuZGV2JA
-CLERK_SECRET_KEY=
-`;
-
-  fs.writeFileSync(envPath, envTemplate);
-  console.log(
-    "\x1b[32mSuccess! Created .env.local with your API keys.\x1b[0m"
-  );
-  process.exit(0);
+// Function to ask for input if not provided via command line
+function askQuestion(question, defaultValue = "") {
+  return new Promise((resolve) => {
+    rl.question(
+      `${question} ${defaultValue ? `(default: ${defaultValue})` : ""}: `,
+      (answer) => {
+        resolve(answer || defaultValue);
+      }
+    );
+  });
 }
 
-// Read the existing file
-try {
-  let envContent = fs.readFileSync(envPath, "utf8");
+async function promptForMissingValues() {
+  console.log("\n=== Court Finder Environment Update ===\n");
 
-  // Update the Google Maps API keys if provided
-  if (googleApiKey) {
+  if (!params["convex"]) {
+    params["convex"] = await askQuestion(
+      "Enter your Convex URL (from Convex dashboard)"
+    );
+  }
+
+  if (!params["clerk-pub"]) {
+    params["clerk-pub"] = await askQuestion("Enter your Clerk Publishable Key");
+  }
+
+  if (!params["clerk-secret"]) {
+    params["clerk-secret"] = await askQuestion("Enter your Clerk Secret Key");
+  }
+
+  if (!params["google"]) {
+    params["google"] = await askQuestion("Enter your Google Maps API Key");
+  }
+
+  rl.close();
+}
+
+// Function to update the .env.local file
+function updateEnvFile() {
+  let envContent;
+
+  // Check if the file exists
+  if (fs.existsSync(envPath)) {
+    // Read existing file
+    envContent = fs.readFileSync(envPath, "utf8");
+    console.log("Updating existing .env.local file...");
+  } else {
+    // Create new file with template
+    envContent = `# Court Finder Environment Variables
+# Generated on ${new Date().toISOString()}
+# DO NOT commit this file to version control
+
+NODE_ENV=development
+`;
+    console.log("Creating new .env.local file...");
+  }
+
+  // Update or add Convex URL
+  if (params["convex"]) {
+    if (envContent.includes("NEXT_PUBLIC_CONVEX_URL=")) {
+      envContent = envContent.replace(
+        /NEXT_PUBLIC_CONVEX_URL=.*$/m,
+        `NEXT_PUBLIC_CONVEX_URL=${params["convex"]}`
+      );
+    } else {
+      envContent += `\nNEXT_PUBLIC_CONVEX_URL=${params["convex"]}`;
+    }
+  }
+
+  // Update or add Clerk keys
+  if (params["clerk-pub"]) {
+    if (envContent.includes("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=")) {
+      envContent = envContent.replace(
+        /NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=.*$/m,
+        `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${params["clerk-pub"]}`
+      );
+    } else {
+      envContent += `\nNEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${params["clerk-pub"]}`;
+    }
+  }
+
+  if (params["clerk-secret"]) {
+    if (envContent.includes("CLERK_SECRET_KEY=")) {
+      envContent = envContent.replace(
+        /CLERK_SECRET_KEY=.*$/m,
+        `CLERK_SECRET_KEY=${params["clerk-secret"]}`
+      );
+    } else {
+      envContent += `\nCLERK_SECRET_KEY=${params["clerk-secret"]}`;
+    }
+  }
+
+  // Update or add Google Maps API key
+  if (params["google"]) {
     if (envContent.includes("GOOGLE_MAPS_API_KEY=")) {
       envContent = envContent.replace(
         /GOOGLE_MAPS_API_KEY=.*$/m,
-        `GOOGLE_MAPS_API_KEY=${googleApiKey}`
+        `GOOGLE_MAPS_API_KEY=${params["google"]}`
       );
     } else {
-      envContent += `\nGOOGLE_MAPS_API_KEY=${googleApiKey}`;
+      envContent += `\nGOOGLE_MAPS_API_KEY=${params["google"]}`;
     }
 
     if (envContent.includes("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=")) {
       envContent = envContent.replace(
         /NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=.*$/m,
-        `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${googleApiKey}`
+        `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${params["google"]}`
       );
     } else {
-      envContent += `\nNEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${googleApiKey}`;
+      envContent += `\nNEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${params["google"]}`;
     }
   }
 
-  // Update the Pickleball API key if provided
-  if (pickleballApiKey) {
-    if (envContent.includes("PICKLEBALL_API_KEY=")) {
-      envContent = envContent.replace(
-        /PICKLEBALL_API_KEY=.*$/m,
-        `PICKLEBALL_API_KEY=${pickleballApiKey}`
-      );
-    } else {
-      envContent += `\nPICKLEBALL_API_KEY=${pickleballApiKey}`;
-    }
-  }
-
-  // Write the updated file
+  // Write the updated content to the file
   fs.writeFileSync(envPath, envContent);
-  console.log(
-    "\x1b[32mSuccess! Updated .env.local with your API keys.\x1b[0m"
-  );
-} catch (error) {
-  console.error(
-    "\x1b[31mError updating .env.local file:\x1b[0m",
-    error.message
-  );
-  process.exit(1);
 }
+
+// Validate that required parameters are set
+function validateParams() {
+  const missingParams = [];
+
+  if (!params["convex"]) missingParams.push("Convex URL");
+  if (!params["clerk-pub"]) missingParams.push("Clerk Publishable Key");
+  if (!params["clerk-secret"]) missingParams.push("Clerk Secret Key");
+
+  if (missingParams.length > 0) {
+    return false;
+  }
+
+  return true;
+}
+
+// Print completion instructions
+function printInstructions() {
+  console.log("\n✅ Environment update complete!");
+  console.log("\nNext steps:");
+  console.log("1. Start the Convex development server:");
+  console.log("   npm run convex");
+  console.log(
+    "\n2. In a separate terminal, start the Next.js development server:"
+  );
+  console.log("   npm run dev");
+  console.log("\n3. Or use the combined dev command:");
+  console.log("   npm run dev:all");
+  console.log("\nEnjoy using Court Finder! 🎾🏓");
+}
+
+// Main function
+async function main() {
+  try {
+    await promptForMissingValues();
+
+    if (!validateParams()) {
+      console.error("\n❌ Error: Some required parameters are missing.");
+      process.exit(1);
+    }
+
+    updateEnvFile();
+    printInstructions();
+  } catch (error) {
+    console.error(`\n❌ Error: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+// Run the script
+main();
