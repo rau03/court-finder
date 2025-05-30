@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Princeton Tennis Center",
+    "address": "1000 Washington Rd",
+    "city": "Princeton",
+    "state": "NJ",
+    "zipCode": "08540",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-74.66, 40.33]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Mercer County Tennis Center",
+    "address": "4315 US-1",
+    "city": "Princeton Junction",
+    "state": "NJ",
+    "zipCode": "08550",
+    "indoor": true,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-74.62, 40.3]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Morristown Tennis Club",
+    "address": "8 Normandy Heights Rd",
+    "city": "Morristown",
+    "state": "NJ",
+    "zipCode": "07960",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-74.48, 40.8]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Hackensack Tennis Center",
+    "address": "400 River St",
+    "city": "Hackensack",
+    "state": "NJ",
+    "zipCode": "07601",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-74.04, 40.89]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Cherry Hill Tennis Club",
+    "address": "1000 Haddonfield Rd",
+    "city": "Cherry Hill",
+    "state": "NJ",
+    "zipCode": "08002",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-75.02, 39.93]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  }
+]

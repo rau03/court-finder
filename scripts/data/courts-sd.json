@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Sioux Falls Tennis Center",
+    "address": "2711 W 12th St",
+    "city": "Sioux Falls",
+    "state": "SD",
+    "zipCode": "57104",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-96.73, 43.54]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Rapid City Tennis Center",
+    "address": "2350 N Maple Ave",
+    "city": "Rapid City",
+    "state": "SD",
+    "zipCode": "57701",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-103.23, 44.08]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Aberdeen Tennis Center",
+    "address": "1500 S State St",
+    "city": "Aberdeen",
+    "state": "SD",
+    "zipCode": "57401",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-98.49, 45.46]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Brookings Tennis Club",
+    "address": "520 8th St S",
+    "city": "Brookings",
+    "state": "SD",
+    "zipCode": "57006",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-96.79, 44.31]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Watertown Tennis Center",
+    "address": "1900 9th Ave SE",
+    "city": "Watertown",
+    "state": "SD",
+    "zipCode": "57201",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-97.12, 44.9]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  }
+]

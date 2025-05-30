@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Baseline Tennis Center",
+    "address": "1815 4th St SE",
+    "city": "Minneapolis",
+    "state": "MN",
+    "zipCode": "55455",
+    "indoor": true,
+    "numberOfCourts": 10,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-93.23, 44.97]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Fred Wells Tennis Center",
+    "address": "100 Portland Ave",
+    "city": "St. Paul",
+    "state": "MN",
+    "zipCode": "55107",
+    "indoor": true,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-93.09, 44.94]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Rochester Athletic Club",
+    "address": "3100 19th St NW",
+    "city": "Rochester",
+    "state": "MN",
+    "zipCode": "55901",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-92.47, 44.02]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Duluth Indoor Sports Center",
+    "address": "1601 N 34th St W",
+    "city": "Duluth",
+    "state": "MN",
+    "zipCode": "55806",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-92.12, 46.78]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "St. Cloud Tennis Center",
+    "address": "1500 33rd St S",
+    "city": "St. Cloud",
+    "state": "MN",
+    "zipCode": "56301",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-94.16, 45.55]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  }
+]

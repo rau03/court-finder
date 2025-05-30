@@ -312,7 +312,7 @@ export const importExternalCourts = mutation({
         ),
         rating: v.optional(v.number()),
         submittedBy: v.optional(v.string()),
-        source: v.string(),
+        source: v.optional(v.string()),
       })
     ),
   },
@@ -320,6 +320,12 @@ export const importExternalCourts = mutation({
   handler: async (ctx, args) => {
     const courtIds = [];
     for (const court of args.courts) {
+      // Add default source if not provided
+      const courtWithSource = {
+        ...court,
+        source: court.source || "osm",
+      };
+
       // Check if court already exists
       const existingCourts = await ctx.db
         .query("courts")
@@ -334,11 +340,11 @@ export const importExternalCourts = mutation({
       if (existingCourts.length > 0) {
         // Update existing court
         const existingCourt = existingCourts[0];
-        await ctx.db.patch(existingCourt._id, court);
+        await ctx.db.patch(existingCourt._id, courtWithSource);
         courtIds.push(existingCourt._id);
       } else {
         // Insert new court
-        const courtId = await ctx.db.insert("courts", court);
+        const courtId = await ctx.db.insert("courts", courtWithSource);
         courtIds.push(courtId);
       }
     }

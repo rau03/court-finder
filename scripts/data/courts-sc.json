@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Family Circle Tennis Center",
+    "address": "161 Seven Farms Dr",
+    "city": "Charleston",
+    "state": "SC",
+    "zipCode": "29492",
+    "indoor": false,
+    "numberOfCourts": 17,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-79.9, 32.81]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Columbia Tennis Center",
+    "address": "1635 Whaley St",
+    "city": "Columbia",
+    "state": "SC",
+    "zipCode": "29205",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-81.0, 33.99]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Greenville Tennis Center",
+    "address": "75 Cleveland Park Dr",
+    "city": "Greenville",
+    "state": "SC",
+    "zipCode": "29601",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-82.4, 34.85]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Hilton Head Tennis Club",
+    "address": "8 Lighthouse Ln",
+    "city": "Hilton Head Island",
+    "state": "SC",
+    "zipCode": "29928",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.75, 32.16]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Myrtle Beach Tennis Center",
+    "address": "3300 Robert Grissom Pkwy",
+    "city": "Myrtle Beach",
+    "state": "SC",
+    "zipCode": "29577",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-78.88, 33.69]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  }
+]

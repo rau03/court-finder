@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Lindner Family Tennis Center",
+    "address": "5460 Courseview Dr",
+    "city": "Mason",
+    "state": "OH",
+    "zipCode": "45040",
+    "indoor": false,
+    "numberOfCourts": 16,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.3139, 39.35]
+    }
+  },
+  {
+    "name": "Ohio State University Tennis Courts",
+    "address": "880 W Henderson Rd",
+    "city": "Columbus",
+    "state": "OH",
+    "zipCode": "43214",
+    "indoor": false,
+    "numberOfCourts": 12,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-83.0007, 40.0005]
+    }
+  }
+]

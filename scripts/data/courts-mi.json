@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Varsity Tennis Center",
+    "address": "2250 S State St",
+    "city": "Ann Arbor",
+    "state": "MI",
+    "zipCode": "48104",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-83.7431, 42.2783]
+    }
+  },
+  {
+    "name": "Detroit Tennis Club",
+    "address": "15040 Kercheval Ave",
+    "city": "Grosse Pointe",
+    "state": "MI",
+    "zipCode": "48236",
+    "indoor": false,
+    "numberOfCourts": 10,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-82.9139, 42.3833]
+    }
+  }
+]

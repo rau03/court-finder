@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Chicago Tennis Center",
+    "address": "1300 W Thorndale Ave",
+    "city": "Chicago",
+    "state": "IL",
+    "zipCode": "60660",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-87.67, 41.99]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Naperville Tennis Center",
+    "address": "443 Aurora Ave",
+    "city": "Naperville",
+    "state": "IL",
+    "zipCode": "60540",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-88.15, 41.75]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Rockford Tennis Center",
+    "address": "2000 S Lyford Rd",
+    "city": "Rockford",
+    "state": "IL",
+    "zipCode": "61108",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-89.05, 42.25]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Springfield Tennis Center",
+    "address": "2500 S 11th St",
+    "city": "Springfield",
+    "state": "IL",
+    "zipCode": "62703",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-89.65, 39.78]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Peoria Tennis Center",
+    "address": "1700 N Main St",
+    "city": "Peoria",
+    "state": "IL",
+    "zipCode": "61606",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-89.6, 40.7]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  }
+]

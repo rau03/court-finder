@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Gates Tennis Center",
+    "address": "3300 E Bayaud Ave",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80209",
+    "indoor": true,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-104.96, 39.7]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Denver Tennis Club",
+    "address": "1201 E 16th Ave",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80218",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-104.97, 39.74]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "City Park Tennis Courts",
+    "address": "2001 Colorado Blvd",
+    "city": "Denver",
+    "state": "CO",
+    "zipCode": "80205",
+    "indoor": false,
+    "numberOfCourts": 12,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-104.95, 39.74]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Boulder Indoor Tennis",
+    "address": "2850 30th St",
+    "city": "Boulder",
+    "state": "CO",
+    "zipCode": "80301",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-105.25, 40.02]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  },
+  {
+    "name": "Colorado Springs Tennis Club",
+    "address": "1625 W Bijou St",
+    "city": "Colorado Springs",
+    "state": "CO",
+    "zipCode": "80904",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-104.82, 38.84]
+    },
+    "addedByUser": false,
+    "createdAt": 1717027200000,
+    "updatedAt": 1717027200000,
+    "isVerified": true,
+    "lastVerified": 1717027200000,
+    "source": "seed-data"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Amy Yee Tennis Center",
+    "address": "2000 Martin Luther King Jr Way S",
+    "city": "Seattle",
+    "state": "WA",
+    "zipCode": "98144",
+    "indoor": true,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-122.3, 47.58]
+    }
+  },
+  {
+    "name": "Seattle Tennis Club",
+    "address": "922 McGilvra Blvd E",
+    "city": "Seattle",
+    "state": "WA",
+    "zipCode": "98112",
+    "indoor": false,
+    "numberOfCourts": 10,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-122.35, 47.63]
+    }
+  }
+]

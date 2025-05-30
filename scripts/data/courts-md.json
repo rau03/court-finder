@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Tennis Center at College Park",
+    "address": "5201 Paint Branch Pkwy",
+    "city": "College Park",
+    "state": "MD",
+    "zipCode": "20740",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-76.9367, 38.9897]
+    }
+  },
+  {
+    "name": "Loyola University Tennis Courts",
+    "address": "4501 N Charles St",
+    "city": "Baltimore",
+    "state": "MD",
+    "zipCode": "21210",
+    "indoor": false,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-76.6178, 39.3447]
+    }
+  }
+]

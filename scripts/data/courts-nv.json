@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Tennis Center at UNLV",
+    "address": "4505 S Maryland Pkwy",
+    "city": "Las Vegas",
+    "state": "NV",
+    "zipCode": "89154",
+    "indoor": false,
+    "numberOfCourts": 12,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-115.14, 36.11]
+    }
+  },
+  {
+    "name": "Reno Tennis Center",
+    "address": "2601 Plumas St",
+    "city": "Reno",
+    "state": "NV",
+    "zipCode": "89509",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-119.81, 39.53]
+    }
+  }
+]

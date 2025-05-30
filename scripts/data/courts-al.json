@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Lagoon Park Tennis Center",
+    "address": "2855 Lagoon Park Dr",
+    "city": "Montgomery",
+    "state": "AL",
+    "zipCode": "36109",
+    "indoor": false,
+    "numberOfCourts": 16,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-86.2539, 32.3676]
+    }
+  },
+  {
+    "name": "Birmingham Southern College Tennis Courts",
+    "address": "900 Arkadelphia Rd",
+    "city": "Birmingham",
+    "state": "AL",
+    "zipCode": "35254",
+    "indoor": false,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-86.8467, 33.5231]
+    }
+  }
+]

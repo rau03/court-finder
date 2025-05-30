@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Alaska Club East",
+    "address": "1920 E Dimond Blvd",
+    "city": "Anchorage",
+    "state": "AK",
+    "zipCode": "99515",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-149.8267, 61.1422]
+    }
+  },
+  {
+    "name": "University of Alaska Anchorage Tennis Courts",
+    "address": "3211 Providence Dr",
+    "city": "Anchorage",
+    "state": "AK",
+    "zipCode": "99508",
+    "indoor": false,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-149.8267, 61.1914]
+    }
+  }
+]

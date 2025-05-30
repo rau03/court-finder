@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Crandon Park Tennis Center",
+    "address": "7300 Crandon Blvd",
+    "city": "Key Biscayne",
+    "state": "FL",
+    "zipCode": "33149",
+    "indoor": false,
+    "numberOfCourts": 29,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-80.1557, 25.6925]
+    }
+  },
+  {
+    "name": "Sanlando Park",
+    "address": "401 W Highland St",
+    "city": "Altamonte Springs",
+    "state": "FL",
+    "zipCode": "32714",
+    "indoor": false,
+    "numberOfCourts": 20,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-81.3654, 28.6611]
+    }
+  }
+]

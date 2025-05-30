@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Centennial Sportsplex",
+    "address": "222 25th Ave N",
+    "city": "Nashville",
+    "state": "TN",
+    "zipCode": "37203",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-86.8133, 36.1539]
+    }
+  },
+  {
+    "name": "Memphis Tennis Center",
+    "address": "4145 Southern Ave",
+    "city": "Memphis",
+    "state": "TN",
+    "zipCode": "38117",
+    "indoor": false,
+    "numberOfCourts": 12,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-89.9361, 35.1212]
+    }
+  }
+]

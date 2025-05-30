@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Phoenix Tennis Center",
+    "address": "6330 N 21st Ave",
+    "city": "Phoenix",
+    "state": "AZ",
+    "zipCode": "85015",
+    "indoor": false,
+    "numberOfCourts": 16,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-112.1, 33.58]
+    }
+  },
+  {
+    "name": "Tucson Racquet Club",
+    "address": "4001 N Country Club Rd",
+    "city": "Tucson",
+    "state": "AZ",
+    "zipCode": "85716",
+    "indoor": true,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-110.9, 32.28]
+    }
+  }
+]

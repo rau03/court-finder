@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Piedmont Park Tennis Center",
+    "address": "1071 Piedmont Ave NE",
+    "city": "Atlanta",
+    "state": "GA",
+    "zipCode": "30309",
+    "indoor": false,
+    "numberOfCourts": 12,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.3733, 33.7857]
+    }
+  },
+  {
+    "name": "Bitsy Grant Tennis Center",
+    "address": "2125 Northside Dr NW",
+    "city": "Atlanta",
+    "state": "GA",
+    "zipCode": "30305",
+    "indoor": false,
+    "numberOfCourts": 10,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.4117, 33.8307]
+    }
+  }
+]

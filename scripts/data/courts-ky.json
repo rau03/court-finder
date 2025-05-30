@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Top Seed Tennis Club",
+    "address": "3140 Players Club Pkwy",
+    "city": "Nicholasville",
+    "state": "KY",
+    "zipCode": "40356",
+    "indoor": true,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.57, 37.8806]
+    }
+  },
+  {
+    "name": "University of Kentucky Tennis Courts",
+    "address": "1777 University Dr",
+    "city": "Lexington",
+    "state": "KY",
+    "zipCode": "40506",
+    "indoor": false,
+    "numberOfCourts": 12,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-84.5027, 38.0333]
+    }
+  }
+]

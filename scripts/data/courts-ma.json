@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Longfellow Tennis Club",
+    "address": "524 Boston Post Rd",
+    "city": "Wayland",
+    "state": "MA",
+    "zipCode": "01778",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.3617, 42.3625]
+    }
+  },
+  {
+    "name": "Boston University Tennis Courts",
+    "address": "100 Ashford St",
+    "city": "Boston",
+    "state": "MA",
+    "zipCode": "02215",
+    "indoor": false,
+    "numberOfCourts": 8,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-71.1028, 42.3505]
+    }
+  }
+]

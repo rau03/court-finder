@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Liberty Park Tennis Center",
+    "address": "600 E 900 S",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "zipCode": "84105",
+    "indoor": false,
+    "numberOfCourts": 10,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-111.88, 40.75]
+    }
+  },
+  {
+    "name": "Sports Mall Tennis Club",
+    "address": "5445 S 900 E",
+    "city": "Murray",
+    "state": "UT",
+    "zipCode": "84117",
+    "indoor": true,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-111.88, 40.66]
+    }
+  }
+]
