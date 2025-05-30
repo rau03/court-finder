@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "Riverside Tennis Center",
+      "address": "551 Nims N",
+      "city": "Wichita",
+      "state": "KS",
+      "zipCode": "67203",
+      "location": {
+        "type": "Point",
+        "coordinates": [-97.3532, 37.6936]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 18,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "8:00 AM - 10:00 PM",
+        "tuesday": "8:00 AM - 10:00 PM",
+        "wednesday": "8:00 AM - 10:00 PM",
+        "thursday": "8:00 AM - 10:00 PM",
+        "friday": "8:00 AM - 10:00 PM",
+        "saturday": "8:00 AM - 10:00 PM",
+        "sunday": "8:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.wichita.gov/ParkandRec/Tennis/Pages/Riverside.aspx",
+        "phone": "(316) 337-9257"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Genesis Health Clubs - Topeka Tennis Center",
+      "address": "2900 SW Eveningside Dr",
+      "city": "Topeka",
+      "state": "KS",
+      "zipCode": "66614",
+      "location": {
+        "type": "Point",
+        "coordinates": [-95.7531, 39.0156]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 12,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "5:00 AM - 10:00 PM",
+        "tuesday": "5:00 AM - 10:00 PM",
+        "wednesday": "5:00 AM - 10:00 PM",
+        "thursday": "5:00 AM - 10:00 PM",
+        "friday": "5:00 AM - 10:00 PM",
+        "saturday": "5:00 AM - 10:00 PM",
+        "sunday": "5:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.genesishealthclubs.com/locations/topeka-tennis.html",
+        "phone": "(785) 273-0030"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Kossover Tennis Center",
+      "address": "2540 SW Gage Blvd",
+      "city": "Topeka",
+      "state": "KS",
+      "zipCode": "66614",
+      "location": {
+        "type": "Point",
+        "coordinates": [-95.7342, 39.0212]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 18,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "8:00 AM - 10:00 PM",
+        "tuesday": "8:00 AM - 10:00 PM",
+        "wednesday": "8:00 AM - 10:00 PM",
+        "thursday": "8:00 AM - 10:00 PM",
+        "friday": "8:00 AM - 10:00 PM",
+        "saturday": "8:00 AM - 10:00 PM",
+        "sunday": "8:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": false,
+      "contact": {
+        "website": "https://parks.snco.us/Facilities/Facility/Details/Kossover-Tennis-Center-13",
+        "phone": "(785) 273-0030"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Overland Park Racquet Club",
+      "address": "6800 W 91st St",
+      "city": "Overland Park",
+      "state": "KS",
+      "zipCode": "66212",
+      "location": {
+        "type": "Point",
+        "coordinates": [-94.6697, 38.9597]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 14,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.opracquetclub.com",
+        "phone": "(913) 642-6888"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Salina Tennis Center",
+      "address": "100 E Ash St",
+      "city": "Salina",
+      "state": "KS",
+      "zipCode": "67401",
+      "location": {
+        "type": "Point",
+        "coordinates": [-97.6091, 38.8403]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Public courts, free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.salina-ks.gov/parksandrecreation",
+        "phone": "(785) 309-5765"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

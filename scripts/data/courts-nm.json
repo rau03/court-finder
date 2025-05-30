@@ -1,0 +1,210 @@
+{
+  "courts": [
+    {
+      "name": "Jerry Cline Tennis Center",
+      "address": "7205 Constitution Ave NE",
+      "city": "Albuquerque",
+      "state": "NM",
+      "zipCode": "87110",
+      "location": {
+        "type": "Point",
+        "coordinates": [-106.5631, 35.0985]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 18,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "8:00 AM - 9:00 PM",
+        "tuesday": "8:00 AM - 9:00 PM",
+        "wednesday": "8:00 AM - 9:00 PM",
+        "thursday": "8:00 AM - 9:00 PM",
+        "friday": "8:00 AM - 9:00 PM",
+        "saturday": "8:00 AM - 9:00 PM",
+        "sunday": "8:00 AM - 9:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.cabq.gov/parksandrecreation/recreation/tennis/jerry-cline-tennis-center",
+        "phone": "(505) 224-6682"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Shellaberger Tennis Center",
+      "address": "1600 Medical Center Dr",
+      "city": "Las Vegas",
+      "state": "NM",
+      "zipCode": "87701",
+      "location": {
+        "type": "Point",
+        "coordinates": [-105.2228, 35.6012]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "8:00 AM - 8:00 PM",
+        "tuesday": "8:00 AM - 8:00 PM",
+        "wednesday": "8:00 AM - 8:00 PM",
+        "thursday": "8:00 AM - 8:00 PM",
+        "friday": "8:00 AM - 8:00 PM",
+        "saturday": "8:00 AM - 8:00 PM",
+        "sunday": "8:00 AM - 8:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.shellabergertennis.com",
+        "phone": "(505) 662-4796"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Santa Fe Tennis & Swim Club",
+      "address": "1755 Camino Corrales",
+      "city": "Santa Fe",
+      "state": "NM",
+      "zipCode": "87505",
+      "location": {
+        "type": "Point",
+        "coordinates": [-105.9636, 35.6467]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 7,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "8:00 AM - 8:00 PM",
+        "tuesday": "8:00 AM - 8:00 PM",
+        "wednesday": "8:00 AM - 8:00 PM",
+        "thursday": "8:00 AM - 8:00 PM",
+        "friday": "8:00 AM - 8:00 PM",
+        "saturday": "8:00 AM - 8:00 PM",
+        "sunday": "8:00 AM - 8:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.santafetennis.net",
+        "phone": "(505) 988-4100"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Albuquerque Country Club Tennis",
+      "address": "601 Laguna Blvd SW",
+      "city": "Albuquerque",
+      "state": "NM",
+      "zipCode": "87104",
+      "location": {
+        "type": "Point",
+        "coordinates": [-106.6706, 35.0876]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Private club membership required",
+      "hours": {
+        "monday": "8:00 AM - 8:00 PM",
+        "tuesday": "8:00 AM - 8:00 PM",
+        "wednesday": "8:00 AM - 8:00 PM",
+        "thursday": "8:00 AM - 8:00 PM",
+        "friday": "8:00 AM - 8:00 PM",
+        "saturday": "8:00 AM - 8:00 PM",
+        "sunday": "8:00 AM - 8:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.albuquerquecountryclub.org",
+        "phone": "(505) 247-4111"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Las Cruces Tennis Complex",
+      "address": "801 Motel Blvd",
+      "city": "Las Cruces",
+      "state": "NM",
+      "zipCode": "88007",
+      "location": {
+        "type": "Point",
+        "coordinates": [-106.8006, 32.3199]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 12,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "8:00 AM - 9:00 PM",
+        "tuesday": "8:00 AM - 9:00 PM",
+        "wednesday": "8:00 AM - 9:00 PM",
+        "thursday": "8:00 AM - 9:00 PM",
+        "friday": "8:00 AM - 9:00 PM",
+        "saturday": "8:00 AM - 9:00 PM",
+        "sunday": "8:00 AM - 9:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.las-cruces.org/Facilities/Facility/Details/Tennis-Complex-41",
+        "phone": "(575) 541-2563"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

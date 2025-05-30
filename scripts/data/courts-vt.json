@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "Burlington Tennis Club",
+      "address": "298 North Avenue",
+      "city": "Burlington",
+      "state": "VT",
+      "zipCode": "05401",
+      "location": {
+        "type": "Point",
+        "coordinates": [-73.2121, 44.4759]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.burlingtontennisclub.com",
+        "phone": "(802) 862-5800"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Stowe Tennis Club",
+      "address": "1613 Mountain Road",
+      "city": "Stowe",
+      "state": "VT",
+      "zipCode": "05672",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.6874, 44.4654]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.stowetennisclub.com",
+        "phone": "(802) 253-4900"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Middlebury College Tennis Courts",
+      "address": "125 South Main Street",
+      "city": "Middlebury",
+      "state": "VT",
+      "zipCode": "05753",
+      "location": {
+        "type": "Point",
+        "coordinates": [-73.167, 44.0089]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Free for students, public access limited",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.3,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.middlebury.edu/athletics/facilities",
+        "phone": "(802) 443-5000"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Rutland Tennis Club",
+      "address": "75 Grove Street",
+      "city": "Rutland",
+      "state": "VT",
+      "zipCode": "05701",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.9726, 43.6106]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.2,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.rutlandtennisclub.com",
+        "phone": "(802) 775-2020"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Quechee Club Tennis Courts",
+      "address": "3268 Quechee Main Street",
+      "city": "Quechee",
+      "state": "VT",
+      "zipCode": "05059",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.4187, 43.6462]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Clay",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.quecheeclub.com/tennis",
+        "phone": "(802) 295-9356"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

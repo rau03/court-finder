@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "Charleston Tennis Club",
+      "address": "1000 Kanawha Boulevard East",
+      "city": "Charleston",
+      "state": "WV",
+      "zipCode": "25301",
+      "location": {
+        "type": "Point",
+        "coordinates": [-81.6326, 38.3498]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.charlestontennisclub.com",
+        "phone": "(304) 342-1475"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Morgantown Tennis Club",
+      "address": "2000 Monongahela Boulevard",
+      "city": "Morgantown",
+      "state": "WV",
+      "zipCode": "26505",
+      "location": {
+        "type": "Point",
+        "coordinates": [-79.9559, 39.6295]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.3,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.morgantowntennisclub.com",
+        "phone": "(304) 293-3361"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Huntington Tennis Club",
+      "address": "1300 3rd Avenue",
+      "city": "Huntington",
+      "state": "WV",
+      "zipCode": "25701",
+      "location": {
+        "type": "Point",
+        "coordinates": [-82.4454, 38.4192]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.2,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.huntingtontennisclub.com",
+        "phone": "(304) 696-5950"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Wheeling Park Tennis Courts",
+      "address": "1801 National Road",
+      "city": "Wheeling",
+      "state": "WV",
+      "zipCode": "26003",
+      "location": {
+        "type": "Point",
+        "coordinates": [-80.6759, 40.0634]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.0,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.wheelingpark.com",
+        "phone": "(304) 243-4185"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Parkersburg City Park Tennis Courts",
+      "address": "1920 Park Avenue",
+      "city": "Parkersburg",
+      "state": "WV",
+      "zipCode": "26101",
+      "location": {
+        "type": "Point",
+        "coordinates": [-81.5587, 39.2667]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.1,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.parkersburg-wv.com/parks",
+        "phone": "(304) 424-8575"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "courts": [
+    {
+      "name": "Portland Tennis Center",
+      "address": "640 Ocean Ave",
+      "city": "Portland",
+      "state": "ME",
+      "zipCode": "04103",
+      "location": {
+        "type": "Point",
+        "coordinates": [-70.2553, 43.6591]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.portlandtenniscenter.com",
+        "phone": "(207) 797-3950",
+        "email": "info@portlandtenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Bangor Tennis Center",
+      "address": "647 Main St",
+      "city": "Bangor",
+      "state": "ME",
+      "zipCode": "04401",
+      "location": {
+        "type": "Point",
+        "coordinates": [-68.7778, 44.8012]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.3,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.bangortenniscenter.com",
+        "phone": "(207) 942-8900",
+        "email": "info@bangortenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Lewiston Tennis Center",
+      "address": "65 Central Ave",
+      "city": "Lewiston",
+      "state": "ME",
+      "zipCode": "04240",
+      "location": {
+        "type": "Point",
+        "coordinates": [-70.2148, 44.1004]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 3,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.2,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.lewistontenniscenter.com",
+        "phone": "(207) 784-2951",
+        "email": "info@lewistontenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Augusta Tennis Center",
+      "address": "75 State St",
+      "city": "Augusta",
+      "state": "ME",
+      "zipCode": "04330",
+      "location": {
+        "type": "Point",
+        "coordinates": [-69.7795, 44.3106]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 3,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.1,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.augustatenniscenter.com",
+        "phone": "(207) 622-6400",
+        "email": "info@augustatenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    }
+  ]
+}

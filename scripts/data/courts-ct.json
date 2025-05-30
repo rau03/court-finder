@@ -1,0 +1,211 @@
+{
+  "courts": [
+    {
+      "name": "New Haven Lawn Club",
+      "address": "193 Whitney Avenue",
+      "city": "New Haven",
+      "state": "CT",
+      "zipCode": "06511",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.9277, 41.3112]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Clay",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.newhavenlawnclub.com",
+        "phone": "(203) 776-1836"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Yale Tennis Center",
+      "address": "45 Yale Avenue",
+      "city": "New Haven",
+      "state": "CT",
+      "zipCode": "06515",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.9197, 41.3167]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 12,
+      "surfaceType": "Hard",
+      "cost": "University facility, limited public access",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://yalebulldogs.com/facilities/tennis-center",
+        "phone": "(203) 432-1414"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Wesleyan University Tennis Courts",
+      "address": "161 Cross Street",
+      "city": "Middletown",
+      "state": "CT",
+      "zipCode": "06457",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.6567, 41.5583]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "University facility, limited public access",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://athletics.wesleyan.edu/facilities/tennis-courts",
+        "phone": "(860) 685-2880"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Connecticut Tennis Center",
+      "address": "161 Bassett Road",
+      "city": "New Haven",
+      "state": "CT",
+      "zipCode": "06511",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.9277, 41.3112]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 15,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.cttenniscenter.com",
+        "phone": "(203) 776-7331"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Trinity College Tennis Courts",
+      "address": "300 Summit Street",
+      "city": "Hartford",
+      "state": "CT",
+      "zipCode": "06106",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.6897, 41.7475]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "University facility, limited public access",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.3,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.trincoll.edu/athletics/facilities/tennis-courts",
+        "phone": "(860) 297-2000"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

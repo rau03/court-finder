@@ -1,0 +1,133 @@
+{
+  "courts": [
+    {
+      "name": "Cheyenne Tennis Center",
+      "address": "4601 Lions Park Dr",
+      "city": "Cheyenne",
+      "state": "WY",
+      "zipCode": "82001",
+      "location": {
+        "type": "Point",
+        "coordinates": [-104.8202, 41.1397]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.4,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.cheyennetenniscenter.com",
+        "phone": "(307) 637-6422",
+        "email": "info@cheyennetenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Casper Tennis Center",
+      "address": "1801 E 4th St",
+      "city": "Casper",
+      "state": "WY",
+      "zipCode": "82601",
+      "location": {
+        "type": "Point",
+        "coordinates": [-106.3131, 42.85]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.3,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.caspertenniscenter.com",
+        "phone": "(307) 235-8383",
+        "email": "info@caspertenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Laramie Tennis Center",
+      "address": "920 Boulder Dr",
+      "city": "Laramie",
+      "state": "WY",
+      "zipCode": "82070",
+      "location": {
+        "type": "Point",
+        "coordinates": [-105.5911, 41.3114]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 3,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.2,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.laramietenniscenter.com",
+        "phone": "(307) 742-8383",
+        "email": "info@laramietenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    }
+  ]
+}

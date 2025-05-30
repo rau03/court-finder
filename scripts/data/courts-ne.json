@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "Hanscom Tennis Center",
+      "address": "3220 Ed Creighton Ave",
+      "city": "Omaha",
+      "state": "NE",
+      "zipCode": "68131",
+      "location": {
+        "type": "Point",
+        "coordinates": [-95.9631, 41.2554]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 20,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "8:00 AM - 10:00 PM",
+        "tuesday": "8:00 AM - 10:00 PM",
+        "wednesday": "8:00 AM - 10:00 PM",
+        "thursday": "8:00 AM - 10:00 PM",
+        "friday": "8:00 AM - 10:00 PM",
+        "saturday": "8:00 AM - 10:00 PM",
+        "sunday": "8:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.omahaparks.com/tennis/",
+        "phone": "(402) 444-5972"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Lincoln Racquet Club",
+      "address": "5300 Old Cheney Rd",
+      "city": "Lincoln",
+      "state": "NE",
+      "zipCode": "68516",
+      "location": {
+        "type": "Point",
+        "coordinates": [-96.6452, 40.7532]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 10,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "5:00 AM - 10:00 PM",
+        "tuesday": "5:00 AM - 10:00 PM",
+        "wednesday": "5:00 AM - 10:00 PM",
+        "thursday": "5:00 AM - 10:00 PM",
+        "friday": "5:00 AM - 10:00 PM",
+        "saturday": "5:00 AM - 10:00 PM",
+        "sunday": "5:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.lincolnracquetclub.com",
+        "phone": "(402) 423-2511"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Nebraska Tennis Center",
+      "address": "7620 Cass St",
+      "city": "Omaha",
+      "state": "NE",
+      "zipCode": "68114",
+      "location": {
+        "type": "Point",
+        "coordinates": [-96.0377, 41.2647]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.nebraskatenniscenter.com",
+        "phone": "(402) 391-6222"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Woods Tennis Center",
+      "address": "401 S 33rd St",
+      "city": "Lincoln",
+      "state": "NE",
+      "zipCode": "68510",
+      "location": {
+        "type": "Point",
+        "coordinates": [-96.6842, 40.8082]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 12,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "8:00 AM - 10:00 PM",
+        "tuesday": "8:00 AM - 10:00 PM",
+        "wednesday": "8:00 AM - 10:00 PM",
+        "thursday": "8:00 AM - 10:00 PM",
+        "friday": "8:00 AM - 10:00 PM",
+        "saturday": "8:00 AM - 10:00 PM",
+        "sunday": "8:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.woodstennis.com",
+        "phone": "(402) 441-7095"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Kearney Tennis Center",
+      "address": "500 W 11th St",
+      "city": "Kearney",
+      "state": "NE",
+      "zipCode": "68845",
+      "location": {
+        "type": "Point",
+        "coordinates": [-99.0909, 40.7009]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Public courts, free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.cityofkearney.org/Facilities/Facility/Details/Tennis-Courts-41",
+        "phone": "(308) 237-4644"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "Bryan Park Tennis Center",
+      "address": "4308 Hermitage Road",
+      "city": "Richmond",
+      "state": "VA",
+      "zipCode": "23227",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.4762, 37.6025]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 12,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.richmondgov.com/parks/bryan-park-tennis-center",
+        "phone": "(804) 646-0123"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Burke Lake Park Tennis Courts",
+      "address": "7315 Ox Road",
+      "city": "Fairfax Station",
+      "state": "VA",
+      "zipCode": "22039",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.3189, 38.7939]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.2,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.fairfaxcounty.gov/parks/burke-lake",
+        "phone": "(703) 323-6600"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Mount Trashmore Park Tennis Courts",
+      "address": "310 Edwin Drive",
+      "city": "Virginia Beach",
+      "state": "VA",
+      "zipCode": "23462",
+      "location": {
+        "type": "Point",
+        "coordinates": [-76.1197, 36.8239]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.0,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.vbgov.com/government/departments/parks-recreation/parks-trails/city-parks/Pages/mount-trashmore-park.aspx",
+        "phone": "(757) 385-2999"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Riverside Tennis Center",
+      "address": "1000 Riverside Drive",
+      "city": "Danville",
+      "state": "VA",
+      "zipCode": "24541",
+      "location": {
+        "type": "Point",
+        "coordinates": [-79.395, 36.5859]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.3,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.danvilleva.gov/tennis",
+        "phone": "(434) 799-5200"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Huntington Park Tennis Center",
+      "address": "9000 Warwick Boulevard",
+      "city": "Newport News",
+      "state": "VA",
+      "zipCode": "23607",
+      "location": {
+        "type": "Point",
+        "coordinates": [-76.4922, 37.1197]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 10,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.nnva.gov/tennis",
+        "phone": "(757) 886-7912"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

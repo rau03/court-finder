@@ -1,0 +1,133 @@
+{
+  "courts": [
+    {
+      "name": "Fargo Tennis Center",
+      "address": "1501 32nd Ave S",
+      "city": "Fargo",
+      "state": "ND",
+      "zipCode": "58103",
+      "location": {
+        "type": "Point",
+        "coordinates": [-96.7897, 46.8772]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.fargotenniscenter.com",
+        "phone": "(701) 232-6422",
+        "email": "info@fargotenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Bismarck Tennis Center",
+      "address": "107 N 26th St",
+      "city": "Bismarck",
+      "state": "ND",
+      "zipCode": "58501",
+      "location": {
+        "type": "Point",
+        "coordinates": [-100.7837, 46.8083]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 3,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.3,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.bismarcktenniscenter.com",
+        "phone": "(701) 255-1844",
+        "email": "info@bismarcktenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Grand Forks Tennis Center",
+      "address": "1500 47th Ave S",
+      "city": "Grand Forks",
+      "state": "ND",
+      "zipCode": "58201",
+      "location": {
+        "type": "Point",
+        "coordinates": [-97.0321, 47.9253]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 3,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.2,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.grandforkstenniscenter.com",
+        "phone": "(701) 746-2610",
+        "email": "info@grandforkstenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    }
+  ]
+}

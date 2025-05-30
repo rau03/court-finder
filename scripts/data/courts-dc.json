@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "East Potomac Tennis Center",
+      "address": "1090 Ohio Drive SW",
+      "city": "Washington",
+      "state": "DC",
+      "zipCode": "20024",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.0289, 38.8767]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 24,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.eastpotomactennis.com",
+        "phone": "(202) 554-5962"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Rock Creek Tennis Center",
+      "address": "16th and Kennedy Streets NW",
+      "city": "Washington",
+      "state": "DC",
+      "zipCode": "20011",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.0364, 38.9647]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 10,
+      "surfaceType": "Hard",
+      "cost": "Public courts with hourly rates",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.rockcreektennis.com",
+        "phone": "(202) 722-5949"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Georgetown University Tennis Courts",
+      "address": "3700 O Street NW",
+      "city": "Washington",
+      "state": "DC",
+      "zipCode": "20057",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.0734, 38.9076]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "University facility, limited public access",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://guhoyas.com/facilities/tennis-courts",
+        "phone": "(202) 687-2400"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Washington Tennis & Education Foundation",
+      "address": "16th and Kennedy Streets NW",
+      "city": "Washington",
+      "state": "DC",
+      "zipCode": "20011",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.0364, 38.9647]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Membership and program fees",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.wtef.org",
+        "phone": "(202) 291-2929"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Carter Barron Tennis Courts",
+      "address": "4850 Colorado Avenue NW",
+      "city": "Washington",
+      "state": "DC",
+      "zipCode": "20011",
+      "location": {
+        "type": "Point",
+        "coordinates": [-77.0524, 38.9437]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Public courts, free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.2,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.nps.gov/rocr/planyourvisit/carter-barron.htm",
+        "phone": "(202) 895-6000"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "courts": [
+    {
+      "name": "Portland Tennis Center",
+      "address": "324 NE 12th Ave",
+      "city": "Portland",
+      "state": "OR",
+      "zipCode": "97232",
+      "location": {
+        "type": "Point",
+        "coordinates": [-122.6587, 45.5231]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.6,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.portlandtenniscenter.com",
+        "phone": "(503) 823-3189",
+        "email": "info@portlandtenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Eugene Tennis Center",
+      "address": "2760 Martin Luther King Jr Blvd",
+      "city": "Eugene",
+      "state": "OR",
+      "zipCode": "97401",
+      "location": {
+        "type": "Point",
+        "coordinates": [-123.0868, 44.0521]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.eugenetenniscenter.com",
+        "phone": "(541) 682-5311",
+        "email": "info@eugenetenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Salem Tennis Center",
+      "address": "2955 Eaglemount Dr SE",
+      "city": "Salem",
+      "state": "OR",
+      "zipCode": "97302",
+      "location": {
+        "type": "Point",
+        "coordinates": [-123.0351, 44.9429]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": false,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.4,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.salemtenniscenter.com",
+        "phone": "(503) 588-6262",
+        "email": "info@salemtenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Bend Tennis Center",
+      "address": "63155 OB Riley Rd",
+      "city": "Bend",
+      "state": "OR",
+      "zipCode": "97703",
+      "location": {
+        "type": "Point",
+        "coordinates": [-121.3153, 44.0582]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 5,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.bendtenniscenter.com",
+        "phone": "(541) 388-1134",
+        "email": "info@bendtenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    }
+  ]
+}

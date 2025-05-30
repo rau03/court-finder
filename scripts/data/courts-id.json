@@ -1,0 +1,211 @@
+{
+  "courts": [
+    {
+      "name": "Boise Racquet and Swim Club",
+      "address": "1116 N Cole Rd",
+      "city": "Boise",
+      "state": "ID",
+      "zipCode": "83704",
+      "location": {
+        "type": "Point",
+        "coordinates": [-116.2871, 43.6293]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 23,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.8,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.boisetennis.com",
+        "phone": "(208) 376-1052"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Julia Davis Park Tennis Courts",
+      "address": "700 S Capitol Blvd",
+      "city": "Boise",
+      "state": "ID",
+      "zipCode": "83702",
+      "location": {
+        "type": "Point",
+        "coordinates": [-116.2035, 43.6086]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Public courts, free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.cityofboise.org/departments/parks-and-recreation/parks/julia-davis-park/",
+        "phone": "(208) 608-7600"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Sun Valley Tennis Center",
+      "address": "1 Sun Valley Rd",
+      "city": "Sun Valley",
+      "state": "ID",
+      "zipCode": "83353",
+      "location": {
+        "type": "Point",
+        "coordinates": [-114.355, 43.6976]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 17,
+      "surfaceType": "Hard",
+      "cost": "Resort guest access",
+      "hours": {
+        "monday": "8:00 AM - 8:00 PM",
+        "tuesday": "8:00 AM - 8:00 PM",
+        "wednesday": "8:00 AM - 8:00 PM",
+        "thursday": "8:00 AM - 8:00 PM",
+        "friday": "8:00 AM - 8:00 PM",
+        "saturday": "8:00 AM - 8:00 PM",
+        "sunday": "8:00 AM - 8:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.sunvalley.com/things-to-do/tennis/",
+        "phone": "(208) 622-2156"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Coeur d'Alene Tennis Association",
+      "address": "1903 E Hazel Ave",
+      "city": "Coeur d'Alene",
+      "state": "ID",
+      "zipCode": "83814",
+      "location": {
+        "type": "Point",
+        "coordinates": [-116.7597, 47.6777]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Public courts, free",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://cdatennis.org/",
+        "phone": "(208) 664-2141"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Idaho Falls Tennis Center",
+      "address": "1290 Science Center Dr",
+      "city": "Idaho Falls",
+      "state": "ID",
+      "zipCode": "83402",
+      "location": {
+        "type": "Point",
+        "coordinates": [-112.0636, 43.4917]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership and hourly rates",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.ifrec.org/tennis/",
+        "phone": "(208) 612-8580"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}

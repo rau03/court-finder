@@ -1,0 +1,176 @@
+{
+  "courts": [
+    {
+      "name": "Honolulu Tennis Center",
+      "address": "3410 Paki Ave",
+      "city": "Honolulu",
+      "state": "HI",
+      "zipCode": "96815",
+      "location": {
+        "type": "Point",
+        "coordinates": [-157.8167, 21.2833]
+      },
+      "amenities": {
+        "indoorCourts": false,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Public",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.5,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.honolulutenniscenter.com",
+        "phone": "(808) 971-7150",
+        "email": "info@honolulutenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Maui Tennis Center",
+      "address": "131 S Kihei Rd",
+      "city": "Kihei",
+      "state": "HI",
+      "zipCode": "96753",
+      "location": {
+        "type": "Point",
+        "coordinates": [-156.4633, 20.7833]
+      },
+      "amenities": {
+        "indoorCourts": false,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Public",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.mauitenniscenter.com",
+        "phone": "(808) 879-1954",
+        "email": "info@mauitenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Kauai Tennis Center",
+      "address": "3501 Rice St",
+      "city": "Lihue",
+      "state": "HI",
+      "zipCode": "96766",
+      "location": {
+        "type": "Point",
+        "coordinates": [-159.3667, 21.9667]
+      },
+      "amenities": {
+        "indoorCourts": false,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Public",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.3,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.kauaitenniscenter.com",
+        "phone": "(808) 241-4460",
+        "email": "info@kauaitenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Big Island Tennis Center",
+      "address": "75-5722 Alii Dr",
+      "city": "Kailua-Kona",
+      "state": "HI",
+      "zipCode": "96740",
+      "location": {
+        "type": "Point",
+        "coordinates": [-155.9983, 19.6406]
+      },
+      "amenities": {
+        "indoorCourts": false,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Public",
+      "hours": {
+        "monday": "6:00 AM - 10:00 PM",
+        "tuesday": "6:00 AM - 10:00 PM",
+        "wednesday": "6:00 AM - 10:00 PM",
+        "thursday": "6:00 AM - 10:00 PM",
+        "friday": "6:00 AM - 10:00 PM",
+        "saturday": "6:00 AM - 10:00 PM",
+        "sunday": "6:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710000000000,
+      "rating": 4.4,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.bigislandtenniscenter.com",
+        "phone": "(808) 329-7464",
+        "email": "info@bigislandtenniscenter.com"
+      },
+      "createdAt": 1710000000000,
+      "updatedAt": 1710000000000,
+      "source": "seed-data"
+    }
+  ]
+}

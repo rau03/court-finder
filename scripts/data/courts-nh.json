@@ -1,0 +1,212 @@
+{
+  "courts": [
+    {
+      "name": "Manchester Tennis Club",
+      "address": "1000 Elm Street",
+      "city": "Manchester",
+      "state": "NH",
+      "zipCode": "03101",
+      "location": {
+        "type": "Point",
+        "coordinates": [-71.4548, 42.9956]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 8,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.5,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.manchestertennisclub.com",
+        "phone": "(603) 622-1666"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Portsmouth Tennis Club",
+      "address": "1900 Lafayette Road",
+      "city": "Portsmouth",
+      "state": "NH",
+      "zipCode": "03801",
+      "location": {
+        "type": "Point",
+        "coordinates": [-70.7626, 43.0718]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 6,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.4,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.portsmouthtennisclub.com",
+        "phone": "(603) 436-2500"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Dartmouth College Tennis Courts",
+      "address": "1 Rope Ferry Road",
+      "city": "Hanover",
+      "state": "NH",
+      "zipCode": "03755",
+      "location": {
+        "type": "Point",
+        "coordinates": [-72.2897, 43.7044]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 12,
+      "surfaceType": "Hard",
+      "cost": "Free for students, public access limited",
+      "hours": {
+        "monday": "Dawn to Dusk",
+        "tuesday": "Dawn to Dusk",
+        "wednesday": "Dawn to Dusk",
+        "thursday": "Dawn to Dusk",
+        "friday": "Dawn to Dusk",
+        "saturday": "Dawn to Dusk",
+        "sunday": "Dawn to Dusk"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.6,
+      "indoor": false,
+      "contact": {
+        "website": "https://dartmouthsports.com/facilities/tennis-courts",
+        "phone": "(603) 646-2466"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Nashua Tennis Club",
+      "address": "25 Riverside Street",
+      "city": "Nashua",
+      "state": "NH",
+      "zipCode": "03062",
+      "location": {
+        "type": "Point",
+        "coordinates": [-71.4676, 42.7654]
+      },
+      "amenities": {
+        "indoorCourts": true,
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Hard",
+      "cost": "Membership required",
+      "hours": {
+        "monday": "7:00 AM - 10:00 PM",
+        "tuesday": "7:00 AM - 10:00 PM",
+        "wednesday": "7:00 AM - 10:00 PM",
+        "thursday": "7:00 AM - 10:00 PM",
+        "friday": "7:00 AM - 10:00 PM",
+        "saturday": "7:00 AM - 10:00 PM",
+        "sunday": "7:00 AM - 10:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.3,
+      "indoor": true,
+      "contact": {
+        "website": "https://www.nashuatennisclub.com",
+        "phone": "(603) 882-0000"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    },
+    {
+      "name": "Mount Washington Resort Tennis Courts",
+      "address": "310 Mount Washington Hotel Road",
+      "city": "Bretton Woods",
+      "state": "NH",
+      "zipCode": "03575",
+      "location": {
+        "type": "Point",
+        "coordinates": [-71.4412, 44.2581]
+      },
+      "amenities": {
+        "outdoorCourts": true,
+        "lightsAvailable": true,
+        "restroomsAvailable": true,
+        "waterFountain": true
+      },
+      "numberOfCourts": 4,
+      "surfaceType": "Clay",
+      "cost": "Resort guest access",
+      "hours": {
+        "monday": "8:00 AM - 8:00 PM",
+        "tuesday": "8:00 AM - 8:00 PM",
+        "wednesday": "8:00 AM - 8:00 PM",
+        "thursday": "8:00 AM - 8:00 PM",
+        "friday": "8:00 AM - 8:00 PM",
+        "saturday": "8:00 AM - 8:00 PM",
+        "sunday": "8:00 AM - 8:00 PM"
+      },
+      "isVerified": true,
+      "addedByUser": false,
+      "lastVerified": 1710864000000,
+      "rating": 4.7,
+      "indoor": false,
+      "contact": {
+        "website": "https://www.omnihotels.com/hotels/bretton-woods-mount-washington/tennis",
+        "phone": "(603) 278-1000"
+      },
+      "createdAt": 1710864000000,
+      "updatedAt": 1710864000000,
+      "source": "seed-data"
+    }
+  ]
+}
