@@ -72,6 +72,5 @@ export default defineSchema({
     name: v.optional(v.string()),
     email: v.optional(v.string()),
     role: v.string(), // "admin" or "user"
-    clerkId: v.string(), // ID from Clerk auth
-  }).index("by_clerkId", ["clerkId"]),
+  }),
 });

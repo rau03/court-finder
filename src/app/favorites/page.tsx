@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -10,7 +9,6 @@ import CourtCard from "../components/CourtCard";
 import Link from "next/link";
 
 export default function Favorites() {
-  const { isSignedIn, isLoaded, user } = useUser();
   const router = useRouter();
 
   // Use Convex query to fetch favorites with court details

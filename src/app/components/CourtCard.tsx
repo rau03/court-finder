@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
-import { SignIn } from "@clerk/nextjs";
 
 interface CourtCardProps {
   court: {
@@ -53,12 +51,11 @@ export default function CourtCard({
   court,
   isFavorite = false,
 }: CourtCardProps) {
-  const { isSignedIn, user } = useUser();
   const [loading, setLoading] = useState(false);
 
   // Use Convex queries and mutations
   const isFavorited = useQuery(api.favorites.isFavorited, {
-    userId: user?.id ?? "",
+    userId: "", // No user context
     courtId: court._id,
   });
   const addFavorite = useMutation(api.favorites.addFavorite);
@@ -69,32 +66,8 @@ export default function CourtCard({
   const displayStatus = loading ? favoriteStatus : (isFavorited ?? isFavorite);
 
   const toggleFavorite = async () => {
-    if (!isSignedIn || !user) {
-      // Redirect to sign in if not signed in
-      window.location.href = "/sign-in";
-      return;
-    }
-
-    setLoading(true);
-    try {
-      if (favoriteStatus) {
-        // Remove from favorites
-        await removeFavorite({
-          userId: user.id,
-          courtId: court._id,
-        });
-      } else {
-        // Add to favorites
-        await addFavorite({
-          userId: user.id,
-          courtId: court._id,
-        });
-      }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    } finally {
-      setLoading(false);
-    }
+    // No auth context, just return
+    return;
   };
 
   return (
@@ -137,14 +110,6 @@ export default function CourtCard({
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-export function SignInPage() {
-  return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-50">
-      <SignIn />
     </div>
   );
 }

@@ -197,21 +197,6 @@ body {
   border-radius: var(--border-radius) !important;
 }
 
-/* Add these strong overrides for Clerk components */
-.cl-internal-b3fm6y,  /* Clerk header title */
-.cl-internal-wkkub3,  /* Clerk header subtitle */
-.cl-internal-13zprp1, /* Form labels */
-.cl-internal-1w67h8,  /* Input text */
-.cl-internal-15amzqo, /* Other text elements */
-.cl-internal-pi07y0,  /* More text elements */
-.cl-internal-uyu30m,  /* Even more text elements */
-.cl-internal-1xpzp53 /* Footer text */ {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-  font-weight: 600 !important;
-  opacity: 1 !important;
-}
-
 /* Make input text jet black */
 .cl-formFieldInput,
 .cl-formFieldInput:focus,
@@ -233,18 +218,6 @@ body {
 .cl-formFieldInput:focus {
   box-shadow: var(--shadow) !important;
   z-index: 20 !important;
-}
-
-/* Make all Clerk text elements black */
-[class^="cl-"] {
-  color: #000000;
-  opacity: 1;
-}
-
-/* Override input placeholder color */
-.cl-formFieldInput::placeholder {
-  color: #6b7280 !important;
-  opacity: 1 !important;
 }
 
 /* Add to src/app/globals.css */
@@ -308,8 +281,7 @@ input::placeholder {
 }
 
 .cl-formField {
-  margin-bottom: 1rem !important;
-  z-index: 10 !important;
+  margin-bottom: 1.5rem !important;
 }
 
 /* Ensure proper spacing between form fields */
@@ -358,4 +330,218 @@ input::placeholder {
 
 .cl-formField:focus-within {
   z-index: 20 !important;
+}
+
+/* Add specific spacing for Clerk sign-in form fields */
+.cl-formField {
+  margin-bottom: 2rem !important;
+}
+
+.cl-formFieldInputWrapper {
+  margin-top: 0.5rem !important;
+}
+
+/* Ensure proper spacing between form fields */
+.cl-formField + .cl-formField {
+  margin-top: 2rem !important;
+}
+
+/* Ensure the form container has proper spacing */
+.cl-card {
+  padding: 2rem !important;
+  min-height: 600px !important;
+}
+
+/* Ensure proper stacking of form elements */
+.cl-formFieldLabel {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix for form field stacking */
+.cl-formField {
+  position: relative !important;
+}
+
+.cl-formField:focus-within {
+  z-index: 20 !important;
+}
+
+/* Ensure proper stacking context */
+.cl-rootBox {
+  z-index: 5 !important;
+}
+
+/* Add a new stacking context for the form */
+.cl-card {
+  isolation: isolate !important;
+}
+
+/* Ensure form fields are above other elements */
+.cl-formFieldInput,
+.cl-formFieldLabel,
+.cl-formField {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.cl-formField:focus-within {
+  z-index: 20 !important;
+}
+
+/* Fix for overlapping form fields */
+.cl-formField {
+  padding: 1rem 0 !important;
+  height: 5rem !important;
+  margin: 0 !important;
+}
+
+.cl-formFieldInputWrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.cl-formFieldInput {
+  height: 2.5rem !important;
+  margin: 0 !important;
+  padding: 0.5rem !important;
+}
+
+.cl-formFieldLabel {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 1.5rem !important;
+}
+
+/* Remove any conflicting margin rules */
+.cl-formField + .cl-formField {
+  margin-top: 0 !important;
+}
+
+/* Ensure the form container has proper spacing */
+.cl-card {
+  padding: 2rem !important;
+  min-height: 600px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+/* Ensure proper stacking of form elements */
+.cl-formField {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.cl-formField:focus-within {
+  z-index: 20 !important;
+}
+
+/* Remove any other conflicting styles */
+.cl-formFieldInput,
+.cl-formFieldLabel,
+.cl-formField {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Aggressive fix for overlapping form fields */
+.cl-formField {
+  display: block !important;
+  position: relative !important;
+  margin-bottom: 3rem !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 4rem !important;
+}
+
+.cl-formFieldInputWrapper {
+  position: relative !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+
+.cl-formFieldInput {
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0.75rem !important;
+  height: auto !important;
+  min-height: 2.5rem !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+.cl-formFieldLabel {
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* Force spacing between form fields */
+.cl-formField + .cl-formField {
+  margin-top: 3rem !important;
+}
+
+/* Ensure the form container has proper spacing */
+.cl-card {
+  padding: 2rem !important;
+  min-height: 600px !important;
+  display: block !important;
+}
+
+/* Reset any conflicting styles */
+.cl-formField * {
+  box-sizing: border-box !important;
+}
+
+/* Ensure proper stacking */
+.cl-formField {
+  z-index: 1 !important;
+}
+
+.cl-formField:focus-within {
+  z-index: 2 !important;
+}
+
+/* Remove any transform or translate that might cause overlap */
+.cl-formField,
+.cl-formFieldInputWrapper,
+.cl-formFieldInput,
+.cl-formFieldLabel {
+  transform: none !important;
+  translate: none !important;
+}
+
+/* Layout for form fields with proper spacing */
+.cl-formField {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Specific spacing for the password field */
+.cl-formField:nth-child(2) {
+  margin-top: 2rem !important;
+}
+
+/* Ensure the form container has proper spacing */
+.cl-card {
+  padding: 2rem !important;
+  min-height: 600px !important;
+}
+
+/* Remove any conflicting styles */
+.cl-formField + .cl-formField {
+  margin-top: 2rem !important;
+}
+
+/* Minimal safe Clerk overrides */
+.cl-formField {
+  margin-bottom: 1.5rem !important;
+}
+
+.cl-card {
+  padding: 2rem !important;
+  min-height: 600px !important;
 }

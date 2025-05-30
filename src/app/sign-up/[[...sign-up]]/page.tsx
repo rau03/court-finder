@@ -1,7 +1,5 @@
 "use client";
 
-import { SignUp } from "@clerk/nextjs";
-
 // Custom dark theme
 const darkTextTheme = {
   variables: {
@@ -42,8 +40,8 @@ const darkTextTheme = {
 
 export default function SignUpPage() {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <SignUp appearance={darkTextTheme} />
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-50">
+      {/* Remove Clerk SignUp import and usage */}
     </div>
   );
 }

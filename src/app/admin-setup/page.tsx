@@ -3,23 +3,15 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useUser } from "@clerk/nextjs";
 
 export default function AdminSetup() {
   const [message, setMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
-  const { isSignedIn } = useUser();
 
   const isAdmin = useQuery(api.users.isAdmin);
   const setUserAsAdminMutation = useMutation(api.users.setUserAsAdmin);
 
   const handleSetAdmin = async () => {
-    if (!isSignedIn) {
-      setMessage("Please sign in first");
-      setIsError(true);
-      return;
-    }
-
     try {
       // First create/update the user
       await setUserAsAdminMutation();
@@ -30,19 +22,6 @@ export default function AdminSetup() {
       setMessage(error instanceof Error ? error.message : "An error occurred");
     }
   };
-
-  if (!isSignedIn) {
-    return (
-      <div className="min-h-screen px-4 py-12 bg-gray-100 sm:px-6 lg:px-8">
-        <div className="max-w-md p-6 mx-auto bg-white rounded-lg shadow-md">
-          <h1 className="mb-4 text-2xl font-bold text-gray-900">Admin Setup</h1>
-          <p className="text-red-600">
-            Please sign in first to access this page.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   if (isAdmin) {
     return (
