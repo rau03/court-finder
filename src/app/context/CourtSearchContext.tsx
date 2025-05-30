@@ -127,23 +127,33 @@ export const CourtSearchProvider: React.FC<CourtSearchProviderProps> = ({
 
       setCourts(data.courts);
 
-      // Update map center if address was provided
-      if (searchAddress) {
-        try {
-          console.log("Updating map center for address:", searchAddress);
-          const geocodeResponse = await fetch(
-            `/api/geocode?address=${encodeURIComponent(searchAddress)}`
-          );
-          if (geocodeResponse.ok) {
-            const location = await geocodeResponse.json();
-            if (location) {
-              console.log("Setting map center to:", location);
-              setMapCenter(location);
-              setMapZoom(12);
-            }
-          }
-        } catch (geoError) {
-          console.error("Geocoding error:", geoError);
+      // Update map center based on search results
+      if (data.courts.length > 0) {
+        // Calculate the center point of all courts
+        const totalLat = data.courts.reduce(
+          (sum, court) => sum + court.location.coordinates[1],
+          0
+        );
+        const totalLng = data.courts.reduce(
+          (sum, court) => sum + court.location.coordinates[0],
+          0
+        );
+        const centerLat = totalLat / data.courts.length;
+        const centerLng = totalLng / data.courts.length;
+
+        console.log("Setting map center to average of court locations:", {
+          lat: centerLat,
+          lng: centerLng,
+        });
+        setMapCenter({ lat: centerLat, lng: centerLng });
+
+        // Adjust zoom level based on number of courts and search type
+        if (data.courts.length === 1) {
+          setMapZoom(15); // Zoom in close for single court
+        } else if (state || zipCode) {
+          setMapZoom(10); // Zoom out more for state/zip searches
+        } else {
+          setMapZoom(12); // Default zoom for address searches
         }
       }
     } catch (err) {

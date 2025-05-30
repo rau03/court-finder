@@ -1,12 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useCourtSearch } from "../context/CourtSearchContext";
 import CourtCard from "./CourtCard";
 import MapWrapper from "./MapWrapper";
 
 const CourtResults: React.FC = () => {
   const { courts, loading, error, mapCenter, mapZoom } = useCourtSearch();
+
+  // Memoize markers to prevent unnecessary re-renders
+  const markers = useMemo(
+    () =>
+      courts.map((court) => ({
+        position: {
+          lat: court.location.coordinates[1],
+          lng: court.location.coordinates[0],
+        },
+        title: court.name,
+      })),
+    [courts]
+  );
 
   return (
     <div className="grid h-[600px] grid-cols-1 gap-6 md:grid-cols-2">
@@ -52,13 +65,7 @@ const CourtResults: React.FC = () => {
 
       <div className="border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33] h-[600px]">
         <MapWrapper
-          markers={courts.map((court) => ({
-            position: {
-              lat: court.location.coordinates[1],
-              lng: court.location.coordinates[0],
-            },
-            title: court.name,
-          }))}
+          markers={markers}
           center={mapCenter || { lat: 39.8283, lng: -98.5795 }}
           zoom={mapZoom}
         />

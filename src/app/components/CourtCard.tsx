@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import { SignIn } from "@clerk/nextjs";
 
 interface CourtCardProps {
   court: {
@@ -65,6 +66,7 @@ export default function CourtCard({
 
   // Use isFavorite prop as fallback while query is loading
   const favoriteStatus = isFavorited ?? isFavorite;
+  const displayStatus = loading ? favoriteStatus : (isFavorited ?? isFavorite);
 
   const toggleFavorite = async () => {
     if (!isSignedIn || !user) {
@@ -95,15 +97,9 @@ export default function CourtCard({
     }
   };
 
-  // Random slight rotation for each card
-  const rotation =
-    Math.random() < 0.5
-      ? `rotate-[${(Math.random() * 0.5).toFixed(2)}deg]`
-      : `rotate-[-${(Math.random() * 0.5).toFixed(2)}deg]`;
-
   return (
     <div
-      className={`overflow-hidden bg-white border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] hover:-translate-y-1 transform transition ${rotation} relative`}
+      className={`overflow-hidden bg-white border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] hover:-translate-y-1 transform transition rotate-[${Math.random() < 0.5 ? (Math.random() * 0.5).toFixed(2) : -(Math.random() * 0.5).toFixed(2)}deg] relative`}
     >
       <div className="p-4">
         <div className="flex items-start justify-between">
@@ -111,12 +107,12 @@ export default function CourtCard({
           <button
             onClick={toggleFavorite}
             disabled={loading}
-            className="text-2xl transition-transform transform hover:scale-125 focus:outline-none"
+            className={`text-2xl transition-transform transform hover:scale-125 focus:outline-none ${loading ? "opacity-50" : ""}`}
             aria-label={
-              favoriteStatus ? "Remove from favorites" : "Add to favorites"
+              displayStatus ? "Remove from favorites" : "Add to favorites"
             }
           >
-            {favoriteStatus ? "❤️" : "🤍"}
+            {displayStatus ? "❤️" : "🤍"}
           </button>
         </div>
         <p className="mb-3 font-bold text-[#222]">
@@ -141,6 +137,14 @@ export default function CourtCard({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function SignInPage() {
+  return (
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-50">
+      <SignIn />
     </div>
   );
 }
