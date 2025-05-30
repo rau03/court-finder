@@ -545,3 +545,8 @@ input::placeholder {
   padding: 2rem !important;
   min-height: 600px !important;
 }
+
+/* Add this to your global CSS file */
+.cl-internal-footer {
+  margin-top: 7rem !important;
+}
