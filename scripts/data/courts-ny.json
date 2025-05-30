@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Central Park Tennis Courts",
+    "address": "123 Tennis Lane",
+    "city": "New York",
+    "state": "NY",
+    "zipCode": "10022",
+    "indoor": false,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-73.935242, 40.73061]
+    },
+    "source": "seed-data"
+  }
+]

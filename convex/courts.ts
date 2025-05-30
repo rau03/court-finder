@@ -63,6 +63,7 @@ export const submitCourt = mutation({
         submittedBy: identity.subject,
         createdAt: now,
         updatedAt: now,
+        source: "user-submitted",
       });
 
       return courtId;
@@ -311,6 +312,7 @@ export const importExternalCourts = mutation({
         ),
         rating: v.optional(v.number()),
         submittedBy: v.optional(v.string()),
+        source: v.string(),
       })
     ),
   },
@@ -329,12 +331,31 @@ export const importExternalCourts = mutation({
         )
         .collect();
 
-      if (existingCourts.length === 0) {
+      if (existingCourts.length > 0) {
+        // Update existing court
+        const existingCourt = existingCourts[0];
+        await ctx.db.patch(existingCourt._id, court);
+        courtIds.push(existingCourt._id);
+      } else {
         // Insert new court
         const courtId = await ctx.db.insert("courts", court);
         courtIds.push(courtId);
       }
     }
     return courtIds;
+  },
+});
+
+export const patchCourtsAddSource = mutation({
+  args: {},
+  returns: v.null(),
+  handler: async (ctx) => {
+    const courts = await ctx.db.query("courts").collect();
+    for (const court of courts) {
+      if (!court.source) {
+        await ctx.db.patch(court._id, { source: "user-submitted" });
+      }
+    }
+    return null;
   },
 });

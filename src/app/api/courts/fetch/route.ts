@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@convex/_generated/api";
+import { OverpassClient } from "@/lib/overpass-client";
+import {
+  createOptimizedQuery,
+  calculateBounds,
+  Bounds,
+} from "@/lib/overpass-query";
+import { OverpassCache } from "@/lib/overpass-cache";
+import { geocodeAddress } from "@/lib/geocoder";
 
 // Add this line to mark the route as dynamic
 export const dynamic = "force-dynamic";
@@ -8,15 +16,9 @@ export const dynamic = "force-dynamic";
 // Initialize Convex client
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-// Overpass API endpoint
-const OVERPASS_API = "https://overpass-api.de/api/interpreter";
-
-interface Bounds {
-  minLat: number;
-  maxLat: number;
-  minLon: number;
-  maxLon: number;
-}
+// Initialize Overpass components
+const overpassClient = new OverpassClient();
+const cache = new OverpassCache();
 
 interface OSMNode {
   type: "node";
@@ -93,39 +95,6 @@ interface Court {
   submittedBy: string;
 }
 
-// Function to create Overpass QL query for pickleball courts
-function createOverpassQuery(bounds: Bounds): string {
-  return `
-    [out:json][timeout:25];
-    (
-      // Direct pickleball court matches
-      node["sport"="pickleball"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["sport"="pickleball"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      
-      // Places with pickleball in name or description
-      node["name"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["name"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["description"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["description"~"pickleball",i](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      
-      // Sports facilities that might have pickleball
-      node["leisure"="sports_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["leisure"="pitch"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["leisure"="stadium"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      node["leisure"="fitness_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      
-      // Areas that might have pickleball
-      way["leisure"="sports_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["leisure"="pitch"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["leisure"="stadium"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      way["leisure"="fitness_centre"](${bounds.minLat},${bounds.minLon},${bounds.maxLat},${bounds.maxLon});
-      
-      // Get the nodes that make up the ways
-      >;
-    );
-  `;
-}
-
 // Function to process OSM data into our court format
 function processOSMData(osmData: OSMResponse): Court[] {
   const courts: Court[] = [];
@@ -148,7 +117,9 @@ function processOSMData(osmData: OSMResponse): Court[] {
           node.tags.leisure === "sports_centre" ||
           node.tags.leisure === "pitch" ||
           node.tags.leisure === "stadium" ||
-          node.tags.leisure === "fitness_centre";
+          node.tags.leisure === "fitness_centre" ||
+          node.tags.leisure === "park" ||
+          node.tags.amenity === "community_centre";
 
         const mentionsPickleball =
           node.tags.name?.toLowerCase().includes("pickleball") ||
@@ -167,7 +138,8 @@ function processOSMData(osmData: OSMResponse): Court[] {
         if (
           isSportsFacility ||
           mentionsPickleball ||
-          (mentionsTennis && mentionsCourts)
+          mentionsTennis ||
+          mentionsCourts
         ) {
           console.log("Found potential court node:", {
             id: node.id,
@@ -177,9 +149,11 @@ function processOSMData(osmData: OSMResponse): Court[] {
             description: node.tags.description,
             reason: mentionsPickleball
               ? "pickleball"
-              : mentionsTennis && mentionsCourts
-                ? "tennis court"
-                : "sports facility",
+              : mentionsTennis
+                ? "tennis"
+                : mentionsCourts
+                  ? "court"
+                  : "sports facility",
           });
 
           const street = node.tags["addr:street"] ?? "";
@@ -260,7 +234,8 @@ function processOSMData(osmData: OSMResponse): Court[] {
         if (
           isSportsFacility ||
           mentionsPickleball ||
-          (mentionsTennis && mentionsCourts)
+          mentionsTennis ||
+          mentionsCourts
         ) {
           console.log("Found potential court way:", {
             id: way.id,
@@ -270,9 +245,11 @@ function processOSMData(osmData: OSMResponse): Court[] {
             description: way.tags.description,
             reason: mentionsPickleball
               ? "pickleball"
-              : mentionsTennis && mentionsCourts
-                ? "tennis court"
-                : "sports facility",
+              : mentionsTennis
+                ? "tennis"
+                : mentionsCourts
+                  ? "court"
+                  : "sports facility",
           });
 
           // Calculate center point of the way
@@ -331,200 +308,84 @@ function processOSMData(osmData: OSMResponse): Court[] {
 
 export async function GET(request: Request) {
   try {
-    console.log("Starting court fetch request...");
-
     const { searchParams } = new URL(request.url);
     const lat = parseFloat(searchParams.get("lat") || "0");
     const lng = parseFloat(searchParams.get("lng") || "0");
-    const radius = parseFloat(searchParams.get("radius") || "10");
+    const radius = parseFloat(searchParams.get("radius") || "20");
 
-    console.log("Request parameters:", { lat, lng, radius });
+    // Calculate bounds using the imported function
+    const bounds = calculateBounds(lat, lng, radius);
+    console.log("Search parameters:", { lat, lng, radius });
+    console.log("Calculated bounds:", bounds);
 
-    // Verify Convex URL is set
-    if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
-      throw new Error("NEXT_PUBLIC_CONVEX_URL is not set");
-    }
-    console.log("Convex URL is configured");
-
-    // Add a test court that exactly matches the Convex schema
-    const testCourt = {
-      name: "Test Pickleball Court",
-      address: "123 Test Street",
-      state: "CA",
-      zipCode: "94105",
-      indoor: false,
-      numberOfCourts: 2,
-      amenities: {
-        lightsAvailable: true,
-        restroomsAvailable: true,
-        waterFountain: true,
-      },
-      location: {
-        type: "Point" as const,
-        coordinates: [parseFloat(lng.toString()), parseFloat(lat.toString())],
-      },
-      isVerified: false,
-      addedByUser: false,
-      lastVerified: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      submittedBy: "system",
-    };
-
-    console.log(
-      "Test court object created:",
-      JSON.stringify(testCourt, null, 2)
-    );
-
-    try {
-      console.log("Attempting to save test court to Convex...");
-      const result = await convex.mutation(api.courts.importExternalCourts, {
-        courts: [
-          {
-            name: testCourt.name,
-            address: testCourt.address,
-            state: testCourt.state,
-            zipCode: testCourt.zipCode,
-            indoor: testCourt.indoor,
-            numberOfCourts: testCourt.numberOfCourts,
-            amenities: testCourt.amenities,
-            location: testCourt.location,
-            isVerified: false,
-            addedByUser: false,
-            lastVerified: Date.now(),
-            createdAt: Date.now(),
-            updatedAt: Date.now(),
-            submittedBy: "system",
-          },
-        ],
-      });
-      console.log("Successfully saved test court to Convex:", result);
-    } catch (error) {
-      console.error("Error saving to Convex:", error);
-      if (error instanceof Error) {
-        console.error("Error details:", {
-          message: error.message,
-          stack: error.stack,
-          name: error.name,
-        });
-      }
-      throw error;
-    }
-
-    // Calculate bounding box
-    const bounds = {
-      minLat: lat - radius / 111.32,
-      maxLat: lat + radius / 111.32,
-      minLon: lng - radius / (111.32 * Math.cos((lat * Math.PI) / 180)),
-      maxLon: lng + radius / (111.32 * Math.cos((lat * Math.PI) / 180)),
-    };
-
-    console.log("Bounding box calculated:", bounds);
-
-    // Create and execute Overpass query
-    const query = createOverpassQuery(bounds);
-    console.log("Overpass query created:", query);
-
-    try {
-      console.log("Sending request to Overpass API...");
-      const response = await fetch(OVERPASS_API, {
-        method: "POST",
-        body: query,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Overpass API error response:", {
-          status: response.status,
-          statusText: response.statusText,
-          body: errorText,
-        });
-        throw new Error(
-          `Overpass API error: ${response.statusText} - ${errorText}`
-        );
-      }
-
-      const osmData = await response.json();
-      console.log("Overpass API response received:", {
-        elementCount: osmData.elements?.length || 0,
-        firstElement: osmData.elements?.[0],
-      });
-
-      const courts = processOSMData(osmData);
-      console.log("Processed courts:", {
-        count: courts.length,
-        firstCourt: courts[0],
-      });
-
-      // Save courts to Convex
-      if (courts.length > 0) {
-        try {
-          console.log("Attempting to save processed courts to Convex...");
-          const result = await convex.mutation(
-            api.courts.importExternalCourts,
-            {
-              courts: courts.map((court) => ({
-                ...court,
-                isVerified: false,
-                addedByUser: false,
-                lastVerified: Date.now(),
-                createdAt: Date.now(),
-                updatedAt: Date.now(),
-                submittedBy: "osm",
-              })),
-            }
-          );
-          console.log("Successfully saved courts to Convex:", result);
-        } catch (error) {
-          console.error("Error saving processed courts to Convex:", error);
-          if (error instanceof Error) {
-            console.error("Error details:", {
-              message: error.message,
-              stack: error.stack,
-              name: error.name,
-            });
-          }
-          throw error;
-        }
-      }
-
+    // Try to get from cache first
+    const cacheKey = JSON.stringify(bounds);
+    const cachedData = await cache.get(cacheKey);
+    if (cachedData) {
+      console.log("Retrieved data from cache");
       return NextResponse.json({
         success: true,
-        message: `Found ${courts.length} courts`,
-        courts: [testCourt, ...courts],
-        debug: {
-          bounds,
-          query,
-          elementCount: osmData.elements?.length || 0,
-          sampleElements: osmData.elements?.slice(0, 2),
-        },
+        message: "Data retrieved from cache",
+        courts: cachedData,
       });
-    } catch (error) {
-      console.error("Error in Overpass API request:", error);
-      if (error instanceof Error) {
-        console.error("Error details:", {
-          message: error.message,
-          stack: error.stack,
-          name: error.name,
-        });
-      }
-      throw error;
     }
+
+    console.log("Cache miss, fetching from Overpass API");
+
+    // Create and execute Overpass query
+    const query = createOptimizedQuery(bounds);
+    console.log("Generated Overpass query:", query);
+
+    const osmData = await overpassClient.executeQuery(query);
+    console.log("Received response from Overpass API");
+
+    const courts = processOSMData(osmData);
+    console.log(`Processed ${courts.length} courts from OSM data`);
+
+    // Cache the results
+    cache.set(cacheKey, courts);
+    console.log("Cached results for future requests");
+
+    // Save courts to Convex
+    if (courts.length > 0) {
+      console.log("Saving courts to Convex database");
+      await convex.mutation(api.courts.importExternalCourts, {
+        courts: courts.map((court) => ({
+          ...court,
+          isVerified: false,
+          addedByUser: false,
+          lastVerified: Date.now(),
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          submittedBy: "osm",
+        })),
+      });
+      console.log("Successfully saved courts to Convex");
+    }
+
+    // Get metrics for monitoring
+    const metrics = overpassClient.getMetrics();
+    console.log("Overpass API metrics:", metrics);
+
+    return NextResponse.json({
+      success: true,
+      message: `Found ${courts.length} courts`,
+      courts,
+      metrics,
+    });
   } catch (error) {
     console.error("Error in court fetch request:", error);
-    if (error instanceof Error) {
-      console.error("Error details:", {
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
-      });
-    }
+
+    // Get metrics even in case of error
+    const metrics = overpassClient.getMetrics();
+    console.error("Overpass API metrics at time of error:", metrics);
+
     return NextResponse.json(
       {
         success: false,
         error: "Failed to fetch courts",
         details: error instanceof Error ? error.message : "Unknown error",
-        stack: error instanceof Error ? error.stack : undefined,
+        metrics,
       },
       { status: 500 }
     );

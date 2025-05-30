@@ -49,6 +49,7 @@ export default defineSchema({
     submittedBy: v.optional(v.string()), // ID of user who submitted
     createdAt: v.number(), // timestamp
     updatedAt: v.number(), // timestamp
+    source: v.optional(v.string()), // Source of the court data (e.g., "seed-data", "user-submitted", "api")
   })
     .index("by_location", ["location"])
     .index("by_state", ["state"])

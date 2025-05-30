@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Indoor Tennis Center",
+    "address": "456 Court Street",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zipCode": "90001",
+    "indoor": true,
+    "numberOfCourts": 6,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-118.2437, 34.0522]
+    },
+    "source": "seed-data"
+  },
+  {
+    "name": "San Francisco Tennis Club",
+    "address": "789 Golden Gate Park",
+    "city": "San Francisco",
+    "state": "CA",
+    "zipCode": "94122",
+    "indoor": false,
+    "numberOfCourts": 4,
+    "amenities": {
+      "lightsAvailable": true,
+      "restroomsAvailable": true,
+      "waterFountain": true
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [-122.4194, 37.7749]
+    },
+    "source": "seed-data"
+  }
+]
