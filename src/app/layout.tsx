@@ -4,10 +4,6 @@ import { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Providers from "./providers";
-import { SignInButton } from "@clerk/nextjs";
-import { SignUpButton } from "@clerk/nextjs";
-import { UserButton } from "@clerk/nextjs";
-import { useAuth, useUser } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Pickleball Court Finder",

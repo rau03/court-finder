@@ -66,6 +66,7 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@convex": "./convex",
+      "@/convex": "./convex",
     };
     return config;
   },

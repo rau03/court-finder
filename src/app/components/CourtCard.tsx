@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import { useAuth } from "@clerk/nextjs";
 
 interface CourtCardProps {
   court: {
@@ -23,25 +24,25 @@ interface CourtCardProps {
     surfaceType?: string;
     cost?: string;
     amenities?: {
-      indoorCourts: boolean;
-      outdoorCourts: boolean;
-      lightsAvailable: boolean;
-      restroomsAvailable: boolean;
-      waterFountain: boolean;
+      indoorCourts?: boolean;
+      outdoorCourts?: boolean;
+      lightsAvailable?: boolean;
+      restroomsAvailable?: boolean;
+      waterFountain?: boolean;
     };
     contact?: {
-      website: string;
-      phone: string;
-      email: string;
+      website?: string;
+      phone?: string;
+      email?: string;
     };
     hours?: {
-      monday: string;
-      tuesday: string;
-      wednesday: string;
-      thursday: string;
-      friday: string;
-      saturday: string;
-      sunday: string;
+      monday?: string;
+      tuesday?: string;
+      wednesday?: string;
+      thursday?: string;
+      friday?: string;
+      saturday?: string;
+      sunday?: string;
     };
   };
   isFavorite?: boolean;
@@ -51,11 +52,12 @@ export default function CourtCard({
   court,
   isFavorite = false,
 }: CourtCardProps) {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { userId } = useAuth();
 
   // Use Convex queries and mutations
   const isFavorited = useQuery(api.favorites.isFavorited, {
-    userId: "", // No user context
+    userId: userId ?? "",
     courtId: court._id,
   });
   const addFavorite = useMutation(api.favorites.addFavorite);
@@ -63,11 +65,25 @@ export default function CourtCard({
 
   // Use isFavorite prop as fallback while query is loading
   const favoriteStatus = isFavorited ?? isFavorite;
-  const displayStatus = loading ? favoriteStatus : (isFavorited ?? isFavorite);
+  const displayStatus = isLoading
+    ? favoriteStatus
+    : (isFavorited ?? isFavorite);
 
   const toggleFavorite = async () => {
-    // No auth context, just return
-    return;
+    if (isLoading || !userId) return;
+
+    setIsLoading(true);
+    try {
+      if (favoriteStatus) {
+        await removeFavorite({ userId, courtId: court._id });
+      } else {
+        await addFavorite({ userId, courtId: court._id });
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,8 +95,8 @@ export default function CourtCard({
           <h3 className="mb-2 text-xl font-black text-[#222]">{court.name}</h3>
           <button
             onClick={toggleFavorite}
-            disabled={loading}
-            className={`text-2xl transition-transform transform hover:scale-125 focus:outline-none ${loading ? "opacity-50" : ""}`}
+            disabled={isLoading || !userId}
+            className={`text-2xl transition-transform transform hover:scale-125 focus:outline-none ${isLoading || !userId ? "opacity-50" : ""}`}
             aria-label={
               displayStatus ? "Remove from favorites" : "Add to favorites"
             }
@@ -89,7 +105,8 @@ export default function CourtCard({
           </button>
         </div>
         <p className="mb-3 font-bold text-[#222]">
-          {court.address}, {court.city}, {court.state} {court.zipCode}
+          {court.address}
+          {court.city && `, ${court.city}`}, {court.state} {court.zipCode}
         </p>
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div className="p-2 bg-[var(--accent)] border-2 border-[#222]">

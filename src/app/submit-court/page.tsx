@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { Id } from "../../../convex/_generated/dataModel";
 
 // Define the form data structure matching Convex schema
 interface FormData {
@@ -46,6 +45,7 @@ export default function SubmitCourt() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [submittedCourtId, setSubmittedCourtId] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -199,37 +199,22 @@ export default function SubmitCourt() {
           restroomsAvailable: Boolean(formData.amenities?.restroomsAvailable),
           waterFountain: Boolean(formData.amenities?.waterFountain),
         },
-        surfaceType: formData.surfaceType || "",
-        cost: formData.cost || "",
-        hours: {
-          monday: formData.hours?.monday || "",
-          tuesday: formData.hours?.tuesday || "",
-          wednesday: formData.hours?.wednesday || "",
-          thursday: formData.hours?.thursday || "",
-          friday: formData.hours?.friday || "",
-          saturday: formData.hours?.saturday || "",
-          sunday: formData.hours?.sunday || "",
-        },
-        contact: {
-          website: formData.contact?.website || "",
-          phone: formData.contact?.phone || "",
-          email: formData.contact?.email || "",
-        },
         location: {
           type: "Point",
           coordinates: [geocodeData.lng, geocodeData.lat],
         },
+        surfaceType: formData.surfaceType,
+        cost: formData.cost,
+        hours: formData.hours,
+        contact: formData.contact,
       });
 
+      setSubmittedCourtId(courtId);
       setSuccess(true);
-      setTimeout(() => router.push("/"), 7000);
+      router.push(`/courts/${courtId}`);
     } catch (err) {
-      console.error("Submission error:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : "An error occurred while submitting the court"
-      );
+      console.error("Error submitting court:", err);
+      setError(err instanceof Error ? err.message : "Failed to submit court");
     } finally {
       setLoading(false);
     }
@@ -245,13 +230,13 @@ export default function SubmitCourt() {
             Your court submission has been received and will be reviewed soon.
           </p>
           <p className="mb-4 text-gray-800">
-            Redirecting to homepage in 7 seconds...
+            Redirecting to court page in 7 seconds...
           </p>
           <Link
-            href="/"
+            href="/courts"
             className="px-6 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
-            Return to Home
+            Return to Courts
           </Link>
         </div>
       </div>

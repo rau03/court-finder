@@ -1,6 +1,5 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { Id } from "./_generated/dataModel";
 
 // Get user's favorites with court details
 export const getUserFavoritesWithDetails = query({
@@ -15,8 +14,49 @@ export const getUserFavoritesWithDetails = query({
         name: v.string(),
         address: v.string(),
         state: v.string(),
-        indoor: v.boolean(),
+        zipCode: v.string(),
         numberOfCourts: v.number(),
+        indoor: v.boolean(),
+        location: v.object({
+          type: v.literal("Point"),
+          coordinates: v.array(v.number()),
+        }),
+        city: v.optional(v.string()),
+        surfaceType: v.optional(v.string()),
+        cost: v.optional(v.string()),
+        amenities: v.object({
+          indoorCourts: v.optional(v.boolean()),
+          outdoorCourts: v.optional(v.boolean()),
+          lightsAvailable: v.optional(v.boolean()),
+          restroomsAvailable: v.optional(v.boolean()),
+          waterFountain: v.optional(v.boolean()),
+        }),
+        contact: v.optional(
+          v.object({
+            website: v.optional(v.string()),
+            phone: v.optional(v.string()),
+            email: v.optional(v.string()),
+          })
+        ),
+        hours: v.optional(
+          v.object({
+            monday: v.optional(v.string()),
+            tuesday: v.optional(v.string()),
+            wednesday: v.optional(v.string()),
+            thursday: v.optional(v.string()),
+            friday: v.optional(v.string()),
+            saturday: v.optional(v.string()),
+            sunday: v.optional(v.string()),
+          })
+        ),
+        isVerified: v.boolean(),
+        addedByUser: v.boolean(),
+        lastVerified: v.number(),
+        rating: v.optional(v.number()),
+        submittedBy: v.optional(v.string()),
+        createdAt: v.number(),
+        updatedAt: v.number(),
+        source: v.optional(v.string()),
       }),
       createdAt: v.number(),
     })
@@ -34,15 +74,21 @@ export const getUserFavoritesWithDetails = query({
         if (!court) {
           throw new Error(`Court ${favorite.courtId} not found`);
         }
+
+        // Ensure coordinates is a tuple of exactly 2 numbers
+        const coordinates = court.location.coordinates;
+        if (!Array.isArray(coordinates) || coordinates.length !== 2) {
+          throw new Error(`Invalid coordinates for court ${court._id}`);
+        }
+
         return {
           _id: favorite._id,
           courtId: {
-            _id: court._id,
-            name: court.name,
-            address: court.address,
-            state: court.state,
-            indoor: court.indoor,
-            numberOfCourts: court.numberOfCourts,
+            ...court,
+            location: {
+              ...court.location,
+              coordinates: [coordinates[0], coordinates[1]] as [number, number],
+            },
           },
           createdAt: favorite.createdAt,
         };
