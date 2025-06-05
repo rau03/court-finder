@@ -1,4 +1,4 @@
-# Court Finder
+# Pickleball Court Hub - Court Finder
 
 A modern web application that helps pickleball players find and discover courts in their area. Built with Next.js, TypeScript, and Google Maps API.
 
