@@ -1,6 +1,24 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { isUserAdmin } from "./auth";
+import { DatabaseReader } from "convex/server";
+
+// Helper function to check if user is admin
+async function checkIsAdmin(
+  ctx: { db: DatabaseReader },
+  userId: string
+): Promise<boolean> {
+  try {
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), userId))
+      .first();
+
+    return user?.role === "admin";
+  } catch (error) {
+    console.error("Error checking admin status:", error);
+    return false;
+  }
+}
 
 // Submit a new court
 export const submitCourt = mutation({
@@ -86,8 +104,8 @@ export const getPendingCourts = query({
     }
 
     // Check if user is admin
-    const admin = await isUserAdmin(ctx, identity.subject);
-    if (!admin) {
+    const isAdmin = await checkIsAdmin(ctx, identity.subject);
+    if (!isAdmin) {
       throw new Error("Unauthorized: Admin access required");
     }
 
@@ -113,8 +131,8 @@ export const approveCourt = mutation({
     }
 
     // Check if user is admin
-    const admin = await isUserAdmin(ctx, identity.subject);
-    if (!admin) {
+    const isAdmin = await checkIsAdmin(ctx, identity.subject);
+    if (!isAdmin) {
       throw new Error("Unauthorized: Admin access required");
     }
 
@@ -143,8 +161,8 @@ export const rejectCourt = mutation({
     }
 
     // Check if user is admin
-    const admin = await isUserAdmin(ctx, identity.subject);
-    if (!admin) {
+    const isAdmin = await checkIsAdmin(ctx, identity.subject);
+    if (!isAdmin) {
       throw new Error("Unauthorized: Admin access required");
     }
 
