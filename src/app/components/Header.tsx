@@ -18,17 +18,6 @@ export default function Header() {
   return (
     <header className="bg-white border-b-[5px] border-[#222] relative z-50">
       <div className="flex items-center justify-between max-w-6xl p-4 mx-auto">
-        {/* Hamburger Menu Button - Mobile Only */}
-        <button
-          onClick={toggleMenu}
-          className="z-50 p-2 md:hidden"
-          aria-label="Toggle menu"
-        >
-          <div className="w-6 h-0.5 bg-[#222] mb-1.5"></div>
-          <div className="w-6 h-0.5 bg-[#222] mb-1.5"></div>
-          <div className="w-6 h-0.5 bg-[#222]"></div>
-        </button>
-
         {/* Title - Centered on Mobile */}
         <Link
           href="/"
@@ -36,6 +25,17 @@ export default function Header() {
         >
           Pickleball Court Hub
         </Link>
+
+        {/* Hamburger Menu Button - Mobile Only */}
+        <button
+          onClick={toggleMenu}
+          className="z-50 p-3 bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition md:hidden"
+          aria-label="Toggle menu"
+        >
+          <div className="w-8 h-1 mb-2 bg-white"></div>
+          <div className="w-8 h-1 mb-2 bg-white"></div>
+          <div className="w-8 h-1 bg-white"></div>
+        </button>
 
         {/* Desktop Navigation */}
         <div className="items-center hidden gap-4 md:flex">
@@ -78,11 +78,11 @@ export default function Header() {
             isMenuOpen ? "translate-y-0" : "-translate-y-full"
           } md:hidden`}
         >
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-center gap-4">
             {isAdmin && (
               <Link
                 href="/admin"
-                className="px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[-0.5deg]"
+                className="w-full px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[-0.5deg] text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Admin
@@ -90,18 +90,18 @@ export default function Header() {
             )}
             <Link
               href="/submit-court"
-              className="px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[0.5deg]"
+              className="w-full px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[0.5deg] text-center"
               onClick={() => setIsMenuOpen(false)}
             >
               Submit Court
             </Link>
 
             {isSignedIn ? (
-              <div className="flex justify-center">
+              <div className="flex justify-center w-full">
                 <UserButton afterSignOutUrl="/" />
               </div>
             ) : (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col w-full gap-2">
                 <SignInButton mode="modal">
                   <button className="w-full px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition">
                     Sign In
