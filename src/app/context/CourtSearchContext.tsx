@@ -99,13 +99,16 @@ export const CourtSearchProvider: React.FC<CourtSearchProviderProps> = ({
       };
 
       // Use Convex query to search courts
-      const searchResults = await fetch("/api/courts/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(params),
-      });
+      const searchResults = await fetch(
+        `${window.location.origin}/api/courts/search`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(params),
+        }
+      );
 
       if (!searchResults.ok) {
         const errorData = await searchResults.json();
