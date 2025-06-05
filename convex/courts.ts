@@ -68,6 +68,16 @@ export const submitCourt = mutation({
       throw new Error("Not authenticated");
     }
 
+    // Validate coordinates
+    if (
+      !Array.isArray(args.location.coordinates) ||
+      args.location.coordinates.length !== 2
+    ) {
+      throw new Error(
+        "Coordinates must be a two-element array [longitude, latitude]"
+      );
+    }
+
     try {
       // Create court with unverified status
       const now = Date.now();
@@ -335,28 +345,34 @@ export const importExternalCourts = mutation({
   },
   returns: v.array(v.id("courts")),
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
     const courtIds = [];
     for (const court of args.courts) {
-      // Add default source if not provided
+      // Validate coordinates
+      if (
+        !Array.isArray(court.location.coordinates) ||
+        court.location.coordinates.length !== 2
+      ) {
+        throw new Error(`Invalid coordinates for court ${court.name}`);
+      }
+
       const courtWithSource = {
         ...court,
-        source: court.source || "osm",
+        source: court.source ?? "seed-data",
       };
 
       // Check if court already exists
-      const existingCourts = await ctx.db
+      const existingCourt = await ctx.db
         .query("courts")
-        .filter((q) =>
-          q.and(
-            q.eq(q.field("name"), court.name),
-            q.eq(q.field("address"), court.address)
-          )
-        )
-        .collect();
+        .withIndex("by_location", (q) => q.eq("location", court.location))
+        .first();
 
-      if (existingCourts.length > 0) {
+      if (existingCourt) {
         // Update existing court
-        const existingCourt = existingCourts[0];
         await ctx.db.patch(existingCourt._id, courtWithSource);
         courtIds.push(existingCourt._id);
       } else {
@@ -365,6 +381,7 @@ export const importExternalCourts = mutation({
         courtIds.push(courtId);
       }
     }
+
     return courtIds;
   },
 });

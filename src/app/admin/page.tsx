@@ -5,9 +5,11 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import Header from "../components/Header";
 import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
 
 export default function AdminDashboard() {
-  const isAdmin = useQuery(api.users.isAdmin);
+  const { userId } = useAuth();
+  const isAdmin = useQuery(api.users.isAdmin, { userId: userId ?? "" });
   const pendingCourts = useQuery(api.courts.getPendingCourts);
   const approveMutation = useMutation(api.courts.approveCourt);
   const rejectMutation = useMutation(api.courts.rejectCourt);

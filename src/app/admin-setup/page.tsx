@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { useAuth } from "@clerk/nextjs";
 
 export default function AdminSetup() {
   const [message, setMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
+  const { userId } = useAuth();
 
-  const isAdmin = useQuery(api.users.isAdmin);
+  const isAdmin = useQuery(api.users.isAdmin, { userId: userId ?? "" });
   const setUserAsAdminMutation = useMutation(api.users.setUserAsAdmin);
 
   const handleSetAdmin = async () => {

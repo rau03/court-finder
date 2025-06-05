@@ -17,7 +17,7 @@ interface CourtCardProps {
     indoor: boolean;
     location: {
       type: string;
-      coordinates: [number, number];
+      coordinates: number[];
     };
     // Optional properties
     city?: string;

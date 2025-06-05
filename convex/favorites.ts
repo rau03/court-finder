@@ -75,9 +75,11 @@ export const getUserFavoritesWithDetails = query({
           throw new Error(`Court ${favorite.courtId} not found`);
         }
 
-        // Ensure coordinates is a tuple of exactly 2 numbers
-        const coordinates = court.location.coordinates;
-        if (!Array.isArray(coordinates) || coordinates.length !== 2) {
+        // Validate coordinates
+        if (
+          !Array.isArray(court.location.coordinates) ||
+          court.location.coordinates.length !== 2
+        ) {
           throw new Error(`Invalid coordinates for court ${court._id}`);
         }
 
@@ -87,7 +89,7 @@ export const getUserFavoritesWithDetails = query({
             ...court,
             location: {
               ...court.location,
-              coordinates: [coordinates[0], coordinates[1]] as [number, number],
+              coordinates: court.location.coordinates,
             },
           },
           createdAt: favorite.createdAt,

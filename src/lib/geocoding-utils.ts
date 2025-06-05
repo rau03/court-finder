@@ -1,5 +1,5 @@
 interface Location {
-  coordinates: number[];
+  coordinates: [number, number];
 }
 
 interface LocationObject {

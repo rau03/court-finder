@@ -1,6 +1,6 @@
 // All Clerk-specific user queries and mutations have been removed.
 
-import { query } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
 // Query to check if a user is an admin
@@ -59,5 +59,43 @@ export const isUserAdmin = query({
       .first();
 
     return user?.role === "admin";
+  },
+});
+
+// Mutation to set a user as admin
+export const setUserAsAdmin = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+    const email = identity.email;
+
+    if (!email) {
+      throw new Error("Email is required");
+    }
+
+    // Check if user already exists
+    const existingUser = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), email))
+      .first();
+
+    if (existingUser) {
+      // Update existing user
+      await ctx.db.patch(existingUser._id, {
+        role: "admin",
+      });
+      return existingUser._id;
+    } else {
+      // Create new user
+      return await ctx.db.insert("users", {
+        email,
+        role: "admin",
+      });
+    }
   },
 });

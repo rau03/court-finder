@@ -11,6 +11,7 @@ export default defineSchema({
     zipCode: v.string(),
     location: v.object({
       type: v.literal("Point"),
+      // Coordinates must be [longitude, latitude] as a two-element array
       coordinates: v.array(v.number()),
     }),
     amenities: v.object({

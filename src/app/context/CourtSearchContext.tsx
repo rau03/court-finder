@@ -131,11 +131,11 @@ export const CourtSearchProvider: React.FC<CourtSearchProviderProps> = ({
       if (data.courts.length > 0) {
         // Calculate the center point of all courts
         const totalLat = data.courts.reduce(
-          (sum, court) => sum + court.location.coordinates[1],
+          (sum: number, court: Court) => sum + court.location.coordinates[1],
           0
         );
         const totalLng = data.courts.reduce(
-          (sum, court) => sum + court.location.coordinates[0],
+          (sum: number, court: Court) => sum + court.location.coordinates[0],
           0
         );
         const centerLat = totalLat / data.courts.length;

@@ -9,7 +9,7 @@ export interface Court {
   numberOfCourts: number;
   location: {
     type: string;
-    coordinates: number[];
+    coordinates: [number, number];
   };
   isVerified: boolean;
   addedByUser: boolean;
