@@ -1,16 +1,15 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { DatabaseReader } from "convex/server";
 
 // Helper function to check if user is admin
 async function checkIsAdmin(
-  ctx: { db: DatabaseReader },
+  ctx: { db: any },
   userId: string
 ): Promise<boolean> {
   try {
     const user = await ctx.db
       .query("users")
-      .filter((q) => q.eq(q.field("email"), userId))
+      .filter((q: any) => q.eq(q.field("email"), userId))
       .first();
 
     return user?.role === "admin";

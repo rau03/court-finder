@@ -12,10 +12,10 @@ export const isAdmin = query({
     try {
       const user = await ctx.db
         .query("users")
-        .filter((q) => q.eq(q.field("userId"), args.userId))
+        .filter((q) => q.eq(q.field("email"), args.userId))
         .first();
 
-      return user?.isAdmin === true;
+      return user?.role === "admin";
     } catch (error) {
       console.error("Error checking admin status:", error);
       return false;
