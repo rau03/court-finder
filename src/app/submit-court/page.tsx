@@ -45,7 +45,6 @@ export default function SubmitCourt() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [submittedCourtId, setSubmittedCourtId] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -209,7 +208,6 @@ export default function SubmitCourt() {
         contact: formData.contact,
       });
 
-      setSubmittedCourtId(courtId);
       setSuccess(true);
       router.push(`/courts/${courtId}`);
     } catch (err) {
