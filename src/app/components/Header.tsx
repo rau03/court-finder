@@ -16,12 +16,12 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white border-b-[5px] border-[#222] relative z-10">
+    <header className="bg-white border-b-[5px] border-[#222] relative z-50">
       <div className="flex items-center justify-between max-w-6xl p-4 mx-auto">
         {/* Hamburger Menu Button - Mobile Only */}
         <button
           onClick={toggleMenu}
-          className="p-2 md:hidden"
+          className="z-50 p-2 md:hidden"
           aria-label="Toggle menu"
         >
           <div className="w-6 h-0.5 bg-[#222] mb-1.5"></div>
@@ -32,13 +32,13 @@ export default function Header() {
         {/* Title - Centered on Mobile */}
         <Link
           href="/"
-          className="text-3xl font-black text-[#222] hover:text-[var(--primary)] transition-colors relative md:ml-0 mx-auto"
+          className="text-3xl font-black text-[#222] hover:text-[var(--primary)] transition-colors relative md:ml-0 mx-auto z-40"
         >
           Pickleball Court Hub
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="items-center hidden gap-4 md:flex">
           {isAdmin && (
             <Link
               href="/admin"
@@ -74,7 +74,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed top-[73px] left-0 right-0 bg-white border-b-[5px] border-[#222] p-4 transform transition-transform duration-300 ease-in-out ${
+          className={`fixed top-[73px] left-0 right-0 bg-white border-b-[5px] border-[#222] p-4 transform transition-transform duration-300 ease-in-out z-40 ${
             isMenuOpen ? "translate-y-0" : "-translate-y-full"
           } md:hidden`}
         >
