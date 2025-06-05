@@ -22,7 +22,8 @@ const CourtResults: React.FC = () => {
   );
 
   return (
-    <div className="grid h-[600px] grid-cols-1 gap-6 md:grid-cols-2">
+    <div className="flex flex-col gap-6 md:grid md:grid-cols-2">
+      {/* Court List */}
       <div className="p-4 bg-[#3bdf72dd] border-3 border-[#222] shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[-0.4deg] relative h-[600px] overflow-y-auto">
         {error && (
           <div className="p-4 mb-4 text-red-700 bg-red-100 border-3 border-[#222] shadow-[3px_3px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg]">
@@ -63,6 +64,7 @@ const CourtResults: React.FC = () => {
         ) : null}
       </div>
 
+      {/* Map */}
       <div className="border-3 border-[#222] overflow-hidden shadow-[6px_6px_0px_0px_rgba(30,30,30,0.8)] rotate-[0.4deg] relative bg-[#ffffff33] h-[600px]">
         <MapWrapper
           markers={markers}
