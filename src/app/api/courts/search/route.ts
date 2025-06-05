@@ -100,7 +100,10 @@ export async function POST(request: Request) {
     // Step 2: Search Convex database
     safeLog("Calling Convex query with params:", validatedParams);
 
-    const courts = await convex.query(api.courts.searchCourts, validatedParams);
+    const courts = await convex.query(api.courts.searchCourts, {
+      ...validatedParams,
+      coordinates: coordinates ? [coordinates.lng, coordinates.lat] : undefined,
+    });
 
     safeLog("Convex query response:", JSON.stringify(courts, null, 2));
 

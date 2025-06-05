@@ -19,6 +19,27 @@ async function checkIsAdmin(
   }
 }
 
+// Helper function to calculate distance between two points using the Haversine formula
+function calculateDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
+  const R = 6371e3; // Earth's radius in meters
+  const φ1 = (lat1 * Math.PI) / 180;
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c; // Distance in meters
+}
+
 // Submit a new court
 export const submitCourt = mutation({
   args: {
@@ -217,6 +238,7 @@ export const searchCourts = query({
     zipCode: v.optional(v.string()),
     indoor: v.optional(v.boolean()),
     maxDistance: v.optional(v.number()),
+    coordinates: v.optional(v.array(v.number())), // [longitude, latitude]
   },
   returns: v.array(
     v.object({
@@ -267,6 +289,21 @@ export const searchCourts = query({
       courts = courts.filter(
         (court: { indoor: boolean }) => court.indoor === args.indoor
       );
+    }
+
+    // Filter by distance if coordinates and maxDistance are provided
+    if (args.coordinates && args.maxDistance) {
+      const [searchLon, searchLat] = args.coordinates;
+      courts = courts.filter((court) => {
+        const [courtLon, courtLat] = court.location.coordinates;
+        const distance = calculateDistance(
+          searchLat,
+          searchLon,
+          courtLat,
+          courtLon
+        );
+        return distance <= args.maxDistance!;
+      });
     }
 
     // Map the courts to match the return type
