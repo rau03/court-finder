@@ -1,0 +1,12 @@
+{
+  "project": "quaint-wren-249",
+  "team": "quaint-wren-249",
+  "prodUrl": "https://quaint-wren-249.convex.cloud",
+  "functions": "convex/",
+  "authInfo": [
+    {
+      "domain": "https://court-finder.clerk.accounts.dev",
+      "applicationID": "convex"
+    }
+  ]
+}

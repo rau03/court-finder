@@ -70,8 +70,9 @@ export default defineSchema({
 
   // Users table
   users: defineTable({
-    name: v.optional(v.string()),
-    email: v.optional(v.string()),
-    role: v.string(), // "admin" or "user"
-  }),
+    email: v.string(),
+    role: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_email", ["email"]),
 });
