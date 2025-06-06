@@ -131,7 +131,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             id="state"
             value={state}
             onChange={(e) => setState(e.target.value)}
-            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[52px] shadow-[8px_8px_0px_0px_rgba(30,30,30,1)] sm:shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] pr-8 leading-normal"
+            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[52px] shadow-[12px_12px_0px_0px_rgba(30,30,30,1)] sm:shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] pr-8 leading-normal"
           >
             <option value="">Any State</option>
             {states.map((st) => (
@@ -220,7 +220,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           id="maxDistance"
           value={maxDistance}
           onChange={(e) => setMaxDistance(e.target.value)}
-          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[52px] shadow-[8px_8px_0px_0px_rgba(30,30,30,1)] sm:shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
+          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[52px] shadow-[12px_12px_0px_0px_rgba(30,30,30,1)] sm:shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
         >
           <option value="8000">5 miles</option>
           <option value="16000">10 miles</option>
