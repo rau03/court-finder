@@ -26,7 +26,6 @@ const SearchForm: React.FC<SearchFormProps> = ({
   const [zipCode, setZipCode] = useState("");
   const [indoor, setIndoor] = useState<string | null>(null);
   const [maxDistance, setMaxDistance] = useState("50000"); // Default ~30 miles (50km)
-  const [city, setCity] = useState("");
 
   const states = [
     "AL",
@@ -98,7 +97,6 @@ const SearchForm: React.FC<SearchFormProps> = ({
     setZipCode("");
     setIndoor(null);
     setMaxDistance("50000");
-    setCity("");
     onReset();
   };
 
