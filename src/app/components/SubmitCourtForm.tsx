@@ -131,7 +131,7 @@ export default function SubmitCourtForm() {
       }
 
       // Submit the court data to Convex
-      const courtId = await submitCourtMutation({
+      await submitCourtMutation({
         name: formData.name,
         address: formData.address,
         city: formData.city || "",
@@ -164,7 +164,11 @@ export default function SubmitCourtForm() {
         contact: formData.contact,
       });
 
-      router.push(`/courts/${courtId}`);
+      // Add a small delay to ensure the mutation completes
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Use window.location for navigation
+      window.location.href = "/";
     } catch (err) {
       console.error("Error submitting court:", err);
       setError(err instanceof Error ? err.message : "Failed to submit court");

@@ -50,7 +50,8 @@ export default defineSchema({
     submittedBy: v.optional(v.string()), // ID of user who submitted
     createdAt: v.number(), // timestamp
     updatedAt: v.number(), // timestamp
-    source: v.optional(v.string()), // Source of the court data (e.g., "seed-data", "user-submitted", "api")
+    source: v.optional(v.string()), // Source of the court data (e.g., "seed-data", "user-submitted", "api"),
+    createdBy: v.optional(v.id("users")), // Temporarily make this optional
   })
     .index("by_location", ["location"])
     .index("by_state", ["state"])
@@ -70,7 +71,9 @@ export default defineSchema({
 
   // Users table
   users: defineTable({
+    clerkId: v.string(),
     email: v.string(),
+    name: v.string(),
     role: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),

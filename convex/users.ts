@@ -96,6 +96,8 @@ export const setUserAsAdmin = mutation({
       const now = Date.now();
       return await ctx.db.insert("users", {
         email,
+        name: "Anonymous",
+        clerkId: "system",
         role: "admin",
         createdAt: now,
         updatedAt: now,
