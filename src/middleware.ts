@@ -11,7 +11,9 @@ export default authMiddleware({
     "/courts",
     "/sign-in",
     "/sign-up",
+    "/api/geocode",
   ],
+  ignoredRoutes: ["/api/webhook", "/api/courts/search", "/api/geocode"],
 });
 
 export const config = {

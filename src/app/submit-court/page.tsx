@@ -2,9 +2,18 @@
 
 import { useAuth, SignIn } from "@clerk/nextjs";
 import SubmitCourtForm from "../components/SubmitCourtForm";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SubmitCourt() {
   const { isSignedIn, isLoaded } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/sign-in?redirect_url=/submit-court");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   // Show loading state while auth is being checked
   if (!isLoaded) {

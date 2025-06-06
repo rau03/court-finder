@@ -32,7 +32,7 @@ interface FormData {
 
 export default function SubmitCourtForm() {
   const router = useRouter();
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const submitCourtMutation = useMutation(api.courts.submitCourt);
@@ -67,13 +67,17 @@ export default function SubmitCourtForm() {
     const { name, value } = e.target;
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
-      setFormData((prev) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof FormData],
-          [child]: value,
-        },
-      }));
+      if (parent === "amenities" || parent === "contact") {
+        setFormData((prev) => ({
+          ...prev,
+          [parent]: {
+            ...(prev[parent as keyof FormData] as {
+              [key: string]: string | boolean;
+            }),
+            [child]: value,
+          },
+        }));
+      }
     } else {
       setFormData((prev) => ({
         ...prev,
@@ -82,21 +86,9 @@ export default function SubmitCourtForm() {
     }
   };
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    const [parent, child] = name.split(".");
-    setFormData((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent as keyof FormData],
-        [child]: checked,
-      },
-    }));
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!isSignedIn) {
+    if (!isLoaded || !isSignedIn) {
       router.push("/sign-in?redirect_url=/submit-court");
       return;
     }
@@ -180,6 +172,34 @@ export default function SubmitCourtForm() {
       setLoading(false);
     }
   };
+
+  // Show loading state while auth is being checked
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl font-bold">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show sign-in component if not signed in
+  if (!isSignedIn) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+          <h2 className="mb-6 text-2xl font-bold text-center text-gray-900">
+            Sign in to Submit a Court
+          </h2>
+          <button
+            onClick={() => router.push("/sign-in?redirect_url=/submit-court")}
+            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
