@@ -220,7 +220,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           id="maxDistance"
           value={maxDistance}
           onChange={(e) => setMaxDistance(e.target.value)}
-          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
+          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[52px] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
         >
           <option value="8000">5 miles</option>
           <option value="16000">10 miles</option>
