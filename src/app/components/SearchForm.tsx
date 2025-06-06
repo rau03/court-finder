@@ -114,7 +114,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input"
+          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
           placeholder="Enter city, full address, or landmark"
         />
       </div>
@@ -159,7 +159,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
         </div>
       </div>
 
-      <div className="p-3 mb-4 bg-white border-black border-3">
+      <div className="p-3 mb-4 bg-white border-black border-3 shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]">
         <label className="block mb-2 text-lg font-bold text-black">
           Indoor/Outdoor
         </label>
@@ -220,7 +220,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           id="maxDistance"
           value={maxDistance}
           onChange={(e) => setMaxDistance(e.target.value)}
-          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input"
+          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
         >
           <option value="8000">5 miles</option>
           <option value="16000">10 miles</option>
