@@ -131,7 +131,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             id="state"
             value={state}
             onChange={(e) => setState(e.target.value)}
-            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[42px]"
+            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[42px] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
           >
             <option value="">Any State</option>
             {states.map((st) => (
