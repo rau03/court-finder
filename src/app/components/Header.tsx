@@ -21,7 +21,7 @@ export default function Header() {
         {/* Title - Centered on Mobile */}
         <Link
           href="/"
-          className="text-3xl font-black text-[#222] hover:text-[var(--primary)] transition-colors relative md:ml-0 mx-auto z-40"
+          className="text-3xl font-black text-[#222] hover:text-[var(--primary)] transition-colors relative z-[60] md:ml-0 mx-auto"
         >
           Pickleball Court Hub
         </Link>
@@ -29,7 +29,7 @@ export default function Header() {
         {/* Hamburger Menu Button - Mobile Only */}
         <button
           onClick={toggleMenu}
-          className="z-50 p-3 bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition md:hidden"
+          className="z-[60] p-3 bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition md:hidden"
           aria-label="Toggle menu"
         >
           <div className="w-8 h-1 mb-2 bg-white"></div>
@@ -37,44 +37,46 @@ export default function Header() {
           <div className="w-8 h-1 bg-white"></div>
         </button>
 
-        {/* Desktop Navigation */}
-        <div className="items-center hidden gap-4 md:flex">
-          {isAdmin && (
+        {/* Desktop Navigation - Completely Hidden on Mobile */}
+        <div className="hidden md:block">
+          <div className="flex items-center gap-4">
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[-0.5deg]"
+              >
+                Admin
+              </Link>
+            )}
             <Link
-              href="/admin"
-              className="px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[-0.5deg]"
+              href="/submit-court"
+              className="px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[0.5deg]"
             >
-              Admin
+              Submit Court
             </Link>
-          )}
-          <Link
-            href="/submit-court"
-            className="px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition rotate-[0.5deg]"
-          >
-            Submit Court
-          </Link>
 
-          {isSignedIn ? (
-            <UserButton afterSignOutUrl="/" />
-          ) : (
-            <div className="flex items-center gap-2">
-              <SignInButton mode="modal">
-                <button className="px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition">
-                  Sign In
-                </button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button className="px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition">
-                  Sign Up
-                </button>
-              </SignUpButton>
-            </div>
-          )}
+            {isSignedIn ? (
+              <UserButton afterSignOutUrl="/" />
+            ) : (
+              <div className="flex items-center gap-2">
+                <SignInButton mode="modal">
+                  <button className="px-4 py-2 font-black text-white bg-[var(--primary)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="px-4 py-2 font-black text-black bg-[var(--accent)] border-3 border-[#222] shadow-[4px_4px_0px_0px_rgba(30,30,30,1)] hover:shadow-[6px_6px_0px_0px_rgba(30,30,30,1)] hover:-translate-y-1 transform transition">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Hidden on Desktop */}
         <div
-          className={`fixed top-[73px] left-0 right-0 bg-white border-b-[5px] border-[#222] p-4 transform transition-transform duration-300 ease-in-out z-40 ${
+          className={`fixed top-[73px] left-0 right-0 bg-white border-b-[5px] border-[#222] p-4 transform transition-transform duration-300 ease-in-out z-[55] ${
             isMenuOpen ? "translate-y-0" : "-translate-y-full"
           } md:hidden`}
         >
