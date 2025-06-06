@@ -9,17 +9,11 @@ if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
   throw new Error("Missing NEXT_PUBLIC_CONVEX_URL environment variable");
 }
 
-// Debug: Check if Clerk key is present
 if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
   throw new Error(
     "Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY environment variable"
   );
 }
-
-console.log(
-  "Clerk key present (first 5 chars):",
-  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY.substring(0, 5)
-);
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
