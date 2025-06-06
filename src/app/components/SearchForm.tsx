@@ -120,7 +120,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
+        <div className="w-full">
           <label
             htmlFor="state"
             className="block mb-2 text-lg font-bold text-black"
@@ -131,7 +131,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             id="state"
             value={state}
             onChange={(e) => setState(e.target.value)}
-            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input"
+            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[42px]"
           >
             <option value="">Any State</option>
             {states.map((st) => (
@@ -141,7 +141,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             ))}
           </select>
         </div>
-        <div>
+        <div className="w-full">
           <label
             htmlFor="zipCode"
             className="block mb-2 text-lg font-bold text-black"
@@ -153,7 +153,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             id="zipCode"
             value={zipCode}
             onChange={(e) => setZipCode(e.target.value)}
-            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input"
+            className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[42px]"
             placeholder="Optional"
           />
         </div>
