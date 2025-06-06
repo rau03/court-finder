@@ -26,6 +26,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
   const [zipCode, setZipCode] = useState("");
   const [indoor, setIndoor] = useState<string | null>(null);
   const [maxDistance, setMaxDistance] = useState("50000"); // Default ~30 miles (50km)
+  const [city, setCity] = useState("");
 
   const states = [
     "AL",
@@ -97,6 +98,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
     setZipCode("");
     setIndoor(null);
     setMaxDistance("50000");
+    setCity("");
     onReset();
   };
 
@@ -114,7 +116,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
+          className="w-full p-2 font-bold text-black border-black rounded-none border-3 neo-input h-[52px] shadow-[8px_8px_0px_0px_rgba(30,30,30,1)] sm:shadow-[4px_4px_0px_0px_rgba(30,30,30,1)]"
           placeholder="Enter city, full address, or landmark"
         />
       </div>
