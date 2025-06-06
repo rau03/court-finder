@@ -1,6 +1,5 @@
 import { ConvexError, v } from "convex/values";
 import { internalMutation } from "./_generated/server";
-import { Id } from "./_generated/dataModel";
 
 // This is the configuration for Clerk authentication
 export const authConfig = {
@@ -26,12 +25,13 @@ export const onSignIn = internalMutation({
       .first();
 
     if (!existingUser) {
+      const now = Date.now();
       // Create new user
       await ctx.db.insert("users", {
         email: args.email,
         role: "user", // Default role
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
+        createdAt: now,
+        updatedAt: now,
       });
     }
   },
