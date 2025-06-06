@@ -85,14 +85,23 @@ export default function SubmitCourt() {
 
   // Show loading state while auth is being checked
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl font-bold">Loading...</div>
+      </div>
+    );
   }
 
   // Show sign-in component if not signed in
   if (!isSignedIn) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <SignIn afterSignInUrl="/submit-court" />
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+          <h2 className="mb-6 text-2xl font-bold text-center text-gray-900">
+            Sign in to Submit a Court
+          </h2>
+          <SignIn afterSignInUrl="/submit-court" />
+        </div>
       </div>
     );
   }
@@ -242,14 +251,11 @@ export default function SubmitCourt() {
           <p className="mb-6 text-lg text-gray-800">
             Your court submission has been received and will be reviewed soon.
           </p>
-          <p className="mb-4 text-gray-800">
-            Redirecting to court page in 7 seconds...
-          </p>
           <Link
             href="/courts"
             className="px-6 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
-            Return to Courts
+            View All Courts
           </Link>
         </div>
       </div>
