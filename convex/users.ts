@@ -88,13 +88,17 @@ export const setUserAsAdmin = mutation({
       // Update existing user
       await ctx.db.patch(existingUser._id, {
         role: "admin",
+        updatedAt: Date.now(),
       });
       return existingUser._id;
     } else {
       // Create new user
+      const now = Date.now();
       return await ctx.db.insert("users", {
         email,
         role: "admin",
+        createdAt: now,
+        updatedAt: now,
       });
     }
   },
