@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { useAuth, SignIn } from "@clerk/nextjs";
 
 // Define the form data structure matching Convex schema
 interface FormData {
@@ -42,9 +43,11 @@ interface FormData {
 
 export default function SubmitCourt() {
   const router = useRouter();
+  const { isSignedIn, isLoaded } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const submitCourtMutation = useMutation(api.courts.submitCourt);
 
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -80,7 +83,19 @@ export default function SubmitCourt() {
     },
   });
 
-  const submitCourtMutation = useMutation(api.courts.submitCourt);
+  // Show loading state while auth is being checked
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  // Show sign-in component if not signed in
+  if (!isSignedIn) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <SignIn afterSignInUrl="/submit-court" />
+      </div>
+    );
+  }
 
   // Form handlers
   const handleChange = (
