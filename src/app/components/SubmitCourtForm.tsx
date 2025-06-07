@@ -164,11 +164,11 @@ export default function SubmitCourtForm() {
         contact: formData.contact,
       });
 
-      // Add a small delay to ensure the mutation completes
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Show success message (optional)
+      alert("Court submitted successfully! Redirecting to home page...");
 
-      // Use window.location for navigation
-      window.location.href = "/";
+      // Use Next.js router for navigation
+      router.push("/");
     } catch (err) {
       console.error("Error submitting court:", err);
       setError(err instanceof Error ? err.message : "Failed to submit court");
