@@ -6,12 +6,13 @@ interface UserIdentity {
   tokenIdentifier: string;
   email?: string;
   name?: string;
+  subject?: string;
 }
 
 const auth = {
   providers: [
     {
-      domain: "deep-gar-59.clerk.accounts.dev",
+      domain: "court-finder-ten.vercel.app",
       applicationID: "convex",
     },
   ],
@@ -25,7 +26,10 @@ const auth = {
     }
 
     // Get the user's Clerk ID from the token
-    const userId = identity.tokenIdentifier;
+    const userId = identity.subject || identity.tokenIdentifier;
+    if (!userId) {
+      throw new ConvexError("No user ID found in token");
+    }
 
     // Check if the user already exists in the database
     const user = await ctx.db
@@ -47,7 +51,7 @@ const auth = {
 
     // Return the Clerk user ID as the Convex user ID
     return {
-      userId: identity.tokenIdentifier,
+      userId: userId,
       tokenIdentifier: identity.tokenIdentifier,
     };
   },

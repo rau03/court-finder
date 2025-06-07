@@ -5,7 +5,7 @@
   "functions": "convex/",
   "authInfo": [
     {
-      "domain": "deep-gar-59.clerk.accounts.dev",
+      "domain": "court-finder-ten.vercel.app",
       "applicationID": "convex"
     }
   ]

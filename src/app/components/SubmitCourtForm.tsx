@@ -32,7 +32,7 @@ interface FormData {
 
 export default function SubmitCourtForm() {
   const router = useRouter();
-  const { isSignedIn, isLoaded, getToken } = useAuth();
+  const { isSignedIn, isLoaded, userId } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const submitCourtMutation = useMutation(api.courts.submitCourt);
@@ -88,7 +88,7 @@ export default function SubmitCourtForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!isLoaded || !isSignedIn) {
+    if (!isLoaded || !isSignedIn || !userId) {
       router.push("/sign-in?redirect_url=/submit-court");
       return;
     }
@@ -97,14 +97,6 @@ export default function SubmitCourtForm() {
     setError(null);
 
     try {
-      // Get the auth token
-      const token = await getToken();
-      if (!token) {
-        throw new Error(
-          "Authentication token not available. Please sign in again."
-        );
-      }
-
       // Validate required fields
       if (!formData.address || !formData.state || !formData.zipCode) {
         throw new Error("Please fill in all required address fields");
