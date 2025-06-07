@@ -73,6 +73,12 @@ export async function GET(request: NextRequest) {
     console.log("Attempting to geocode address:", address);
 
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    console.log("Environment variables available:", Object.keys(process.env));
+    console.log(
+      "GOOGLE_MAPS_API_KEY exists:",
+      !!process.env.GOOGLE_MAPS_API_KEY
+    );
+
     if (!apiKey) {
       console.error("Google Maps API key is missing");
       throw new Error("Google Maps API key is not configured");
@@ -92,16 +98,18 @@ export async function GET(request: NextRequest) {
       "Making request to Google Maps API with URL:",
       url.replace(apiKey, "REDACTED")
     );
+
     const response = await fetch(url);
+    const responseText = await response.text();
+    console.log("Raw API response:", responseText);
 
     if (!response.ok) {
       console.error("Google Maps API response not OK:", response.status);
-      const errorText = await response.text();
-      console.error("Error response body:", errorText);
+      console.error("Error response body:", responseText);
       throw new Error("Failed to fetch from Google Maps API");
     }
 
-    const data = await response.json();
+    const data = JSON.parse(responseText);
     console.log("Google Maps API response status:", data.status);
     console.log("Full API response:", JSON.stringify(data, null, 2));
 

@@ -70,6 +70,10 @@ const nextConfig = {
     };
     return config;
   },
+  // Add Clerk configuration
+  // experimental: {
+  //   serverActions: true,
+  // },
 };
 
 module.exports = nextConfig;

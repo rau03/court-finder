@@ -131,7 +131,7 @@ export default function SubmitCourtForm() {
       }
 
       // Submit the court data to Convex
-      await submitCourtMutation({
+      const courtId = await submitCourtMutation({
         name: formData.name,
         address: formData.address,
         city: formData.city || "",
@@ -164,16 +164,15 @@ export default function SubmitCourtForm() {
         contact: formData.contact,
       });
 
+      if (!courtId) {
+        throw new Error("Failed to submit court");
+      }
+
       // Show success message
       alert("Court submitted successfully! Redirecting to home page...");
 
-      // Use replace instead of push to prevent back navigation to the form
+      // Use router.replace for navigation
       router.replace("/");
-
-      // Force a hard navigation if the router.replace doesn't work
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1000);
     } catch (err) {
       console.error("Error submitting court:", err);
       setError(err instanceof Error ? err.message : "Failed to submit court");
