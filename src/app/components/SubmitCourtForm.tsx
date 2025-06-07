@@ -164,11 +164,16 @@ export default function SubmitCourtForm() {
         contact: formData.contact,
       });
 
-      // Show success message (optional)
+      // Show success message
       alert("Court submitted successfully! Redirecting to home page...");
 
-      // Use Next.js router for navigation
-      router.push("/");
+      // Use replace instead of push to prevent back navigation to the form
+      router.replace("/");
+
+      // Force a hard navigation if the router.replace doesn't work
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
     } catch (err) {
       console.error("Error submitting court:", err);
       setError(err instanceof Error ? err.message : "Failed to submit court");
