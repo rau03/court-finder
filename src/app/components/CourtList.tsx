@@ -27,10 +27,29 @@ export default function CourtList() {
         amenities: {
           indoorCourts: false,
           outdoorCourts: true,
+          lightsAvailable: false,
+          restroomsAvailable: false,
+          waterFountain: false,
         },
         location: {
           type: "Point",
           coordinates: [-122.4194, 37.7749], // Example coordinates
+        },
+        surfaceType: "Concrete",
+        cost: "Free",
+        hours: {
+          monday: "9:00 AM - 9:00 PM",
+          tuesday: "9:00 AM - 9:00 PM",
+          wednesday: "9:00 AM - 9:00 PM",
+          thursday: "9:00 AM - 9:00 PM",
+          friday: "9:00 AM - 9:00 PM",
+          saturday: "9:00 AM - 5:00 PM",
+          sunday: "9:00 AM - 5:00 PM",
+        },
+        contact: {
+          website: "",
+          phone: "",
+          email: "",
         },
       });
       setNewCourtName("");

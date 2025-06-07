@@ -15,6 +15,14 @@ console.log(
   "NEXT_PUBLIC_CONVEX_URL present:",
   !!process.env.NEXT_PUBLIC_CONVEX_URL
 );
+console.log(
+  "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY value:",
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+);
+console.log(
+  "NEXT_PUBLIC_CONVEX_URL value:",
+  process.env.NEXT_PUBLIC_CONVEX_URL
+);
 
 if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
   throw new Error("Missing NEXT_PUBLIC_CONVEX_URL environment variable");
