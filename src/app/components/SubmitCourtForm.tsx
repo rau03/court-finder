@@ -130,52 +130,78 @@ export default function SubmitCourtForm() {
         );
       }
 
-      // Submit the court data to Convex
-      const courtId = await submitCourtMutation({
-        name: formData.name,
-        address: formData.address,
-        city: formData.city || "",
-        state: formData.state,
-        zipCode: formData.zipCode,
-        indoor: formData.indoor,
-        numberOfCourts: Number(formData.numberOfCourts),
-        amenities: {
-          indoorCourts: Boolean(formData.amenities?.indoorCourts),
-          outdoorCourts: Boolean(formData.amenities?.outdoorCourts),
-          lightsAvailable: Boolean(formData.amenities?.lightsAvailable),
-          restroomsAvailable: Boolean(formData.amenities?.restroomsAvailable),
-          waterFountain: Boolean(formData.amenities?.waterFountain),
-        },
-        location: {
-          type: "Point",
-          coordinates: [geocodeData.lng, geocodeData.lat],
-        },
-        surfaceType: formData.surfaceType,
-        cost: formData.cost,
-        hours: {
-          monday: "",
-          tuesday: "",
-          wednesday: "",
-          thursday: "",
-          friday: "",
-          saturday: "",
-          sunday: "",
-        },
-        contact: formData.contact,
+      // Add these debug logs:
+      console.log("✅ Geocoding successful:", geocodeData);
+      console.log("🔄 Starting Convex submission...");
+
+      // Add timeout to catch hanging mutations
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(
+          () => reject(new Error("Convex mutation timeout after 10 seconds")),
+          10000
+        );
       });
+
+      const courtId = await Promise.race([
+        submitCourtMutation({
+          name: formData.name,
+          address: formData.address,
+          city: formData.city || "",
+          state: formData.state,
+          zipCode: formData.zipCode,
+          indoor: formData.indoor,
+          numberOfCourts: Number(formData.numberOfCourts),
+          amenities: {
+            indoorCourts: Boolean(formData.amenities?.indoorCourts),
+            outdoorCourts: Boolean(formData.amenities?.outdoorCourts),
+            lightsAvailable: Boolean(formData.amenities?.lightsAvailable),
+            restroomsAvailable: Boolean(formData.amenities?.restroomsAvailable),
+            waterFountain: Boolean(formData.amenities?.waterFountain),
+          },
+          location: {
+            type: "Point",
+            coordinates: [geocodeData.lng, geocodeData.lat],
+          },
+          surfaceType: formData.surfaceType,
+          cost: formData.cost,
+          hours: {
+            monday: "",
+            tuesday: "",
+            wednesday: "",
+            thursday: "",
+            friday: "",
+            saturday: "",
+            sunday: "",
+          },
+          contact: formData.contact,
+        }),
+        timeoutPromise,
+      ]);
+
+      console.log("✅ Convex returned courtId:", courtId);
 
       if (!courtId) {
         throw new Error("Failed to submit court");
       }
 
+      console.log("🎉 About to show success message...");
+
       // Show success message
       alert("Court submitted successfully! Redirecting to home page...");
 
+      console.log("🔄 About to redirect...");
+
       // Use router.replace for navigation
       router.replace("/");
-    } catch (err) {
-      console.error("Error submitting court:", err);
-      setError(err instanceof Error ? err.message : "Failed to submit court");
+    } catch (convexError) {
+      console.error("❌ Convex mutation failed:", convexError);
+      // Log more details about the error
+      console.error("Error details:", {
+        name: convexError?.name,
+        message: convexError?.message,
+        stack: convexError?.stack,
+      });
+      throw convexError;
     } finally {
       setLoading(false);
     }

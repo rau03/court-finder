@@ -9,7 +9,7 @@ import { useAuth } from "@clerk/nextjs";
 
 export default function AdminDashboard() {
   const { userId } = useAuth();
-  const isAdmin = useQuery(api.users.isAdmin, { userId: userId ?? "" });
+  const isAdmin = useQuery(api.users.isAdmin);
   const pendingCourts = useQuery(api.courts.getPendingCourts);
   const approveMutation = useMutation(api.courts.approveCourt);
   const rejectMutation = useMutation(api.courts.rejectCourt);

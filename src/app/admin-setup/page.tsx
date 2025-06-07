@@ -10,7 +10,7 @@ export default function AdminSetup() {
   const [isError, setIsError] = useState(false);
   const { userId } = useAuth();
 
-  const isAdmin = useQuery(api.users.isAdmin, { userId: userId ?? "" });
+  const isAdmin = useQuery(api.users.isAdmin);
   const setUserAsAdminMutation = useMutation(api.users.setUserAsAdmin);
 
   const handleSetAdmin = async () => {

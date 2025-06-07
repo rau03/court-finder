@@ -5,14 +5,17 @@ import { v } from "convex/values";
 
 // Query to check if a user is an admin
 export const isAdmin = query({
-  args: {
-    userId: v.string(),
-  },
-  handler: async (ctx, args) => {
+  args: {},
+  handler: async (ctx) => {
     try {
+      const identity = await ctx.auth.getUserIdentity();
+      if (!identity) {
+        return false;
+      }
+
       const user = await ctx.db
         .query("users")
-        .filter((q) => q.eq(q.field("email"), args.userId))
+        .filter((q) => q.eq(q.field("email"), identity.email))
         .first();
 
       return user?.role === "admin";
@@ -24,9 +27,7 @@ export const isAdmin = query({
 });
 
 export const getUser = query({
-  args: {
-    userId: v.string(),
-  },
+  args: {},
   returns: v.union(
     v.object({
       _id: v.id("users"),
@@ -37,10 +38,15 @@ export const getUser = query({
     }),
     v.null()
   ),
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return null;
+    }
+
     const user = await ctx.db
       .query("users")
-      .filter((q) => q.eq(q.field("email"), args.userId))
+      .filter((q) => q.eq(q.field("email"), identity.email))
       .first();
 
     return user;
@@ -48,14 +54,17 @@ export const getUser = query({
 });
 
 export const isUserAdmin = query({
-  args: {
-    userId: v.string(),
-  },
+  args: {},
   returns: v.boolean(),
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return false;
+    }
+
     const user = await ctx.db
       .query("users")
-      .filter((q) => q.eq(q.field("email"), args.userId))
+      .filter((q) => q.eq(q.field("email"), identity.email))
       .first();
 
     return user?.role === "admin";

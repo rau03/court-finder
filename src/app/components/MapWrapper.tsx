@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { LoadScript } from "@react-google-maps/api";
-import PickleballMap from "./Map";
+import { useEffect } from "react";
 
 interface MapWrapperProps {
   markers?: Array<{
@@ -26,41 +24,45 @@ const MapWrapper: React.FC<MapWrapperProps> = ({
   zoom,
   onLoad,
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [loadError, setLoadError] = useState<Error | null>(null);
-
   useEffect(() => {
-    if (isLoaded && onLoad) {
+    if (onLoad) {
       onLoad();
     }
-  }, [isLoaded, onLoad]);
-
-  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
-    return (
-      <div className="p-4 text-red-700 bg-red-100 rounded">
-        Google Maps API key is not configured
-      </div>
-    );
-  }
+  }, [onLoad]);
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-      onLoad={() => setIsLoaded(true)}
-      onError={(error) => setLoadError(error)}
-    >
-      {isLoaded ? (
-        <PickleballMap markers={markers} center={center} zoom={zoom} />
-      ) : loadError ? (
-        <div className="p-4 text-red-700 bg-red-100 rounded">
-          Error loading maps: {loadError.message}
+    <div className="relative flex items-center justify-center w-full h-full border-2 border-gray-300 border-dashed bg-gradient-to-br from-blue-50 to-green-50">
+      <div className="p-6 text-center">
+        <div className="mb-4 text-6xl">🗺️</div>
+        <h3 className="mb-2 text-xl font-bold text-gray-800">
+          Court Locations
+        </h3>
+        <p className="mb-4 text-gray-600">
+          {markers.length} court{markers.length !== 1 ? "s" : ""} found
+        </p>
+
+        {markers.length > 0 && (
+          <div className="space-y-2 overflow-y-auto max-h-40">
+            {markers.map((marker, index) => (
+              <div
+                key={index}
+                className="p-3 text-sm bg-white border rounded-lg shadow"
+              >
+                <div className="font-medium text-gray-800">{marker.title}</div>
+                <div className="text-xs text-gray-500">
+                  {marker.position.lat.toFixed(4)},{" "}
+                  {marker.position.lng.toFixed(4)}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-4 text-xs text-gray-500">
+          Interactive map coming soon
         </div>
-      ) : (
-        <div className="p-4 text-gray-700 bg-gray-100 rounded">
-          Loading maps...
-        </div>
-      )}
-    </LoadScript>
+      </div>
+    </div>
   );
 };
 

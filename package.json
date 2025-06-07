@@ -13,7 +13,7 @@
     "migrate": "ts-node scripts/migrate-to-convex.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.7",
+    "@clerk/nextjs": "^4.31.8",
     "@react-google-maps/api": "^2.20.6",
     "dotenv": "^16.5.0",
     "geist": "^1.3.1",

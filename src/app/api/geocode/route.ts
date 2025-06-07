@@ -79,6 +79,12 @@ export async function GET(request: NextRequest) {
       !!process.env.GOOGLE_MAPS_API_KEY
     );
 
+    // Add this new line to see the actual key (first 10 chars only)
+    console.log(
+      "API Key (first 10 chars):",
+      apiKey ? apiKey.substring(0, 10) + "..." : "NOT FOUND"
+    );
+
     if (!apiKey) {
       console.error("Google Maps API key is missing");
       throw new Error("Google Maps API key is not configured");
