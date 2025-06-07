@@ -85,13 +85,26 @@ export const submitCourt = mutation({
     const now = Date.now();
 
     // First, get or create the user
-    const user = await ctx.db
+    let user = await ctx.db
       .query("users")
       .filter((q: any) => q.eq(q.field("clerkId"), identity.tokenIdentifier))
       .first();
 
     if (!user) {
-      throw new Error("User not found");
+      // If the user doesn't exist, create a new user
+      const userId = await ctx.db.insert("users", {
+        clerkId: identity.tokenIdentifier,
+        email: identity.email!,
+        name: identity.name ?? "Anonymous",
+        role: "user",
+        createdAt: now,
+        updatedAt: now,
+      });
+      user = await ctx.db.get(userId);
+    }
+
+    if (!user) {
+      throw new Error("Failed to create or get user");
     }
 
     // Then create the court with the user's ID
