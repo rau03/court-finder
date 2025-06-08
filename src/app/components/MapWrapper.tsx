@@ -24,6 +24,9 @@ const MapWrapper: React.FC<MapWrapperProps> = ({
   zoom,
   onLoad,
 }) => {
+  // Suppress unused variable warnings for future map implementation
+  void center;
+  void zoom;
   useEffect(() => {
     if (onLoad) {
       onLoad();

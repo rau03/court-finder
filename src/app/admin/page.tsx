@@ -5,10 +5,9 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import Header from "../components/Header";
 import Link from "next/link";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
 export default function AdminDashboard() {
-  const { userId } = useAuth();
   const { user } = useUser();
 
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;

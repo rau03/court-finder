@@ -196,10 +196,11 @@ export default function SubmitCourtForm() {
     } catch (convexError) {
       console.error("❌ Convex mutation failed:", convexError);
       // Log more details about the error
+      const error = convexError as Error;
       console.error("Error details:", {
-        name: convexError?.name,
-        message: convexError?.message,
-        stack: convexError?.stack,
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
       });
       throw convexError;
     } finally {
