@@ -126,18 +126,18 @@ export const submitCourt = mutation({
 
 // Get all courts pending approval (admin only)
 export const getPendingCourts = query({
-  args: {},
+  args: {
+    adminEmail: v.string(),
+  },
   returns: v.array(v.any()),
-  handler: async (ctx) => {
+  handler: async (ctx, args) => {
     // Check if user is admin
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      throw new Error("Unauthorized: Not authenticated");
-    }
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), args.adminEmail))
+      .first();
 
-    // Check if user is admin
-    const isAdmin = await checkIsAdmin(ctx);
-    if (!isAdmin) {
+    if (!user || user.role !== "admin") {
       throw new Error("Unauthorized: Admin access required");
     }
 
@@ -153,18 +153,17 @@ export const getPendingCourts = query({
 export const approveCourt = mutation({
   args: {
     courtId: v.id("courts"),
+    adminEmail: v.string(),
   },
   returns: v.id("courts"),
   handler: async (ctx, args) => {
     // Check if user is admin
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      throw new Error("Unauthorized: Not authenticated");
-    }
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), args.adminEmail))
+      .first();
 
-    // Check if user is admin
-    const isAdmin = await checkIsAdmin(ctx);
-    if (!isAdmin) {
+    if (!user || user.role !== "admin") {
       throw new Error("Unauthorized: Admin access required");
     }
 
@@ -183,18 +182,17 @@ export const approveCourt = mutation({
 export const rejectCourt = mutation({
   args: {
     courtId: v.id("courts"),
+    adminEmail: v.string(),
   },
   returns: v.id("courts"),
   handler: async (ctx, args) => {
     // Check if user is admin
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      throw new Error("Unauthorized: Not authenticated");
-    }
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), args.adminEmail))
+      .first();
 
-    // Check if user is admin
-    const isAdmin = await checkIsAdmin(ctx);
-    if (!isAdmin) {
+    if (!user || user.role !== "admin") {
       throw new Error("Unauthorized: Admin access required");
     }
 

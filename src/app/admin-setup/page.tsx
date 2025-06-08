@@ -3,20 +3,35 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 export default function AdminSetup() {
   const [message, setMessage] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
   const { userId } = useAuth();
+  const { user } = useUser();
 
-  const isAdmin = useQuery(api.users.isAdmin);
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress;
+  const isAdmin = useQuery(
+    api.users.isAdmin,
+    userEmail ? { email: userEmail } : "skip"
+  );
   const setUserAsAdminMutation = useMutation(api.users.setUserAsAdmin);
 
   const handleSetAdmin = async () => {
+    if (!user || !userEmail || !userId) {
+      setIsError(true);
+      setMessage("Please sign in to continue");
+      return;
+    }
+
     try {
       // First create/update the user
-      await setUserAsAdminMutation();
+      await setUserAsAdminMutation({
+        email: userEmail,
+        clerkId: userId,
+        name: user.fullName || user.firstName || "Admin User",
+      });
       setIsError(false);
       setMessage("Success! You are now an admin.");
     } catch (error) {

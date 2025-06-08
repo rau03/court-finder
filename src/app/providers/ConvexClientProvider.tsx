@@ -3,8 +3,6 @@
 import { ReactNode } from "react";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProvider } from "convex/react";
-// import { ConvexProviderWithClerk } from "convex/react-clerk";
-// import { useAuth } from "@clerk/nextjs";
 
 // Add debug logging
 console.log("=== CONVEX DEBUG ===");

@@ -5,12 +5,21 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import Header from "../components/Header";
 import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 export default function AdminDashboard() {
   const { userId } = useAuth();
-  const isAdmin = useQuery(api.users.isAdmin);
-  const pendingCourts = useQuery(api.courts.getPendingCourts);
+  const { user } = useUser();
+
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress;
+  const isAdmin = useQuery(
+    api.users.isAdmin,
+    userEmail ? { email: userEmail } : "skip"
+  );
+  const pendingCourts = useQuery(
+    api.courts.getPendingCourts,
+    userEmail ? { adminEmail: userEmail } : "skip"
+  );
   const approveMutation = useMutation(api.courts.approveCourt);
   const rejectMutation = useMutation(api.courts.rejectCourt);
 
@@ -50,8 +59,12 @@ export default function AdminDashboard() {
   }
 
   const handleApprove = async (courtId: Id<"courts">) => {
+    if (!userEmail) {
+      alert("User email not available");
+      return;
+    }
     try {
-      await approveMutation({ courtId });
+      await approveMutation({ courtId, adminEmail: userEmail });
     } catch (error) {
       console.error("Error approving court:", error);
       alert("Failed to approve court");
@@ -59,13 +72,17 @@ export default function AdminDashboard() {
   };
 
   const handleReject = async (courtId: Id<"courts">) => {
+    if (!userEmail) {
+      alert("User email not available");
+      return;
+    }
     if (
       confirm(
         "Are you sure you want to reject this court? This action cannot be undone."
       )
     ) {
       try {
-        await rejectMutation({ courtId });
+        await rejectMutation({ courtId, adminEmail: userEmail });
       } catch (error) {
         console.error("Error rejecting court:", error);
         alert("Failed to reject court");
