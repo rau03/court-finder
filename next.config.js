@@ -3,6 +3,8 @@ const nextConfig = {
   output: "standalone",
   env: {
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
+      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   },
   publicRuntimeConfig: {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,

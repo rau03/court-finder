@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ConvexClientProvider from "./providers/ConvexClientProvider";
+import GoogleMapsProvider from "./providers/GoogleMapsProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,7 +17,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
- 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
@@ -30,7 +30,9 @@ export default function RootLayout({
             },
           }}
         >
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          <ConvexClientProvider>
+            <GoogleMapsProvider>{children}</GoogleMapsProvider>
+          </ConvexClientProvider>
         </ClerkProvider>
       </body>
     </html>
