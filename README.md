@@ -2,20 +2,37 @@
 
 A modern web application that helps pickleball players find and discover courts in their area. Built with Next.js, TypeScript, and Google Maps API.
 
-## Features
+## ✨ Current Features
 
-- 🔍 Search for pickleball courts near you
-- 🗺️ Interactive map interface
-- 📍 Real-time court locations and availability
-- 🔐 User authentication with Clerk
-- 💾 Real-time database with Convex
-- 🎨 Modern UI with Tailwind CSS
+### 🔍 Core Functionality
 
-## Vision & Future Features
+- **Court Search**: Advanced search with location-based filtering, indoor/outdoor preferences, and distance radius
+- **Interactive Map**: Real-time map interface powered by Google Maps API showing court locations
+- **Court Details**: Comprehensive court information including amenities, surface type, hours, and contact info
+- **User-Generated Content**: Community-driven court submissions with admin approval process
 
-Court Finder aims to be more than just a court locator - it's building a comprehensive pickleball community platform. Here's what we're planning to build:
+### 👤 User Features
 
-### Community Features
+- **Authentication**: Secure user authentication powered by Clerk
+- **Favorites System**: Save and manage favorite courts for quick access
+- **Court Submission**: Submit new courts with detailed information and location data
+- **Responsive Design**: Mobile-friendly interface with modern UI components
+
+### ⚡ Admin Features
+
+- **Admin Dashboard**: Dedicated admin interface for court management
+- **Court Approval**: Review and approve user-submitted courts
+- **User Management**: Admin user role management system
+
+### 🗄️ Data Management
+
+- **Real-time Database**: Powered by Convex for real-time data synchronization
+- **Location-based Queries**: Efficient geographic searches using coordinate indexing
+- **Court Verification**: System for tracking verified vs. user-submitted courts
+
+## 🎯 Future Features & Roadmap
+
+### Community Features (Planned)
 
 - 👥 **Court Check-ins**: Players can check in at courts to show who's currently playing
 - 💬 **Community Chat**: A dedicated space for pickleball enthusiasts to connect and organize games
@@ -35,60 +52,115 @@ Court Finder aims to be more than just a court locator - it's building a compreh
   - Weather conditions
   - Community activity
 
-### Enhanced User Experience
+### Enhanced User Experience (Planned)
 
 - 📱 **Real-time Updates**: Live information about court conditions and player presence
 - 🎯 **Skill-based Matching**: Find players of similar skill levels
 - 📅 **Game Scheduling**: Organize and join pickup games
 - 🌦️ **Weather Integration**: Real-time weather updates for outdoor courts
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS with custom design system
 - **Authentication**: Clerk
-- **Database**: Convex
-- **Maps**: Google Maps API
-- **Deployment**: Vercel
+- **Database**: Convex (real-time database)
+- **Maps**: Google Maps API (@react-google-maps/api)
+- **UI Components**: Lucide React icons
+- **Development**: Concurrently for running multiple dev servers
 
-## Prerequisites
+## 📁 Project Structure
 
-Before you begin, ensure you have the following installed:
+```
+court-finder/
+├── src/
+│   ├── app/
+│   │   ├── components/        # Reusable UI components
+│   │   │   ├── CourtCard.tsx
+│   │   │   ├── CourtList.tsx
+│   │   │   ├── CourtResults.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── Map.tsx
+│   │   │   ├── MapWrapper.tsx
+│   │   │   ├── SearchForm.tsx
+│   │   │   └── SubmitCourtForm.tsx
+│   │   ├── context/           # React context providers
+│   │   ├── providers/         # App-level providers
+│   │   ├── admin/            # Admin dashboard
+│   │   ├── favorites/        # User favorites page
+│   │   ├── submit-court/     # Court submission page
+│   │   ├── sign-in/          # Authentication pages
+│   │   ├── sign-up/
+│   │   └── api/              # API routes
+│   ├── lib/                  # Utility functions
+│   └── types/                # TypeScript type definitions
+├── convex/                   # Backend database functions
+│   ├── courts.ts            # Court management functions
+│   ├── favorites.ts         # User favorites functionality
+│   ├── users.ts             # User management
+│   ├── auth.ts              # Authentication config
+│   └── schema.ts            # Database schema
+├── scripts/                 # Utility scripts
+└── public/                  # Static assets
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
 
 - Node.js (v18 or higher)
 - npm or yarn
 - Google Cloud account (for Maps API)
+- Clerk account (for authentication)
+- Convex account (for database)
 
-## Getting Started
+### Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/yourusername/court-finder.git
    cd court-finder
    ```
 
-2. Install dependencies:
+2. **Install dependencies**:
 
    ```bash
    npm install
    ```
 
-3. Set up environment variables:
+3. **Set up environment variables**:
+   Create a `.env.local` file with the following variables:
 
-   - Copy `.env.example` to `.env.local`
-   - Add your Google Maps API key (see [Google Maps Setup Guide](GOOGLE_MAPS_SETUP.md))
-   - Add your Clerk credentials
+   ```env
+   # Clerk Authentication
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+   CLERK_SECRET_KEY=your_clerk_secret_key
 
-4. Run the development server:
+   # Google Maps API
+   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+
+   # Convex Database
+   CONVEX_DEPLOYMENT=your_convex_deployment_url
+   NEXT_PUBLIC_CONVEX_URL=your_convex_url
+   ```
+
+4. **Set up Convex**:
+
+   ```bash
+   npx convex dev
+   ```
+
+5. **Run the development server**:
 
    ```bash
    npm run dev:all
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+6. **Open your browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-## Available Scripts
+## 📜 Available Scripts
 
 - `npm run dev` - Start Next.js development server
 - `npm run convex` - Start Convex development server
@@ -99,18 +171,27 @@ Before you begin, ensure you have the following installed:
 - `npm run setup` - Run environment setup script
 - `npm run migrate` - Run database migration script
 
-## Project Structure
+## 🗃️ Database Schema
 
-```
-court-finder/
-├── src/              # Source files
-├── convex/           # Convex database and functions
-├── public/           # Static assets
-├── scripts/          # Utility scripts
-└── ...config files
-```
+### Courts
 
-## Contributing
+- Location data with geographic indexing
+- Amenities (indoor/outdoor, lights, restrooms, etc.)
+- Contact information and hours
+- Verification status and user submission tracking
+
+### Users
+
+- Clerk authentication integration
+- Role-based access control (admin/user)
+- User profile management
+
+### Favorites
+
+- User-court relationship tracking
+- Quick access to saved courts
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -118,14 +199,15 @@ court-finder/
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- [Next.js](https://nextjs.org/)
-- [Convex](https://www.convex.dev/)
-- [Clerk](https://clerk.dev/)
-- [Google Maps Platform](https://developers.google.com/maps)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [Next.js](https://nextjs.org/) - React framework
+- [Convex](https://www.convex.dev/) - Real-time database
+- [Clerk](https://clerk.dev/) - Authentication
+- [Google Maps Platform](https://developers.google.com/maps) - Maps and geocoding
+- [Tailwind CSS](https://tailwindcss.com/) - Styling framework
+- [Lucide React](https://lucide.dev/) - Icon library
