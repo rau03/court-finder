@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Court Finder",
-  description: "Find basketball courts near you",
+  description: "Find pickleball courts near you",
 };
 
 export default function RootLayout({
